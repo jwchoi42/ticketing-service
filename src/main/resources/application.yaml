@@ -1,0 +1,11 @@
+spring:
+
+  application.name: ticketing-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ticketing_db
+    username: postgres
+    password: password
+
+management:
+  endpoint.health.show-details: always

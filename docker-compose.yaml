@@ -1,0 +1,34 @@
+services:
+
+  application:
+
+    build:
+      context: "."
+      dockerfile: "Dockerfile"
+
+    container_name: "spring-application"
+    image: "spring-ticketing-service"
+    ports:
+      - "8080:8080"
+
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://database:5432/ticketing_db"
+      SPRING_DATASOURCE_USERNAME: "postgres"
+      SPRING_DATASOURCE_PASSWORD: "password"
+
+    depends_on:
+      database:
+        condition: "service_started"
+
+    restart: on-failure
+
+  database:
+
+    container_name: "postgresql-database"
+    image: postgres:17-alpine
+    ports:
+      - "5432:5432"
+
+    environment:
+      - "POSTGRES_DB=ticketing_db"
+      - "POSTGRES_PASSWORD=password"

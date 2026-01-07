@@ -19,9 +19,54 @@ repositories {
 }
 
 dependencies {
+
+    // Lombok
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+    // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    /**
+     * Operations
+     */
+
+    // Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    /**
+     * Database
+     */
+
+    // Spring Data JPA
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // PostgreSQL
+    runtimeOnly 'org.postgresql:postgresql'
+
+    /**
+     * Test
+     */
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    // Testcontainers
+    testImplementation 'org.springframework.boot:spring-boot-testcontainers'
+    testImplementation 'org.testcontainers:junit-jupiter'
+    testImplementation 'org.testcontainers:postgresql'
+
+    // Cucumber
+    testImplementation 'org.junit.platform:junit-platform-suite'
+    testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.20.0'
+    testImplementation 'io.cucumber:cucumber-java:7.20.0'
+    testImplementation 'io.cucumber:cucumber-spring:7.20.0'
+
+    // REST-assured
+    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+
 }
 
 tasks.named('test') {

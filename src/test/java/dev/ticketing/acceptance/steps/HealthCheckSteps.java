@@ -1,32 +1,37 @@
 package dev.ticketing.acceptance.steps;
 
-import dev.ticketing.acceptance.cucumber.CucumberTestApiClient;
-import dev.ticketing.acceptance.cucumber.CucumberTestContext;
-import io.cucumber.java.en.And;
+import dev.ticketing.acceptance.client.HealthCheckClient;
+import dev.ticketing.acceptance.client.model.TestResponse;
+import dev.ticketing.acceptance.context.TestContext;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @RequiredArgsConstructor
 public class HealthCheckSteps {
 
-    private final CucumberTestApiClient cucumberTestApiClient;
-    private final CucumberTestContext cucumberTestContext;
+    private final HealthCheckClient healthClient;
+    private final TestContext testContext;
 
     @When("스프링 부트 액추에이터로 시스템 상태를 확인하면,")
     public void performHealthCheck() {
-        cucumberTestApiClient.performHealthCheck();
+        TestResponse response = healthClient.performHealthCheck();
+        testContext.setResponse(response);
     }
 
     @Then("스프링 애플리케이션 상태가 정상이어야 하고,")
-    public void verifyApplicationIsHealthy() {
-        assertThat(cucumberTestContext.getStringFromJsonPath("status")).isEqualTo("UP");
+    public void verifyApplicationHealth() {
+        TestResponse response = testContext.getResponse();
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
+        assertThat(response.jsonPath().getString("status")).isEqualTo("UP");
     }
 
-    @And("데이터베이스도 정상적으로 연결되있어야 한다.")
-    public void verifyDatabaseIsHealthy() {
-        assertThat(cucumberTestContext.getStringFromJsonPath("components.db.status")).isEqualTo("UP");
+    @Then("데이터베이스도 정상적으로 연결되있어야 한다.")
+    public void verifyDatabaseHealth() {
+        TestResponse response = testContext.getResponse();
+        assertThat(response.jsonPath().getString("components.db.status")).isEqualTo("UP");
     }
 }

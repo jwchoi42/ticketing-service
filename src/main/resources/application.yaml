@@ -3,9 +3,59 @@ spring:
   application.name: ticketing-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/ticketing_db
-    username: postgres
-    password: password
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ticketing_db}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:password}
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+    operations-sorter: alpha
+    tags-sorter: alpha
+  packages-to-scan: dev.ticketing
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  show-actuator: false
+
+  redis:
+    host: ${SPRING_REDIS_HOST:localhost}
+    port: ${SPRING_REDIS_PORT:6379}
+#
+#  kafka:
+#    bootstrap-servers: ${SPRING_KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
+#    consumer:
+#      group-id: ticketing-service
+#      auto-offset-reset: earliest
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#      properties:
+#        spring.json.trusted.packages: dev.ticketing.*
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 
 management:
   endpoint.health.show-details: always
+
+seat:
+  occupation:
+    ttl-minutes: 10
+#
+#payment:
+#  mock:
+#    enabled: true
+#    success-rate: 0.9
+#    min-delay-ms: 500
+#    max-delay-ms: 2000

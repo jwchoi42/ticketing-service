@@ -17,7 +17,8 @@ public class Reservation {
     private ReservationStatus status;
     private List<Long> seatIds;
 
-    public static Reservation create(Long userId, Long matchId, ReservationStatus status) {
+    public static Reservation create(final Long userId, final Long matchId, final ReservationStatus status) {
+        validate(userId, matchId, status);
         return Reservation.builder()
                 .userId(userId)
                 .matchId(matchId)
@@ -25,7 +26,9 @@ public class Reservation {
                 .build();
     }
 
-    public static Reservation withId(Long id, Long userId, Long matchId, ReservationStatus status) {
+    public static Reservation withId(final Long id, final Long userId, final Long matchId,
+            final ReservationStatus status) {
+        validate(userId, matchId, status);
         return Reservation.builder()
                 .id(id)
                 .userId(userId)
@@ -34,14 +37,51 @@ public class Reservation {
                 .build();
     }
 
-    public static Reservation withSeatIds(Long id, Long userId, Long matchId, ReservationStatus status,
-            List<Long> seatIds) {
+    public static Reservation withSeatIds(final Long id, final Long userId, final Long matchId,
+            final ReservationStatus status,
+            final List<Long> seatIds) {
+        validate(userId, matchId, status);
+        if (seatIds == null || seatIds.isEmpty()) {
+            throw new IllegalArgumentException("Seat IDs cannot be empty");
+        }
         return Reservation.builder()
                 .id(id)
                 .userId(userId)
                 .matchId(matchId)
                 .status(status)
                 .seatIds(seatIds)
+                .build();
+    }
+
+    private static void validate(final Long userId, final Long matchId, final ReservationStatus status) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        if (matchId == null) {
+            throw new IllegalArgumentException("Match ID cannot be null");
+        }
+        if (status == null) {
+            throw new IllegalArgumentException("Reservation status cannot be null");
+        }
+    }
+
+    public Reservation confirm() {
+        return Reservation.builder()
+                .id(this.id)
+                .userId(this.userId)
+                .matchId(this.matchId)
+                .status(ReservationStatus.CONFIRMED)
+                .seatIds(this.seatIds)
+                .build();
+    }
+
+    public Reservation cancel() {
+        return Reservation.builder()
+                .id(this.id)
+                .userId(this.userId)
+                .matchId(this.matchId)
+                .status(ReservationStatus.CANCELLED)
+                .seatIds(this.seatIds)
                 .build();
     }
 }

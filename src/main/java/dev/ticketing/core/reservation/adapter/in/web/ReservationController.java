@@ -2,6 +2,7 @@ package dev.ticketing.core.reservation.adapter.in.web;
 
 import dev.ticketing.common.web.model.response.SuccessResponse;
 import dev.ticketing.core.reservation.adapter.in.web.model.CreateReservationRequest;
+import dev.ticketing.core.reservation.adapter.in.web.model.response.ReservationResponse;
 import dev.ticketing.core.reservation.application.port.in.CreateReservationUseCase;
 import dev.ticketing.core.reservation.domain.Reservation;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationPort;
@@ -27,30 +28,30 @@ public class ReservationController {
     @Operation(summary = "예약 생성 (좌석 선택 완료 후)")
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public SuccessResponse<Reservation> createReservation(@RequestBody CreateReservationRequest request) {
-        Reservation reservation = createReservationUseCase.createReservation(request.toCommand());
-        return SuccessResponse.of(reservation);
+    public SuccessResponse<ReservationResponse> createReservation(@RequestBody final CreateReservationRequest request) {
+        final Reservation reservation = createReservationUseCase.createReservation(request.toCommand());
+        return SuccessResponse.of(ReservationResponse.from(reservation));
     }
 
     @Operation(summary = "예약 조회")
     @GetMapping("/{id}")
-    public SuccessResponse<Reservation> getReservation(@PathVariable Long id) {
-        Reservation reservation = loadReservationPort.loadById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Reservation not found"));
+    public SuccessResponse<ReservationResponse> getReservation(@PathVariable final Long id) {
+        final Reservation reservation = loadReservationPort.loadById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Reservation not found: " + id));
 
         // Load seatIds from allocations
-        List<Allocation> allocations = loadAllocationPort.loadAllocationsByReservationId(id);
-        List<Long> seatIds = allocations.stream()
+        final List<Allocation> allocations = loadAllocationPort.loadAllocationsByReservationId(id);
+        final List<Long> seatIds = allocations.stream()
                 .map(Allocation::getSeatId)
                 .toList();
 
-        Reservation reservationWithSeats = Reservation.withSeatIds(
+        final Reservation reservationWithSeats = Reservation.withSeatIds(
                 reservation.getId(),
                 reservation.getUserId(),
                 reservation.getMatchId(),
                 reservation.getStatus(),
                 seatIds);
 
-        return SuccessResponse.of(reservationWithSeats);
+        return SuccessResponse.of(ReservationResponse.from(reservationWithSeats));
     }
 }

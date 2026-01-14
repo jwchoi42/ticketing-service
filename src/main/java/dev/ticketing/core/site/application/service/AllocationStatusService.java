@@ -40,14 +40,14 @@ public class AllocationStatusService
     // UseCase 1: SnapShot 조회 (HTTP)
     @Override
     @Transactional(readOnly = true)
-    public AllocationStatusSnapShot getAllocationStatusSnapShot(Long matchId, Long blockId) {
+    public AllocationStatusSnapShot getAllocationStatusSnapShot(final Long matchId, final Long blockId) {
         List<Allocation> seats = loadAllocationStatusPort.loadAllocationStatusesByBlockId(matchId, blockId);
         return AllocationStatusSnapShot.from(seats);
     }
 
     // UseCase 2: Stream 구독 (SSE)
     @Override
-    public SseEmitter subscribeAllocationStatusChangesStream(Long matchId, Long blockId) {
+    public SseEmitter subscribeAllocationStatusChangesStream(final Long matchId, final Long blockId) {
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE); // 무제한 타임아웃
         String key = matchId + ":" + blockId;
 
@@ -95,11 +95,9 @@ public class AllocationStatusService
      */
     @Scheduled(fixedRate = 1000)
     public void checkForUpdates() {
-        System.out.println("[DEBUG] 스케줄러 실행됨: emitters 수=" + allocationStatusEmitters.size());
-        log.info("스케줄러 실행됨: emitters 수={}", allocationStatusEmitters.size());
+        log.debug("스케줄러 실행됨: emitters 수={}", allocationStatusEmitters.size());
         if (allocationStatusEmitters.isEmpty()) {
-            System.out.println("[DEBUG] 연결된 클라이언트 없음 - 스킵");
-            log.info("연결된 클라이언트 없음 - 스킵");
+            log.debug("연결된 클라이언트 없음 - 스킵");
             return; // 연결된 클라이언트가 없으면 스킵
         }
 
@@ -119,18 +117,12 @@ public class AllocationStatusService
                 Long blockId = Long.parseLong(parts[1]);
 
                 // DB에서 변경 사항 조회
-                System.out.println("[DEBUG] 변경 사항 조회 시작: matchId=" + matchId + ", blockId=" + blockId + ", since="
-                        + lastCheckTime);
                 log.debug("변경 사항 조회 시작: matchId={}, blockId={}, since={}", matchId, blockId, lastCheckTime);
                 List<Allocation> changes = loadAllocationStatusPort
                         .loadAllocationStatusesSince(matchId, blockId, lastCheckTime);
-                System.out.println("[DEBUG] 변경 사항 조회 완료: matchId=" + matchId + ", blockId=" + blockId + ", 변경 수="
-                        + changes.size());
                 log.debug("변경 사항 조회 완료: matchId={}, blockId={}, 변경 수={}", matchId, blockId, changes.size());
 
                 if (!changes.isEmpty()) {
-                    System.out.println("[DEBUG] 변경 사항 감지!!! matchId=" + matchId + ", blockId=" + blockId + ", 변경 수="
-                            + changes.size());
                     log.info("변경 사항 감지: matchId={}, blockId={}, 변경 수={}, 변경 목록={}",
                             matchId, blockId, changes.size(), changes);
 
@@ -157,7 +149,7 @@ public class AllocationStatusService
         lastCheckTime = currentCheckTime;
     }
 
-    private void sendInitEvent(SseEmitter emitter, AllocationStatusSnapShot snapshot) throws IOException {
+    private void sendInitEvent(final SseEmitter emitter, final AllocationStatusSnapShot snapshot) throws IOException {
         String json = objectMapper.writeValueAsString(SuccessResponse.of(snapshot));
         emitter.send(SseEmitter.event().name("snapshot").data(json));
     }

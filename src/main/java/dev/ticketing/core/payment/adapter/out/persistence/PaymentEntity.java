@@ -36,7 +36,7 @@ public class PaymentEntity {
     private LocalDateTime createdAt;
     private LocalDateTime paidAt;
 
-    public static PaymentEntity from(Payment payment) {
+    public static PaymentEntity from(final Payment payment) {
         return new PaymentEntity(
                 payment.getId(),
                 payment.getReservationId(),

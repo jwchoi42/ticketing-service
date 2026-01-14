@@ -10,8 +10,15 @@ public class Area {
     private Long id;
     private String name; // e.g., INFIELD, OUTFIELD
 
-    public Area(String name) {
+    public Area(final String name) {
         this(null, name);
+        validate(name);
+    }
+
+    private static void validate(final String name) {
+        if (name == null || name.isBlank()) {
+            throw new IllegalArgumentException("Area name cannot be empty");
+        }
     }
 
 }

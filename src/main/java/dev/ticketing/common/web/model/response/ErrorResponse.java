@@ -1,10 +1,14 @@
 package dev.ticketing.common.web.model.response;
 
-public record ErrorResponse(
-        Integer status,
-        String message) {
+import java.time.LocalDateTime;
 
-    public static ErrorResponse of(int status, String message) {
-        return new ErrorResponse(status, message);
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+public record ErrorResponse(
+        @JsonInclude(JsonInclude.Include.NON_NULL) String message,
+        LocalDateTime timestamp) {
+
+    public static ErrorResponse of(final String message) {
+        return new ErrorResponse(message, LocalDateTime.now());
     }
 }

@@ -1,11 +1,10 @@
 package dev.ticketing.core.site.application.service.exception;
 
-public class SeatAlreadyHeldException extends RuntimeException {
-    public SeatAlreadyHeldException(String message) {
-        super(message);
-    }
+import org.springframework.http.HttpStatus;
 
-    public SeatAlreadyHeldException(Long matchId, Long seatId) {
-        super(String.format("Seat %d is already held for match %d", seatId, matchId));
+public class SeatAlreadyHeldException extends SiteException {
+
+    public SeatAlreadyHeldException(final Long matchId, final Long seatId) {
+        super(String.format("Seat %d is already held for match %d", seatId, matchId), HttpStatus.CONFLICT);
     }
 }

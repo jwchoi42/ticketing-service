@@ -29,7 +29,7 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
-    public static UserEntity from(User user) {
+    public static UserEntity from(final User user) {
         return new UserEntity(user.getId(), user.getEmail(), user.getPassword());
     }
 

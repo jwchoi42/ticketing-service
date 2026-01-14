@@ -34,17 +34,17 @@ public class SiteService implements GetAreasUseCase, GetSectionsUseCase, GetBloc
     }
 
     @Override
-    public List<Section> getSections(Long areaId) {
+    public List<Section> getSections(final Long areaId) {
         return loadSectionPort.loadSectionsByAreaId(areaId);
     }
 
     @Override
-    public List<Block> getBlocks(Long sectionId) {
+    public List<Block> getBlocks(final Long sectionId) {
         return loadBlockPort.loadBlocksBySectionId(sectionId);
     }
 
     @Override
-    public List<Seat> getSeats(Long blockId) {
+    public List<Seat> getSeats(final Long blockId) {
         return loadSeatPort.loadSeatsByBlockId(blockId);
     }
 }

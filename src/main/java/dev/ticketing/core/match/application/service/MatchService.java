@@ -1,14 +1,17 @@
 package dev.ticketing.core.match.application.service;
 
-import dev.ticketing.core.match.application.port.in.GetMatchesUseCase;
-import dev.ticketing.core.match.application.port.in.model.GetMatchesQuery;
-import dev.ticketing.core.match.application.port.out.persistence.LoadMatchPort;
-import dev.ticketing.core.match.domain.Match;
-import lombok.RequiredArgsConstructor;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import lombok.RequiredArgsConstructor;
+
+import dev.ticketing.core.match.application.port.in.GetMatchesUseCase;
+import dev.ticketing.core.match.application.port.in.model.GetMatchesQuery;
+import dev.ticketing.core.match.application.port.in.model.MatchListResponse;
+import dev.ticketing.core.match.application.port.out.persistence.LoadMatchPort;
+import dev.ticketing.core.match.domain.Match;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +21,8 @@ public class MatchService implements GetMatchesUseCase {
     private final LoadMatchPort loadMatchPort;
 
     @Override
-    public List<Match> getMatches(GetMatchesQuery query) {
-        return loadMatchPort.loadAll();
+    public MatchListResponse getMatches(final GetMatchesQuery query) {
+        List<Match> matches = loadMatchPort.loadAll();
+        return MatchListResponse.from(matches);
     }
 }

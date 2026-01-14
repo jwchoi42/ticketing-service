@@ -29,7 +29,7 @@ public class ReservationEntity {
     @Enumerated(EnumType.STRING)
     private ReservationStatus status;
 
-    public static ReservationEntity from(Reservation reservation) {
+    public static ReservationEntity from(final Reservation reservation) {
         return new ReservationEntity(
                 reservation.getId(),
                 reservation.getUserId(),

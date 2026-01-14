@@ -20,9 +20,69 @@ description: exception-handling-best-practices
 - 비즈니스 로직 검증 실패 시 **구체적인 도메인 예외를 직접 `throw`** 합니다.
 - **Controller는 예외를 던지지 않음**: Controller는 UseCase를 호출하고 결과를 반환하는 역할만 수행합니다. Service에서 발생한 예외는 `@RestControllerAdvice`가 처리합니다.
 
+### 예외 계층 구조
+
+모든 도메인 예외는 `DomainException`을 상속하며, 도메인별 기본 예외 클래스를 거쳐 구체적인 예외로 세분화됩니다.
+
+```
+common/exception/
+└── DomainException.java (추상 기본 클래스, HttpStatus 포함)
+
+core/{domain}/application/service/exception/
+├── {Domain}Exception.java extends DomainException (도메인별 기본 예외)
+└── Specific{Situation}Exception.java extends {Domain}Exception
+```
+
+**DomainException 기본 클래스:**
+```java
+package dev.ticketing.common.exception;
+
+import lombok.Getter;
+import org.springframework.http.HttpStatus;
+
+@Getter
+public abstract class DomainException extends RuntimeException {
+    private final HttpStatus status;
+
+    protected DomainException(String message, HttpStatus status) {
+        super(message);
+        this.status = status;
+    }
+
+    protected DomainException(String message, HttpStatus status, Throwable cause) {
+        super(message, cause);
+        this.status = status;
+    }
+}
+```
+
+**도메인별 기본 예외:**
+```java
+package dev.ticketing.core.user.application.service.exception;
+
+import dev.ticketing.common.exception.DomainException;
+import org.springframework.http.HttpStatus;
+
+public class UserException extends DomainException {
+    public UserException(String message, HttpStatus status) {
+        super(message, status);
+    }
+}
+```
+
+**구체적인 예외:**
+```java
+public class DuplicateEmailException extends UserException {
+    public DuplicateEmailException(String email) {
+        super("Email already exists: " + email, HttpStatus.CONFLICT);
+    }
+}
+```
+
 ### 위치
 ```
-src/main/java/dev/ticketing/core/{domain}/application/service/exception/
+src/main/java/dev/ticketing/common/exception/          # 공통 기본 클래스
+src/main/java/dev/ticketing/core/{domain}/application/service/exception/  # 도메인별 예외
 ```
 
 ### 명명 규칙
@@ -101,30 +161,68 @@ if (allocation.getStatus() == AllocationStatus.OCCUPIED) {
 - Application Layer에서 발생한 예외를 **HTTP 응답으로 변환**
 - `@ExceptionHandler`를 사용하는 전역 예외 처리 클래스는 **`ControllerAdvice`** 접미사를 사용합니다.
 
-### 예외 핸들러(`ControllerAdvice`) 예시
+### ControllerAdvice 구조
+
+**1. 도메인별 ControllerAdvice (필수)**
+- 위치: `dev.ticketing.core.{domain}.adapter.in.web.{Domain}ControllerAdvice`
+- 역할: 해당 도메인의 예외를 HTTP 응답으로 변환
+- 반드시 `basePackages`를 지정하여 범위 제한
+
 ```java
-@RestControllerAdvice
-public class AllocationControllerAdvice {
+@RestControllerAdvice(basePackages = "dev.ticketing.core.user")
+public class UserControllerAdvice {
 
-    @ExceptionHandler(SeatAlreadyHeldException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleSeatAlreadyHeld(SeatAlreadyHeldException e) {
-        return ErrorResponse.of(409, e.getMessage());
+    @ExceptionHandler(LoginFailureException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorResponse handleLoginFailure(LoginFailureException e) {
+        return ErrorResponse.of(e.getMessage());
     }
 
-    @ExceptionHandler(SeatNotAvailableException.class)
+    @ExceptionHandler(DuplicateEmailException.class)
     @ResponseStatus(HttpStatus.CONFLICT)
-    public ErrorResponse handleSeatNotAvailable(SeatNotAvailableException e) {
-        return ErrorResponse.of(409, e.getMessage());
-    }
-
-    @ExceptionHandler(UnauthorizedSeatReleaseException.class)
-    @ResponseStatus(HttpStatus.FORBIDDEN)
-    public ErrorResponse handleUnauthorizedRelease(UnauthorizedSeatReleaseException e) {
-        return ErrorResponse.of(403, e.getMessage());
+    public ErrorResponse handleDuplicateEmail(DuplicateEmailException e) {
+        return ErrorResponse.of(e.getMessage());
     }
 }
 ```
+
+**2. GlobalControllerAdvice (Fallback)**
+- 위치: `dev.ticketing.common.web.advice.GlobalControllerAdvice`
+- 역할:
+  - 도메인별 ControllerAdvice가 처리하지 못한 `DomainException` 처리
+  - 새로 추가된 예외가 아직 도메인 ControllerAdvice에 등록되지 않은 경우 처리
+  - 예상치 못한 예외 (`Exception`) 처리
+
+```java
+@Slf4j
+@RestControllerAdvice
+public class GlobalControllerAdvice {
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<ErrorResponse> handleDomainException(DomainException e) {
+        log.warn("Unhandled domain exception caught by GlobalControllerAdvice: {}", e.getClass().getSimpleName());
+        return ResponseEntity
+            .status(e.getStatus())
+            .body(ErrorResponse.of(e.getMessage()));
+    }
+
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponse handleUnexpectedException(Exception e) {
+        log.error("Unexpected error occurred", e);
+        return ErrorResponse.of("Internal Server Error");
+    }
+}
+```
+
+**예외 처리 우선순위:**
+1. 도메인별 ControllerAdvice (구체적인 예외 타입 매칭)
+2. GlobalControllerAdvice의 `DomainException` 핸들러 (fallback)
+3. GlobalControllerAdvice의 `Exception` 핸들러 (최종 fallback)
+
+**주의사항:**
+- 새로운 예외를 추가할 때는 **반드시 해당 도메인의 ControllerAdvice에 등록**합니다.
+- GlobalControllerAdvice에서 warn 로그가 발생하면, 해당 예외를 도메인 ControllerAdvice에 추가해야 합니다.
 
 도메인별 예외 목록
 ---

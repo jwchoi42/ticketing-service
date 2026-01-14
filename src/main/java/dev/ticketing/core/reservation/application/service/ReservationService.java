@@ -8,13 +8,18 @@ import dev.ticketing.core.reservation.domain.ReservationStatus;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationPort;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.RecordAllocationPort;
 import dev.ticketing.core.site.domain.allocation.Allocation;
+import dev.ticketing.core.reservation.application.service.exception.ReservationHoldExpiredException;
+import dev.ticketing.core.reservation.application.service.exception.ReservationSeatNotHeldException;
+import dev.ticketing.core.site.application.service.exception.AllocationNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReservationService implements CreateReservationUseCase {
@@ -25,41 +30,34 @@ public class ReservationService implements CreateReservationUseCase {
 
     @Override
     @Transactional
-    public Reservation createReservation(CreateReservationCommand command) {
-        Long userId = command.userId();
-        Long matchId = command.matchId();
-        List<Long> seatIds = command.seatIds();
+    public Reservation createReservation(final CreateReservationCommand command) {
+        final Long userId = command.userId();
+        final Long matchId = command.matchId();
+        final List<Long> seatIds = command.seatIds();
 
         // 1. Verify all seats are held by the user
-        for (Long seatId : seatIds) {
-            Allocation allocation = loadAllocationPort.loadAllocationWithLock(matchId, seatId)
-                    .orElseThrow(() -> new IllegalArgumentException("Allocation not found for seat: " + seatId));
+        for (final Long seatId : seatIds) {
+            final Allocation allocation = loadAllocationPort.loadAllocationWithLock(matchId, seatId)
+                    .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));
 
             if (!allocation.isHeldBy(userId)) {
-                throw new IllegalStateException("Seat " + seatId + " is not held by user " + userId);
+                throw new ReservationSeatNotHeldException(seatId, userId);
             }
 
             if (allocation.getHoldExpiresAt() != null && allocation.getHoldExpiresAt().isBefore(LocalDateTime.now())) {
-                throw new IllegalStateException("Seat " + seatId + " hold has expired");
+                throw new ReservationHoldExpiredException(seatId);
             }
         }
 
         // 2. Create Reservation (PENDING)
-        Reservation reservation = Reservation.create(userId, matchId, ReservationStatus.PENDING);
-        Reservation savedReservation = recordReservationPort.record(reservation);
+        final Reservation reservation = Reservation.create(userId, matchId, ReservationStatus.PENDING);
+        final Reservation savedReservation = recordReservationPort.record(reservation);
 
         // 3. Update Allocations with Reservation ID
-        for (Long seatId : seatIds) {
-            Allocation allocation = loadAllocationPort.loadAllocationWithLock(matchId, seatId).get();
-            Allocation updatedAllocation = Allocation.withId(
-                    allocation.getId(),
-                    allocation.getUserId(),
-                    allocation.getMatchId(),
-                    allocation.getSeatId(),
-                    savedReservation.getId(),
-                    allocation.getStatus(),
-                    allocation.getHoldExpiresAt(),
-                    LocalDateTime.now());
+        for (final Long seatId : seatIds) {
+            final Allocation allocation = loadAllocationPort.loadAllocationWithLock(matchId, seatId)
+                    .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));
+            final Allocation updatedAllocation = allocation.assignReservation(savedReservation.getId());
             recordAllocationPort.recordAllocation(updatedAllocation);
         }
 

@@ -29,7 +29,7 @@ public class MatchEntity {
     private String awayTeam;
     private LocalDateTime dateTime;
 
-    public static MatchEntity from(Match match) {
+    public static MatchEntity from(final Match match) {
         return new MatchEntity(
                 match.getId(),
                 match.getStadium(),

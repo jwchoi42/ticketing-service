@@ -1,6 +1,5 @@
 package dev.ticketing.core.payment.application.service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -25,7 +24,11 @@ import dev.ticketing.core.reservation.domain.ReservationStatus;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationPort;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.RecordAllocationPort;
 import dev.ticketing.core.site.domain.allocation.Allocation;
-import dev.ticketing.core.site.domain.allocation.AllocationStatus;
+
+import dev.ticketing.core.payment.application.service.exception.InvalidPaymentStateException;
+import dev.ticketing.core.payment.application.service.exception.PaymentNotFoundException;
+import dev.ticketing.core.reservation.application.service.exception.ReservationNotFoundException;
+import dev.ticketing.core.reservation.application.service.exception.InvalidReservationStateException;
 
 @Slf4j
 @Service
@@ -44,17 +47,17 @@ public class PaymentService implements RequestPaymentUseCase, ConfirmPaymentUseC
 
     @Override
     @Transactional
-    public Payment requestPayment(RequestPaymentCommand command) {
+    public Payment requestPayment(final RequestPaymentCommand command) {
         // 1. Validate Reservation
-        Reservation reservation = loadReservationPort.loadById(command.reservationId())
-                .orElseThrow(() -> new IllegalArgumentException("Reservation not found: " + command.reservationId()));
+        final Reservation reservation = loadReservationPort.loadById(command.reservationId())
+                .orElseThrow(() -> new ReservationNotFoundException(command.reservationId()));
 
         if (reservation.getStatus() != ReservationStatus.PENDING) {
-            throw new IllegalStateException("Reservation is not in PENDING state");
+            throw new InvalidReservationStateException(reservation.getId(), reservation.getStatus());
         }
 
         // 2. Create Payment (PENDING)
-        Payment payment = Payment.create(
+        final Payment payment = Payment.create(
                 command.reservationId(),
                 command.amount(),
                 command.method());
@@ -64,67 +67,39 @@ public class PaymentService implements RequestPaymentUseCase, ConfirmPaymentUseC
 
     @Override
     @Transactional
-    public Payment confirmPayment(ConfirmPaymentCommand command) {
+    public Payment confirmPayment(final ConfirmPaymentCommand command) {
         // 1. Load Payment
-        Payment payment = loadPaymentPort.loadById(command.paymentId())
-                .orElseThrow(() -> new IllegalArgumentException("Payment not found: " + command.paymentId()));
+        final Payment payment = loadPaymentPort.loadById(command.paymentId())
+                .orElseThrow(() -> new PaymentNotFoundException(command.paymentId()));
 
         if (payment.getStatus() != PaymentStatus.PENDING) {
-            throw new IllegalStateException("Payment is not in PENDING state");
+            throw new InvalidPaymentStateException(command.paymentId(), payment.getStatus());
         }
 
         // 2. Execute Payment via Mock Gateway
-        boolean success = paymentGatewayPort.executePayment(command.paymentKey(), command.orderId(), command.amount());
+        final boolean success = paymentGatewayPort.executePayment(command.paymentKey(), command.orderId(),
+                command.amount());
 
         if (!success) {
             // Record failure
-            Payment failedPayment = Payment.withId(
-                    payment.getId(),
-                    payment.getReservationId(),
-                    payment.getAmount(),
-                    payment.getMethod(),
-                    PaymentStatus.FAILED,
-                    "TOSS_PAYMENTS",
-                    command.paymentKey(),
-                    payment.getCreatedAt(),
-                    null);
+            final Payment failedPayment = payment.markFailed("TOSS_PAYMENTS", command.paymentKey());
             return recordPaymentPort.record(failedPayment);
         }
 
         // 3. Update Payment to PAID
-        Payment paidPayment = Payment.withId(
-                payment.getId(),
-                payment.getReservationId(),
-                payment.getAmount(),
-                payment.getMethod(),
-                PaymentStatus.PAID,
-                "TOSS_PAYMENTS",
-                command.paymentKey(),
-                payment.getCreatedAt(),
-                LocalDateTime.now());
-        Payment savedPayment = recordPaymentPort.record(paidPayment);
+        final Payment paidPayment = payment.markPaid("TOSS_PAYMENTS", command.paymentKey());
+        final Payment savedPayment = recordPaymentPort.record(paidPayment);
 
         // 4. Update Reservation to CONFIRMED
-        Reservation reservation = loadReservationPort.loadById(payment.getReservationId()).get();
-        Reservation confirmedReservation = Reservation.withId(
-                reservation.getId(),
-                reservation.getUserId(),
-                reservation.getMatchId(),
-                ReservationStatus.CONFIRMED);
+        final Reservation reservation = loadReservationPort.loadById(payment.getReservationId())
+                .orElseThrow(() -> new ReservationNotFoundException(payment.getReservationId()));
+        final Reservation confirmedReservation = reservation.confirm();
         recordReservationPort.record(confirmedReservation);
 
         // 5. Update Allocations to OCCUPIED
-        List<Allocation> allocations = loadAllocationPort.loadAllocationsByReservationId(reservation.getId());
-        for (Allocation allocation : allocations) {
-            Allocation occupiedAllocation = Allocation.withId(
-                    allocation.getId(),
-                    allocation.getUserId(),
-                    allocation.getMatchId(),
-                    allocation.getSeatId(),
-                    allocation.getReservationId(),
-                    AllocationStatus.OCCUPIED,
-                    null, // No expiry for confirmed seats
-                    LocalDateTime.now());
+        final List<Allocation> allocations = loadAllocationPort.loadAllocationsByReservationId(reservation.getId());
+        for (final Allocation allocation : allocations) {
+            final Allocation occupiedAllocation = allocation.occupy();
             recordAllocationPort.recordAllocation(occupiedAllocation);
         }
 

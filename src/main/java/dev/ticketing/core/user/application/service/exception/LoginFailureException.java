@@ -1,7 +1,10 @@
 package dev.ticketing.core.user.application.service.exception;
 
-public class LoginFailureException extends RuntimeException {
-    public LoginFailureException(String message) {
-        super(message);
+import org.springframework.http.HttpStatus;
+
+public class LoginFailureException extends UserException {
+
+    public LoginFailureException(final String message) {
+        super(message, HttpStatus.UNAUTHORIZED);
     }
 }

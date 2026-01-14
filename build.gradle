@@ -29,6 +29,9 @@ dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0'
+
     /**
      * Operations
      */
@@ -46,6 +49,15 @@ dependencies {
     // PostgreSQL
     runtimeOnly 'org.postgresql:postgresql'
 
+    // Redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
+    // Kafka
+//    implementation 'org.springframework.kafka:spring-kafka'
+
+    // WebFlux for SSE and async operations
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+
     /**
      * Test
      */
@@ -58,15 +70,22 @@ dependencies {
     testImplementation 'org.testcontainers:junit-jupiter'
     testImplementation 'org.testcontainers:postgresql'
 
+    testImplementation 'com.redis.testcontainers:testcontainers-redis:1.6.0'
+
+    // Kafka Test
+//    testImplementation 'org.springframework.kafka:spring-kafka-test'
+
     // Cucumber
     testImplementation 'org.junit.platform:junit-platform-suite'
     testImplementation 'io.cucumber:cucumber-junit-platform-engine:7.20.0'
     testImplementation 'io.cucumber:cucumber-java:7.20.0'
     testImplementation 'io.cucumber:cucumber-spring:7.20.0'
 
-    // REST-assured
-    testImplementation 'io.rest-assured:rest-assured:5.4.0'
+    // JsonPath for WebTestClient responses
+    testImplementation 'com.jayway.jsonpath:json-path:2.9.0'
 
+    // Awaitility for async testing
+    testImplementation 'org.awaitility:awaitility:4.2.0'
 }
 
 tasks.named('test') {

@@ -1,3 +1,4 @@
+@healthcheck
 Feature: 시스템 상태 확인
 
   Scenario: 스프링 애플리케이션과 데이터베이스가 모두 정상 상태여야 한다.

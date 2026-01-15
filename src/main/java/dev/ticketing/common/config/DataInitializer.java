@@ -57,38 +57,45 @@ public class DataInitializer implements CommandLineRunner {
         log.info("영역 데이터 생성 완료: 내야, 외야");
 
         // 3. 진영(Section) 생성
-        // 내야: 연고, 원정
-        SectionEntity homeInfieldEntity = sectionRepository
-                .save(SectionEntity.from(new Section(infieldEntity.getId(), "연고")));
-        SectionEntity awayInfieldEntity = sectionRepository
-                .save(SectionEntity.from(new Section(infieldEntity.getId(), "원정")));
-        // 외야: 좌측, 우측
-        SectionEntity leftOutfieldEntity = sectionRepository
-                .save(SectionEntity.from(new Section(outfieldEntity.getId(), "좌측")));
-        SectionEntity rightOutfieldEntity = sectionRepository
-                .save(SectionEntity.from(new Section(outfieldEntity.getId(), "우측")));
+        SectionEntity homeInfieldEntity = sectionRepository.save(SectionEntity.from(new Section(infieldEntity.getId(), "연고")));
+        SectionEntity awayInfieldEntity = sectionRepository.save(SectionEntity.from(new Section(infieldEntity.getId(), "원정")));
+        SectionEntity leftOutfieldEntity = sectionRepository.save(SectionEntity.from(new Section(outfieldEntity.getId(), "좌측")));
+        SectionEntity rightOutfieldEntity = sectionRepository.save(SectionEntity.from(new Section(outfieldEntity.getId(), "우측")));
         log.info("진영 데이터 생성 완료: 연고, 원정, 좌측, 우측");
 
-        // 4. 구역(Block) 및 좌석(Seat) 생성
-        initBlocksAndSeats(homeInfieldEntity.getId(), "내야-연고");
-        initBlocksAndSeats(awayInfieldEntity.getId(), "내야-원정");
-        initBlocksAndSeats(leftOutfieldEntity.getId(), "외야-좌측");
-        initBlocksAndSeats(rightOutfieldEntity.getId(), "외야-우측");
+        // 4. 구역(Block) 및 좌석(Seat) 일괄 생성
+        log.info("구역 및 좌석 생성 시작...");
+
+        List<SectionInfo> sectionInfos = List.of(
+                new SectionInfo(homeInfieldEntity.getId(), "내야-연고"),
+                new SectionInfo(awayInfieldEntity.getId(), "내야-원정"),
+                new SectionInfo(leftOutfieldEntity.getId(), "외야-좌측"),
+                new SectionInfo(rightOutfieldEntity.getId(), "외야-우측")
+        );
+
+        List<BlockEntity> blocksToSave = new ArrayList<>();
+        for (SectionInfo info : sectionInfos) {
+            for (int b = 1; b <= 25; b++) {
+                blocksToSave.add(BlockEntity.from(new Block(info.sectionId(), info.prefix() + "-" + b)));
+            }
+        }
+        log.info("구역 {}개 생성 준비 완료.", blocksToSave.size());
+        List<BlockEntity> savedBlocks = blockRepository.saveAll(blocksToSave);
+        log.info("구역 데이터 일괄 저장 완료.");
+
+        List<SeatEntity> seatsToSave = new ArrayList<>();
+        for (BlockEntity blockEntity : savedBlocks) {
+            for (int s = 1; s <= 100; s++) {
+                int row = (s - 1) / 10 + 1;
+                seatsToSave.add(SeatEntity.from(new Seat(blockEntity.getId(), row, s)));
+            }
+        }
+        log.info("좌석 {}개 생성 준비 완료.", seatsToSave.size());
+        seatRepository.saveAll(seatsToSave);
+        log.info("좌석 데이터 일괄 저장 완료.");
 
         log.info("모든 데이터 초기화 완료.");
     }
 
-    private void initBlocksAndSeats(Long sectionId, String prefix) {
-        log.info("{} 구역 및 좌석 생성 중...", prefix);
-        for (int b = 1; b <= 25; b++) {
-            BlockEntity blockEntity = blockRepository.save(BlockEntity.from(new Block(sectionId, prefix + "-" + b)));
-
-            List<SeatEntity> seats = new ArrayList<>();
-            for (int s = 1; s <= 100; s++) {
-                int row = (s - 1) / 10 + 1;
-                seats.add(SeatEntity.from(new Seat(blockEntity.getId(), row, s)));
-            }
-            seatRepository.saveAll(seats);
-        }
-    }
+    private record SectionInfo(Long sectionId, String prefix) {}
 }

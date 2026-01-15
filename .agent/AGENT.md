@@ -53,3 +53,10 @@ File Encoding Protection Rule
 - **All files MUST be saved in UTF-8 encoding.**
 - Broken encoding (Mojibake) is unacceptable.
 - When using shell commands to write files on Windows, always specify encoding (e.g., `Out-File -Encoding UTF8` or `[System.IO.File]::WriteAllText`).
+
+Frontend-Backend Separation Rule
+===
+
+- **STRICT RESTRICTION**: When assigned a frontend task (`frontend/`), **DO NOT** modify any files in the backend source code (`src/`).
+- **Escalation Policy**: If a frontend task is blocked by backend limitations (missing APIs, bugs, etc.), identify the issue, stop development on that part, and **REQUEST PROMPT INPUT** from the User to proceed.
+- Refer to [frontend-development-rule.md](../docs/convention/frontend-development-rule.md) for more details.

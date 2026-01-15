@@ -12,28 +12,28 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class UserPersistenceAdapter implements LoadUserPort, RecordUserPort {
+public class JpaUserPersistenceAdapter implements LoadUserPort, RecordUserPort {
 
     private final UserRepository userRepository;
 
     @Override
-    public Optional<User> loadById(Long userId) {
+    public Optional<User> loadById(final Long userId) {
         return userRepository.findById(userId).map(UserEntity::toDomain);
     }
 
     @Override
-    public Optional<User> loadByEmail(String email) {
+    public Optional<User> loadByEmail(final String email) {
         return userRepository.findByEmail(email).map(UserEntity::toDomain);
     }
 
     @Override
-    public User record(User user) {
+    public User record(final User user) {
         UserEntity entity = UserEntity.from(user);
         return userRepository.save(entity).toDomain();
     }
 
     @Override
-    public boolean existsByEmail(String email) {
+    public boolean existsByEmail(final String email) {
         return userRepository.existsByEmail(email);
     }
 }

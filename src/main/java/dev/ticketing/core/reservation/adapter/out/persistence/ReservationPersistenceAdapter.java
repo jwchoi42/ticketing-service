@@ -17,18 +17,18 @@ public class ReservationPersistenceAdapter implements LoadReservationPort, Recor
     private final ReservationRepository reservationRepository;
 
     @Override
-    public Optional<Reservation> loadById(Long reservationId) {
+    public Optional<Reservation> loadById(final Long reservationId) {
         return reservationRepository.findById(reservationId).map(ReservationEntity::toDomain);
     }
 
     @Override
-    public List<Reservation> loadByUserId(Long userId) {
+    public List<Reservation> loadByUserId(final Long userId) {
         return reservationRepository.findByUserId(userId).stream().map(ReservationEntity::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Reservation record(Reservation reservation) {
+    public Reservation record(final Reservation reservation) {
         return reservationRepository.save(ReservationEntity.from(reservation)).toDomain();
     }
 }

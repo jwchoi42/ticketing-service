@@ -45,7 +45,7 @@ public class SiteController {
       @ApiResponse(responseCode = "200", description = "진영 목록 조회 성공")
   })
   @GetMapping("/areas/{areaId}/sections")
-  public SuccessResponse<SectionListResponse> getSections(@PathVariable Long areaId) {
+  public SuccessResponse<SectionListResponse> getSections(@PathVariable final Long areaId) {
     return SuccessResponse.of(SectionListResponse.from(getSectionsUseCase.getSections(areaId)));
   }
 
@@ -54,7 +54,7 @@ public class SiteController {
       @ApiResponse(responseCode = "200", description = "구간 목록 조회 성공")
   })
   @GetMapping("/sections/{sectionId}/blocks")
-  public SuccessResponse<BlockListResponse> getBlocks(@PathVariable Long sectionId) {
+  public SuccessResponse<BlockListResponse> getBlocks(@PathVariable final Long sectionId) {
     return SuccessResponse.of(BlockListResponse.from(getBlocksUseCase.getBlocks(sectionId)));
   }
 
@@ -63,7 +63,7 @@ public class SiteController {
       @ApiResponse(responseCode = "200", description = "좌석 목록 조회 성공")
   })
   @GetMapping("/blocks/{blockId}/seats")
-  public SuccessResponse<SeatListResponse> getSeats(@PathVariable Long blockId) {
+  public SuccessResponse<SeatListResponse> getSeats(@PathVariable final Long blockId) {
     return SuccessResponse.of(SeatListResponse.from(getSeatsUseCase.getSeats(blockId)));
   }
 }

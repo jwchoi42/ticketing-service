@@ -1,14 +1,11 @@
 package dev.ticketing.core.site.application.service.exception;
 
-/**
- * 권한 없는 사용자가 좌석 해제를 시도하는 경우 발생하는 예외
- */
-public class UnauthorizedSeatReleaseException extends RuntimeException {
-    public UnauthorizedSeatReleaseException(String message) {
-        super(message);
-    }
+import org.springframework.http.HttpStatus;
 
-    public UnauthorizedSeatReleaseException(Long matchId, Long seatId, Long userId) {
-        super(String.format("User %d is not authorized to release seat %d for match %d", userId, seatId, matchId));
+public class UnauthorizedSeatReleaseException extends SiteException {
+
+    public UnauthorizedSeatReleaseException(final Long matchId, final Long seatId, final Long userId) {
+        super(String.format("User %d is not authorized to release seat %d for match %d", userId, seatId, matchId),
+                HttpStatus.FORBIDDEN);
     }
 }

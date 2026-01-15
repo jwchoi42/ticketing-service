@@ -33,7 +33,7 @@ public class SitePersistenceAdapter
     private final SeatRepository seatRepository;
 
     @Override
-    public Optional<Area> loadAreaById(Long areaId) {
+    public Optional<Area> loadAreaById(final Long areaId) {
         return areaRepository.findById(areaId).map(AreaEntity::toDomain);
     }
 
@@ -43,60 +43,60 @@ public class SitePersistenceAdapter
     }
 
     @Override
-    public Optional<Section> loadSectionById(Long sectionId) {
+    public Optional<Section> loadSectionById(final Long sectionId) {
         return sectionRepository.findById(sectionId).map(SectionEntity::toDomain);
     }
 
     @Override
-    public List<Section> loadSectionsByAreaId(Long areaId) {
+    public List<Section> loadSectionsByAreaId(final Long areaId) {
         return sectionRepository.findByAreaId(areaId).stream().map(SectionEntity::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Block> loadBlockById(Long blockId) {
+    public Optional<Block> loadBlockById(final Long blockId) {
         return blockRepository.findById(blockId).map(BlockEntity::toDomain);
     }
 
     @Override
-    public List<Block> loadBlocksBySectionId(Long sectionId) {
+    public List<Block> loadBlocksBySectionId(final Long sectionId) {
         return blockRepository.findBySectionId(sectionId).stream().map(BlockEntity::toDomain)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Seat> loadSeatById(Long seatId) {
+    public Optional<Seat> loadSeatById(final Long seatId) {
         return seatRepository.findById(seatId).map(SeatEntity::toDomain);
     }
 
     @Override
-    public List<Seat> loadSeatsByBlockId(Long blockId) {
+    public List<Seat> loadSeatsByBlockId(final Long blockId) {
         return seatRepository.findByBlockId(blockId).stream().map(SeatEntity::toDomain).collect(Collectors.toList());
     }
 
     @Override
-    public Optional<Seat> loadSeatByBlockIdAndRowAndCol(Long blockId, int row, int col) {
+    public Optional<Seat> loadSeatByBlockIdAndRowAndCol(final Long blockId, final int row, final int col) {
         return seatRepository.findByBlockIdAndRowNumberAndSeatNumber(blockId, row, col)
                 .map(SeatEntity::toDomain);
     }
 
     @Override
-    public Area recordArea(Area area) {
+    public Area recordArea(final Area area) {
         return areaRepository.save(AreaEntity.from(area)).toDomain();
     }
 
     @Override
-    public Section recordSection(Section section) {
+    public Section recordSection(final Section section) {
         return sectionRepository.save(SectionEntity.from(section)).toDomain();
     }
 
     @Override
-    public Block recordBlock(Block block) {
+    public Block recordBlock(final Block block) {
         return blockRepository.save(BlockEntity.from(block)).toDomain();
     }
 
     @Override
-    public Seat recordSeat(Seat seat) {
+    public Seat recordSeat(final Seat seat) {
         return seatRepository.save(SeatEntity.from(seat)).toDomain();
     }
 }

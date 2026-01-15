@@ -24,14 +24,14 @@ public class AllocationStatusController {
 
     @Operation(summary = "실시간 좌석 현황 스트림 (SSE)")
     @GetMapping("/blocks/{blockId}/seats/events")
-    public SseEmitter getSeatStatusStream(@PathVariable Long matchId, @PathVariable Long blockId) {
+    public SseEmitter getSeatStatusStream(@PathVariable final Long matchId, @PathVariable final Long blockId) {
         return subscribeAllocationStatusChangesStreamUseCase.subscribeAllocationStatusChangesStream(matchId, blockId);
     }
 
     @Operation(summary = "좌석 현황 조회 (SnapShot)")
     @GetMapping("/blocks/{blockId}/seats")
-    public SuccessResponse<AllocationStatusSnapShot> getSeatStatuses(@PathVariable Long matchId,
-            @PathVariable Long blockId) {
+    public SuccessResponse<AllocationStatusSnapShot> getSeatStatuses(@PathVariable final Long matchId,
+            @PathVariable final Long blockId) {
         return SuccessResponse.of(getAllocationStatusSnapShotUseCase.getAllocationStatusSnapShot(matchId, blockId));
     }
 }

@@ -1,21 +1,27 @@
 package dev.ticketing.core.user.adapter.in.web;
 
-import dev.ticketing.common.web.model.response.SuccessResponse;
-import dev.ticketing.core.user.adapter.in.web.model.request.LoginRequest;
-import dev.ticketing.core.user.adapter.in.web.model.request.SignUpRequest;
-import dev.ticketing.core.user.adapter.in.web.model.response.UserResponse;
-import dev.ticketing.core.user.application.port.in.LoginUseCase;
-import dev.ticketing.core.user.application.port.in.SignUpUseCase;
-import dev.ticketing.core.user.application.port.in.model.LoginCommand;
-import dev.ticketing.core.user.application.port.in.model.SignUpCommand;
-import dev.ticketing.core.user.domain.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import lombok.RequiredArgsConstructor;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+
+import dev.ticketing.common.web.model.response.SuccessResponse;
+import dev.ticketing.core.user.adapter.in.web.model.request.LoginRequest;
+import dev.ticketing.core.user.adapter.in.web.model.request.SignUpRequest;
+import dev.ticketing.core.user.application.port.in.LoginUseCase;
+import dev.ticketing.core.user.application.port.in.SignUpUseCase;
+import dev.ticketing.core.user.application.port.in.model.LoginCommand;
+import dev.ticketing.core.user.application.port.in.model.SignUpCommand;
+import dev.ticketing.core.user.application.port.in.model.UserResponse;
 
 @Tag(name = "User", description = "사용자 API")
 @RestController
@@ -34,10 +40,10 @@ public class UserController {
     })
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public SuccessResponse<UserResponse> signUp(@RequestBody SignUpRequest request) {
+    public SuccessResponse<UserResponse> signUp(@RequestBody final SignUpRequest request) {
         SignUpCommand command = new SignUpCommand(request.email(), request.password());
-        User user = signUpUseCase.signUp(command);
-        return SuccessResponse.of(UserResponse.from(user));
+        UserResponse response = signUpUseCase.signUp(command);
+        return SuccessResponse.of(response);
     }
 
     @Operation(summary = "로그인", description = "이메일과 비밀번호로 로그인합니다.")
@@ -47,9 +53,9 @@ public class UserController {
     })
     @PostMapping("/log-in")
     @ResponseStatus(HttpStatus.OK)
-    public SuccessResponse<UserResponse> login(@RequestBody LoginRequest request) {
+    public SuccessResponse<UserResponse> login(@RequestBody final LoginRequest request) {
         LoginCommand command = new LoginCommand(request.email(), request.password());
-        User user = loginUseCase.login(command);
-        return SuccessResponse.of(UserResponse.from(user));
+        UserResponse response = loginUseCase.login(command);
+        return SuccessResponse.of(response);
     }
 }

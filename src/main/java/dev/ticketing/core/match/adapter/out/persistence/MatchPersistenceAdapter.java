@@ -16,7 +16,7 @@ public class MatchPersistenceAdapter implements LoadMatchPort, RecordMatchPort {
     private final MatchRepository matchRepository;
 
     @Override
-    public Optional<Match> loadById(Long matchId) {
+    public Optional<Match> loadById(final Long matchId) {
         return matchRepository.findById(matchId).map(MatchEntity::toDomain);
     }
 
@@ -28,7 +28,7 @@ public class MatchPersistenceAdapter implements LoadMatchPort, RecordMatchPort {
     }
 
     @Override
-    public Match record(Match match) {
+    public Match record(final Match match) {
         MatchEntity entity = MatchEntity.from(match);
         return matchRepository.save(entity).toDomain();
     }

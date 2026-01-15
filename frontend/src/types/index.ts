@@ -33,7 +33,8 @@ export interface Block {
 
 export interface Seat {
     id: number;
-    seatNumber: string;
+    rowNumber: number;
+    seatNumber: number;
     status: SeatStatus;
 }
 

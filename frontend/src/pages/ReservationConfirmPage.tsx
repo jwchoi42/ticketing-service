@@ -26,7 +26,7 @@ const ReservationConfirmPage: React.FC = () => {
             });
             setReservationId(res.id);
             showToast('예약이 생성되었습니다. 결제를 진행해 주세요.', 'success');
-        } catch (error) {
+        } catch {
             showToast('예약 생성에 실패했습니다.', 'error');
         } finally {
             setLoading(false);
@@ -46,6 +46,7 @@ const ReservationConfirmPage: React.FC = () => {
             // 2. Confirm Payment
             await confirmPayment(payment.id, amount);
 
+            localStorage.removeItem(`heldSeats_${state.matchId}_${user.id}`);
             showToast('결제가 완료되었습니다!', 'success');
             navigate('/');
         } catch (error) {
@@ -83,7 +84,7 @@ const ReservationConfirmPage: React.FC = () => {
                     </button>
                 ) : (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                        <div style={{ padding: '1rem', backgroundColor: '#334155', borderRadius: '8px', textAlign: 'center' }}>
+                        <div style={{ padding: '1rem', backgroundColor: '#f1f5f9', borderRadius: '8px', textAlign: 'center', border: '1px solid #e2e8f0' }}>
                             예약 번호: <strong>{reservationId}</strong>
                         </div>
                         <button
@@ -110,7 +111,7 @@ const ReservationConfirmPage: React.FC = () => {
                         padding: '1rem',
                         backgroundColor: 'transparent',
                         color: 'var(--text-muted)',
-                        border: '1px solid #475569'
+                        border: '1px solid #e2e8f0'
                     }}
                 >
                     뒤로 가기

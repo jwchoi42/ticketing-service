@@ -12,7 +12,7 @@ const MatchListPage: React.FC = () => {
         const fetchMatches = async () => {
             try {
                 const data = await getMatches();
-                setMatches((data as any).matches || []);
+                setMatches(data || []);
             } catch (error) {
                 console.error('Failed to fetch matches:', error);
             } finally {

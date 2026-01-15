@@ -1,22 +1,33 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import type { Seat, SeatStatusChange } from '../types';
 
-type ConnectionStatus = 'connected' | 'reconnecting' | 'disconnected' | 'error';
+export type ConnectionStatus = 'connecting' | 'connected' | 'reconnecting' | 'disconnected' | 'error';
 
 interface SSEOptions {
     onSnapshot: (seats: Seat[]) => void;
     onChanges: (changes: SeatStatusChange[]) => void;
-    onError?: (error: any) => void;
+    onError?: (error: unknown) => void;
 }
 
 export const useSSE = (matchId: number | null, blockId: number | null, options: SSEOptions) => {
     const [status, setStatus] = useState<ConnectionStatus>('disconnected');
     const [retryCount, setRetryCount] = useState(0);
     const eventSourceRef = useRef<EventSource | null>(null);
-    const maxRetries = 3;
+    const optionsRef = useRef(options);
+    const maxRetries = 5;
+
+    // Keep options updated without triggering reconnects
+    useEffect(() => {
+        optionsRef.current = options;
+    }, [options]);
+
+    const connectRef = useRef<() => void>(() => { });
 
     const connect = useCallback(() => {
-        if (matchId === null || blockId === null) return;
+        if (matchId === null || blockId === null) {
+            setStatus('disconnected');
+            return;
+        }
 
         if (eventSourceRef.current) {
             eventSourceRef.current.close();
@@ -26,14 +37,18 @@ export const useSSE = (matchId: number | null, blockId: number | null, options: 
         const es = new EventSource(url);
         eventSourceRef.current = es;
 
-        setStatus('connected');
+        // If we are already error/disconnected, we are now 'connecting'
+        // If we were 'reconnecting', keep it 'reconnecting'
+        setStatus(prev => prev === 'reconnecting' ? 'reconnecting' : 'connecting');
 
         es.addEventListener('snapshot', (event) => {
             try {
                 const parsed = JSON.parse(event.data);
                 const data = parsed.data || parsed;
                 if (data.seats) {
-                    options.onSnapshot(data.seats);
+                    optionsRef.current.onSnapshot(data.seats);
+                    setStatus('connected');
+                    setRetryCount(0);
                 }
             } catch (err) {
                 console.error('Failed to parse snapshot:', err);
@@ -45,7 +60,7 @@ export const useSSE = (matchId: number | null, blockId: number | null, options: 
                 const parsed = JSON.parse(event.data);
                 const data = parsed.data || parsed;
                 if (data.changes) {
-                    options.onChanges(data.changes);
+                    optionsRef.current.onChanges(data.changes);
                 }
             } catch (err) {
                 console.error('Failed to parse changes:', err);
@@ -56,31 +71,51 @@ export const useSSE = (matchId: number | null, blockId: number | null, options: 
             console.error('SSE Error:', err);
             es.close();
 
-            if (retryCount < maxRetries) {
-                setStatus('reconnecting');
-                setRetryCount(prev => prev + 1);
-                setTimeout(connect, 3000); // Retry after 3 seconds
-            } else {
-                setStatus('error');
-                if (options.onError) options.onError(err);
-            }
+            setRetryCount(prev => {
+                const next = prev + 1;
+                if (next < maxRetries) {
+                    setStatus('reconnecting');
+                    setTimeout(() => {
+                        connectRef.current();
+                    }, 3000);
+                } else {
+                    setStatus('error');
+                    if (optionsRef.current.onError) optionsRef.current.onError(err);
+                }
+                return next;
+            });
         };
 
         return es;
-    }, [matchId, blockId, retryCount, options]);
-
-    useEffect(() => {
-        let es: EventSource | undefined;
-        if (matchId !== null && blockId !== null) {
-            es = connect();
-        }
-        return () => {
-            if (es) {
-                es.close();
-                setStatus('disconnected');
-            }
-        };
     }, [matchId, blockId]);
 
-    return { status, retryCount };
+    // Keep connectRef updated
+    useEffect(() => {
+        connectRef.current = connect;
+    }, [connect]);
+
+    useEffect(() => {
+        // eslint-disable-next-line react-hooks/set-state-in-effect
+        setRetryCount(0);
+
+        if (eventSourceRef.current) {
+            eventSourceRef.current.close();
+            eventSourceRef.current = null;
+        }
+
+        if (matchId !== null && blockId !== null) {
+            connect();
+        } else {
+            setStatus('disconnected');
+        }
+
+        return () => {
+            if (eventSourceRef.current) {
+                eventSourceRef.current.close();
+                eventSourceRef.current = null;
+            }
+        };
+    }, [matchId, blockId, connect]);
+
+    return { status, retryCount, maxRetries };
 };

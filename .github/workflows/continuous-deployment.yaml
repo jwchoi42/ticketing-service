@@ -78,7 +78,8 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
             sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-            sudo docker compose -f ~/docker-compose.prod.yml pull
-            sudo docker compose -f ~/docker-compose.prod.yml up -d
+            sudo -E docker compose -f ~/docker-compose.prod.yml pull
+            sudo -E docker compose -f ~/docker-compose.prod.yml up -d
             sudo docker image prune -f

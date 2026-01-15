@@ -1,0 +1,54 @@
+services:
+
+  database:
+    image: postgres:17-alpine
+    container_name: ticketing-database
+    restart: always
+    environment:
+      - POSTGRES_DB=ticketing_database
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - ticketing-network
+
+  redis:
+    image: redis:7-alpine
+    container_name: ticketing-redis
+    restart: always
+    networks:
+      - ticketing-network
+
+  backend:
+    image: jwchoi42/ticketing-backend:latest
+    container_name: ticketing-backend
+    restart: always
+    depends_on:
+      - database
+      - redis
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/ticketing_database
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: ${DB_PASSWORD}
+      SPRING_REDIS_HOST: redis
+      SPRING_REDIS_PORT: 6379
+    networks:
+      - ticketing-network
+
+  frontend:
+    image: jwchoi42/ticketing-frontend:latest
+    container_name: ticketing-frontend
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - ticketing-network
+
+networks:
+  ticketing-network:
+    driver: bridge
+
+volumes:
+  postgres_data:

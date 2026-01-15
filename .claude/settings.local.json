@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(iconv:*)",
+      "Bash(./gradlew classes:*)",
+      "Bash(./gradlew compileJava:*)",
+      "Bash(tree:*)"
+    ]
+  }
+}

@@ -7,6 +7,10 @@ import { holdSeat, releaseSeat } from '../api/allocation';
 import { useAuth } from '../context/AuthContext';
 import { useToast } from '../context/ToastContext';
 
+interface HeldSeat extends Seat {
+    blockName: string;
+}
+
 const SeatSelectionPage: React.FC = () => {
     const { matchId } = useParams<{ matchId: string }>();
     const id = Number(matchId);
@@ -56,18 +60,18 @@ const SeatSelectionPage: React.FC = () => {
         else localStorage.removeItem(`lastClicked_${id}`);
     }, [lastClicked, id]);
 
-    // Initializing heldSeatIds from localStorage to persist across refreshes
-    const [heldSeatIds, setHeldSeatIds] = useState<number[]>(() => {
-        const saved = localStorage.getItem(`heldSeats_${id}_${user?.id}`);
+    // Initializing heldSeats from localStorage to persist across refreshes
+    const [heldSeats, setHeldSeats] = useState<HeldSeat[]>(() => {
+        const saved = localStorage.getItem(`heldSeatsV2_${id}_${user?.id}`);
         return saved ? JSON.parse(saved) : [];
     });
 
-    // Update localStorage whenever heldSeatIds changes
+    // Update localStorage whenever heldSeats changes
     useEffect(() => {
         if (user) {
-            localStorage.setItem(`heldSeats_${id}_${user.id}`, JSON.stringify(heldSeatIds));
+            localStorage.setItem(`heldSeatsV2_${id}_${user.id}`, JSON.stringify(heldSeats));
         }
-    }, [heldSeatIds, id, user]);
+    }, [heldSeats, id, user]);
 
     // SSE Integration
     const { status: sseStatus, retryCount, maxRetries } = useSSE(id, selectedBlock, {
@@ -188,46 +192,6 @@ const SeatSelectionPage: React.FC = () => {
         }
     }, [selectedBlock]);
 
-    const handleSeatClick = async (seat: Seat) => {
-        if (!user) return;
-
-        const isHeldByMe = heldSeatIds.includes(seat.id);
-
-        if (seat.status === 'AVAILABLE') {
-            try {
-                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'HOLD' } : s));
-                setHeldSeatIds(prev => [...prev, seat.id]);
-
-                await holdSeat(id, seat.id, user.id);
-                showToast(`좌석 ${seat.rowNumber}행 ${(seat.seatNumber - 1) % 10 + 1}열을 선택했습니다.`, 'success');
-            } catch {
-                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'AVAILABLE' } : s));
-                setHeldSeatIds(prev => prev.filter(id => id !== seat.id));
-                showToast('좌석 선택에 실패했습니다. 이미 선택된 좌석일 수 있습니다.', 'error');
-            }
-        } else if (seat.status === 'HOLD' && isHeldByMe) {
-            try {
-                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'AVAILABLE' } : s));
-                setHeldSeatIds(prev => prev.filter(id => id !== seat.id));
-
-                await releaseSeat(id, seat.id, user.id);
-                showToast(`좌석 ${seat.rowNumber}행 ${(seat.seatNumber - 1) % 10 + 1}열 선택을 해제했습니다.`, 'info');
-            } catch {
-                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'HOLD' } : s));
-                setHeldSeatIds(prev => [...prev, seat.id]);
-                showToast('좌석 해제에 실패했습니다.', 'error');
-            }
-        }
-    };
-
-    const handleComplete = async () => {
-        if (!user || heldSeatIds.length === 0) return;
-        navigate(`/reservation/confirm`, { state: { matchId: id, seatIds: heldSeatIds } });
-    };
-
-    const rowNumbers = Array.from(new Set(seats.map(s => s.rowNumber))).sort((a, b) => a - b);
-    const colNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
     const getBlockInfo = (blockId: number) => {
         if (!selectedSection || !sectionBlocks[selectedSection]) return null;
         const blocks = sectionBlocks[selectedSection];
@@ -241,6 +205,52 @@ const SeatSelectionPage: React.FC = () => {
     };
 
     const blockInfo = selectedBlock ? getBlockInfo(selectedBlock) : null;
+
+    const handleSeatClick = async (seat: Seat) => {
+        if (!user) return;
+
+        const isHeldByMe = heldSeats.some(h => h.id === seat.id);
+
+        if (seat.status === 'AVAILABLE') {
+            try {
+                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'HOLD' } : s));
+
+                const newHeldSeat: HeldSeat = { ...seat, blockName: blockInfo?.name || '' };
+                setHeldSeats(prev => [...prev, newHeldSeat]);
+
+                await holdSeat(id, seat.id, user.id);
+                showToast(`좌석 ${seat.rowNumber}행 ${seat.seatNumber}열을 선택했습니다.`, 'success');
+            } catch {
+                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'AVAILABLE' } : s));
+                setHeldSeats(prev => prev.filter(h => h.id !== seat.id));
+                showToast('좌석 선택에 실패했습니다. 이미 선택된 좌석일 수 있습니다.', 'error');
+            }
+        } else if (seat.status === 'HOLD' && isHeldByMe) {
+            try {
+                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'AVAILABLE' } : s));
+                setHeldSeats(prev => prev.filter(h => h.id !== seat.id));
+
+                await releaseSeat(id, seat.id, user.id);
+                showToast(`좌석 ${seat.rowNumber}행 ${seat.seatNumber}열 선택을 해제했습니다.`, 'info');
+            } catch {
+                setSeats(prev => prev.map(s => s.id === seat.id ? { ...s, status: 'HOLD' } : s));
+                if (!heldSeats.some(h => h.id === seat.id)) {
+                    const newHeldSeat: HeldSeat = { ...seat, blockName: blockInfo?.name || '' };
+                    setHeldSeats(prev => [...prev, newHeldSeat]);
+                }
+                showToast('좌석 해제에 실패했습니다.', 'error');
+            }
+        }
+    };
+
+    const handleComplete = async () => {
+        if (!user || heldSeats.length === 0) return;
+        navigate(`/reservation/confirm`, { state: { matchId: id, seatIds: heldSeats.map(h => h.id) } });
+    };
+
+    const rowNumbers = Array.from(new Set(seats.map(s => s.rowNumber))).sort((a, b) => a - b);
+    const colNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
 
     return (
         <div className="container">
@@ -267,6 +277,7 @@ const SeatSelectionPage: React.FC = () => {
             )}
 
             <div className="reservation-layout">
+                {/* Left Sidebar */}
                 <aside className="sidebar card">
                     <h3 style={{ marginBottom: '1rem', fontSize: '1.125rem' }}>영역 탐색</h3>
                     <div className="tree-container">
@@ -299,6 +310,7 @@ const SeatSelectionPage: React.FC = () => {
                     </div>
                 </aside>
 
+                {/* Main Content (Seat Map) */}
                 <main className="main-content">
                     {/* SSE & Data Loading State */}
                     {(blocksLoading || seatsLoading || isSseConnecting) ? (
@@ -381,7 +393,7 @@ const SeatSelectionPage: React.FC = () => {
                                                 const seat = seats.find(s => s.rowNumber === row && ((s.seatNumber - 1) % 10 + 1) === col);
                                                 if (!seat) return <div key={`empty-${row}-${col}`} />;
 
-                                                const isHeldByMe = heldSeatIds.includes(seat.id);
+                                                const isHeldByMe = heldSeats.some(h => h.id === seat.id);
                                                 const bgColor = seat.status === 'AVAILABLE' ? 'var(--available)' :
                                                     (seat.status === 'HOLD' && isHeldByMe) ? 'var(--selected)' :
                                                         seat.status === 'HOLD' ? 'var(--hold)' : 'var(--occupied)';
@@ -430,23 +442,8 @@ const SeatSelectionPage: React.FC = () => {
                                         <span style={{ fontSize: '0.875rem' }}>판매 완료</span>
                                     </div>
                                 </div>
-
-                                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '1rem' }}>
-                                    <div style={{ fontSize: '1rem', fontWeight: '500' }}>
-                                        선택된 좌석: <span style={{ color: 'var(--primary-color)', fontWeight: 'bold' }}>{heldSeatIds.length}</span>개
-                                    </div>
-                                    <button
-                                        onClick={handleComplete}
-                                        disabled={heldSeatIds.length === 0}
-                                        style={{
-                                            padding: '1rem 2rem', backgroundColor: heldSeatIds.length > 0 ? 'var(--primary-color)' : '#94a3b8',
-                                            color: 'white', fontSize: '1rem', width: '100%', maxWidth: '300px', borderRadius: '10px'
-                                        }}
-                                    >
-                                        선택 완료
-                                    </button>
-                                </div>
                             </div>
+
                         </div>
                     ) : (
                         <div className="card" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '400px', color: 'var(--text-muted)' }}>
@@ -454,6 +451,60 @@ const SeatSelectionPage: React.FC = () => {
                         </div>
                     )}
                 </main>
+
+                {/* Right Sidebar (Selection Summary) */}
+                <aside className="sidebar card" style={{ padding: '1.5rem 1rem' }}>
+                    <h3 style={{ marginBottom: '1rem', fontSize: '1.125rem' }}>선택 내역</h3>
+                    <div style={{
+                        marginBottom: '1rem',
+                        minHeight: '200px',
+                        maxHeight: '400px',
+                        overflowY: 'auto',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '0.5rem'
+                    }}>
+                        {heldSeats.length === 0 ? (
+                            <div style={{ color: 'var(--text-muted)', textAlign: 'center', padding: '1rem 0' }}>
+                                선택된 좌석이 없습니다.
+                            </div>
+                        ) : (
+                            heldSeats.map((seat, index) => (
+                                <div key={seat.id} style={{
+                                    padding: '0.75rem',
+                                    backgroundColor: '#f8fafc',
+                                    borderRadius: '8px',
+                                    border: '1px solid #e2e8f0',
+                                    fontSize: '0.875rem'
+                                }}>
+                                    <div style={{ fontWeight: '600' }}>{seat.blockName}</div>
+                                    <div style={{ color: 'var(--text-muted)' }}>{seat.rowNumber}행 {seat.seatNumber}번</div>
+                                </div>
+                            ))
+                        )}
+                    </div>
+
+                    <div style={{ borderTop: '1px solid #e2e8f0', paddingTop: '1rem' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem', fontSize: '1rem', fontWeight: 'bold' }}>
+                            <span>총 선택</span>
+                            <span style={{ color: 'var(--primary-color)' }}>{heldSeats.length}석</span>
+                        </div>
+                        <button
+                            onClick={handleComplete}
+                            disabled={heldSeats.length === 0}
+                            style={{
+                                padding: '0.75rem',
+                                backgroundColor: heldSeats.length > 0 ? 'var(--primary-color)' : '#94a3b8',
+                                color: 'white',
+                                fontSize: '1rem',
+                                width: '100%',
+                                borderRadius: '8px'
+                            }}
+                        >
+                            선택 완료
+                        </button>
+                    </div>
+                </aside>
             </div>
         </div>
     );

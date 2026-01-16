@@ -4,7 +4,14 @@
       "Bash(iconv:*)",
       "Bash(./gradlew classes:*)",
       "Bash(./gradlew compileJava:*)",
-      "Bash(tree:*)"
+      "Bash(tree:*)",
+      "Bash(MSYS_NO_PATHCONV=1 docker run:*)",
+      "Bash(curl:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker compose:*)",
+      "Bash(xxd:*)",
+      "Bash(docker volume rm:*)",
+      "Bash(docker ps:*)"
     ]
   }
 }

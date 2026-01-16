@@ -1,7 +1,12 @@
 package dev.ticketing.common.web.advice;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -14,6 +19,17 @@ import dev.ticketing.common.web.model.response.ErrorResponse;
 @Slf4j
 @RestControllerAdvice
 public class GlobalControllerAdvice {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleMethodArgumentNotValidException(final MethodArgumentNotValidException e) {
+        Map<String, String> errors = new LinkedHashMap<>();
+        for (FieldError fieldError : e.getBindingResult().getFieldErrors()) {
+            errors.put(fieldError.getField(), fieldError.getDefaultMessage());
+        }
+        log.warn("Validation failed: {}", errors);
+        return ErrorResponse.of("입력값이 올바르지 않습니다", errors);
+    }
 
     @ExceptionHandler(DomainException.class)
     public ResponseEntity<ErrorResponse> handleDomainException(final DomainException e) {

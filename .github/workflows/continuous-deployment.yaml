@@ -3,17 +3,12 @@ name: Continuous Deployment
 on:
   push:
     branches: ["main"]
-  workflow_run:
-    branches: ["main"]
-    workflows: ["Continuous Integration"]
-    types: [completed]
 
 jobs:
   
   build-and-push:
     
     name: Build and Push to Docker Hub
-    if: ${{ github.event_name == 'push' || (github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'success') }}
     runs-on: ubuntu-22.04
     
     steps:

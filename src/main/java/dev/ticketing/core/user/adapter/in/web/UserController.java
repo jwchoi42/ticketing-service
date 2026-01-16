@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import jakarta.validation.Valid;
+
 import lombok.RequiredArgsConstructor;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,7 +42,7 @@ public class UserController {
     })
     @PostMapping("/sign-up")
     @ResponseStatus(HttpStatus.CREATED)
-    public SuccessResponse<UserResponse> signUp(@RequestBody final SignUpRequest request) {
+    public SuccessResponse<UserResponse> signUp(@Valid @RequestBody final SignUpRequest request) {
         SignUpCommand command = new SignUpCommand(request.email(), request.password());
         UserResponse response = signUpUseCase.signUp(command);
         return SuccessResponse.of(response);
@@ -53,7 +55,7 @@ public class UserController {
     })
     @PostMapping("/log-in")
     @ResponseStatus(HttpStatus.OK)
-    public SuccessResponse<UserResponse> login(@RequestBody final LoginRequest request) {
+    public SuccessResponse<UserResponse> login(@Valid @RequestBody final LoginRequest request) {
         LoginCommand command = new LoginCommand(request.email(), request.password());
         UserResponse response = loginUseCase.login(command);
         return SuccessResponse.of(response);

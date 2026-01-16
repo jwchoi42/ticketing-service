@@ -12,12 +12,12 @@ services:
     networks:
       - ticketing-network
 
-  redis:
-    image: redis:7-alpine
-    container_name: ticketing-redis
-    restart: always
-    networks:
-      - ticketing-network
+#  redis:
+#    image: redis:7-alpine
+#    container_name: ticketing-redis
+#    restart: always
+#    networks:
+#      - ticketing-network
 
   backend:
     image: jwchoi42/ticketing-backend:latest
@@ -25,7 +25,6 @@ services:
     restart: always
     depends_on:
       - database
-      - redis
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/ticketing_database
       SPRING_DATASOURCE_USERNAME: postgres

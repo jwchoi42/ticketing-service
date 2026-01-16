@@ -469,7 +469,7 @@ const SeatSelectionPage: React.FC = () => {
                                 선택된 좌석이 없습니다.
                             </div>
                         ) : (
-                            heldSeats.map((seat, index) => (
+                            heldSeats.map((seat) => (
                                 <div key={seat.id} style={{
                                     padding: '0.75rem',
                                     backgroundColor: '#f8fafc',

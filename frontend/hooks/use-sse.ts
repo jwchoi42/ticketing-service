@@ -26,6 +26,18 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
     const retryCountRef = useRef(0);
     const MAX_RETRIES = 3;
 
+    const connectRef = useRef<() => void>(() => { });
+
+    // Handle state reset during render when dependencies change
+    const [prevInfo, setPrevInfo] = useState({ blockId, enabled });
+    if (prevInfo.blockId !== blockId || prevInfo.enabled !== enabled) {
+        setPrevInfo({ blockId, enabled });
+        if (!enabled || !blockId) {
+            if (seats.length > 0) setSeats([]);
+            if (status !== 'disconnected') setStatus('disconnected');
+        }
+    }
+
     const connect = useCallback(() => {
         if (!enabled || !blockId) return;
 
@@ -56,7 +68,7 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
                 setStatus('reconnecting');
                 retryCountRef.current++;
                 toast.error(`Connection lost. Reconnecting... (${retryCountRef.current}/${MAX_RETRIES})`);
-                setTimeout(() => connect(), 1000 * retryCountRef.current);
+                setTimeout(() => connectRef.current(), 1000 * retryCountRef.current);
             } else {
                 setStatus('disconnected');
                 toast.error('Failed to connect to real-time server. Please refresh.');
@@ -82,10 +94,10 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
 
                 setSeats((prev) => {
                     const next = [...prev];
-                    changes.forEach((change: any) => {
+                    changes.forEach((change: { seatId: number; status: string }) => {
                         const idx = next.findIndex(s => s.id === change.seatId);
                         if (idx !== -1) {
-                            next[idx] = { ...next[idx], status: change.status };
+                            next[idx] = { ...next[idx], status: change.status as Seat['status'] };
                         }
                     });
                     return next;
@@ -98,11 +110,12 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
     }, [matchId, blockId, enabled]);
 
     useEffect(() => {
+        connectRef.current = connect;
+    }, [connect]);
+
+    useEffect(() => {
         if (enabled && blockId) {
             connect();
-        } else {
-            setStatus('disconnected');
-            setSeats([]);
         }
 
         return () => {

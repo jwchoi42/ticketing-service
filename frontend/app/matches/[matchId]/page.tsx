@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { matchApi } from '@/lib/api/matches';
@@ -9,7 +9,7 @@ import { allocationApi } from '@/lib/api/allocation';
 import { useSSE } from '@/hooks/use-sse';
 import { useAuthStore } from '@/store/auth-store';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Check, ChevronUp, ChevronDown, X, Armchair } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Check, ChevronUp, X } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { toast } from 'sonner';
 import {
@@ -64,11 +64,14 @@ export default function SeatSelectionPage() {
         enabled: !!selectedSectionId,
     });
 
+    const activeBlockId = selectedBlockId ?? (blocks?.[0]?.id || null);
+    const currentBlock = blocks?.find(b => b.id === activeBlockId);
+
     // --- Real-time Seat Data ---
     const { seats, status } = useSSE({
         matchId,
-        blockId: selectedBlockId,
-        enabled: !!selectedBlockId
+        blockId: activeBlockId,
+        enabled: !!activeBlockId
     });
 
     // --- Logic ---
@@ -83,29 +86,22 @@ export default function SeatSelectionPage() {
         setSelectedBlockId(null);
     };
 
-    useEffect(() => {
-        if (blocks && blocks.length > 0 && !selectedBlockId) {
-            setSelectedBlockId(blocks[0].id);
-        }
-    }, [blocks, selectedBlockId]);
-
     const handlePrevBlock = () => {
-        if (!blocks || !selectedBlockId) return;
-        const currentIndex = blocks.findIndex(b => b.id === selectedBlockId);
+        if (!blocks || !activeBlockId) return;
+        const currentIndex = blocks.findIndex(b => b.id === activeBlockId);
         if (currentIndex > 0) {
             setSelectedBlockId(blocks[currentIndex - 1].id);
         }
     };
 
     const handleNextBlock = () => {
-        if (!blocks || !selectedBlockId) return;
-        const currentIndex = blocks.findIndex(b => b.id === selectedBlockId);
+        if (!blocks || !activeBlockId) return;
+        const currentIndex = blocks.findIndex(b => b.id === activeBlockId);
         if (currentIndex < blocks.length - 1) {
             setSelectedBlockId(blocks[currentIndex + 1].id);
         }
     };
 
-    const currentBlock = blocks?.find(b => b.id === selectedBlockId);
 
     const { isAuthenticated } = useAuthStore();
     const router = useRouter();
@@ -149,8 +145,8 @@ export default function SeatSelectionPage() {
                     return next;
                 });
             }
-        } catch (error) {
-            console.error(error);
+        } catch (err) {
+            console.error(err);
             toast.error('Failed to update seat status');
         }
     };
@@ -160,9 +156,10 @@ export default function SeatSelectionPage() {
             await allocationApi.confirmSeats(matchId, Array.from(myHeldSeatIds));
             toast.success('좌석이 확정되었습니다.');
             router.push('/reservation');
-        } catch (error: any) {
-            console.error('Confirmation Failed:', error);
-            toast.error(error.response?.data?.message || '좌석 확정에 실패했습니다.');
+        } catch (err: unknown) {
+            console.error('Confirmation Failed:', err);
+            const message = err instanceof Error ? err.message : '좌석 확정에 실패했습니다.';
+            toast.error(message);
         }
     };
 
@@ -248,7 +245,7 @@ export default function SeatSelectionPage() {
             {/* 3. Block Navigation & Status */}
             {selectedSectionId && (
                 <div className="flex items-center justify-between px-4 py-3 border-b bg-card">
-                    <Button variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground" onClick={handlePrevBlock} disabled={!blocks || blocks.findIndex(b => b.id === selectedBlockId) <= 0}>
+                    <Button variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground" onClick={handlePrevBlock} disabled={!blocks || blocks.findIndex(b => b.id === activeBlockId) <= 0}>
                         <ChevronLeft className="h-6 w-6" />
                     </Button>
 
@@ -278,7 +275,7 @@ export default function SeatSelectionPage() {
                         </div>
                     </div>
 
-                    <Button variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground" onClick={handleNextBlock} disabled={!blocks || blocks.findIndex(b => b.id === selectedBlockId) >= blocks.length - 1}>
+                    <Button variant="ghost" size="icon" className="h-10 w-10 text-muted-foreground" onClick={handleNextBlock} disabled={!blocks || blocks.findIndex(b => b.id === activeBlockId) >= blocks.length - 1}>
                         <ChevronRight className="h-6 w-6" />
                     </Button>
                 </div>
@@ -290,7 +287,7 @@ export default function SeatSelectionPage() {
                     <div className="flex flex-col items-center justify-center h-64 text-muted-foreground space-y-2">
                         <p className="font-medium">Select an Area and Section above</p>
                     </div>
-                ) : !selectedBlockId ? (
+                ) : !activeBlockId ? (
                     <div className="flex items-center justify-center h-64 text-muted-foreground">Loading Blocks...</div>
                 ) : (
                     <div className="w-full overflow-x-auto pb-12 flex flex-col items-center">
@@ -409,7 +406,7 @@ export default function SeatSelectionPage() {
                         </div>
 
                         <div className="space-y-0 divide-y divide-border/40">
-                            {Array.from(myHeldSeatIds).map((id, index) => {
+                            {Array.from(myHeldSeatIds).map((id) => {
                                 const info = heldSeatsInfo.get(id);
                                 return (
                                     <div key={id} className="py-4 flex items-center justify-between group">
@@ -436,7 +433,7 @@ export default function SeatSelectionPage() {
                                                             return next;
                                                         });
                                                         if (myHeldSeatIds.size <= 1) setIsSummaryExpanded(false);
-                                                    } catch (error) {
+                                                    } catch {
                                                         toast.error('Failed to release seat');
                                                     }
                                                 }}

@@ -4,11 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Trophy, Ticket, ClipboardList } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { useAuthStore } from '@/store/auth-store';
 
 export function MobileNav() {
     const pathname = usePathname();
-    const user = useAuthStore((state) => state.user);
+    // const user = useAuthStore((state) => state.user);
 
     // Hide on auth pages if desired, or keep generic. 
     // Usually app-like nav is visible on main authenticated views.

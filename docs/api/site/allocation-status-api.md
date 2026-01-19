@@ -14,7 +14,7 @@ Status Stream API (SSE)
 실시간 좌석 배정 현황 스트림
 ---
 - **Method**: GET
-- **Path**: `/api/matches/{matchId}/statusstream/blocks/{blockId}/seats/stream`
+- **Path**: `/api/matches/{matchId}/blocks/{blockId}/seats/events`
 - **Content-Type**: `text/event-stream`
 - **Controller**: `AllocationStatusController`
 - **Response**: 200 OK (Event Stream)

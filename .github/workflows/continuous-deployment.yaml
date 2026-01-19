@@ -28,8 +28,8 @@ jobs:
       - name: Build and Push Backend
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./Dockerfile
+          context: ./backend
+          file: ./backend/Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ticketing-backend:latest
           cache-from: type=gha
@@ -43,7 +43,7 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/ticketing-frontend:latest
           build-args: |
-            VITE_API_URL=/api
+            NEXT_PUBLIC_API_URL=/api
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -57,13 +57,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Copy docker-compose.prod.yml to EC2
+      - name: Copy deployment files to EC2
         uses: appleboy/scp-action@v1.0.0
         with:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "docker-compose.prod.yml"
+          source: "docker-compose.prod.yml,infra"
           target: "~/"
 
       - name: SSH Deploy

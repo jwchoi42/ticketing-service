@@ -1,16 +1,40 @@
-# Build stage
+# Build Stage
 FROM node:22-alpine AS builder
 WORKDIR /app
+
+# Install dependencies
 COPY package*.json ./
 RUN npm ci
+
+# Copy source and build
 COPY . .
-ARG VITE_API_URL=/api
-ENV VITE_API_URL=$VITE_API_URL
+
+# Build argument for API URL (build time)
+ARG NEXT_PUBLIC_API_URL=/api
+ENV NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL}
+
 RUN npm run build
 
-# Production stage
-FROM nginx:alpine
-COPY --from=builder /app/dist /usr/share/nginx/html
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Production Stage
+FROM node:22-alpine AS runner
+WORKDIR /app
+
+ENV NODE_ENV=production
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+# Copy built assets
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
+
+CMD ["node", "server.js"]

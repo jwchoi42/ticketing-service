@@ -5,7 +5,7 @@ import dev.ticketing.acceptance.client.AllocationStatusClient;
 import dev.ticketing.acceptance.client.SiteClient;
 import dev.ticketing.acceptance.client.model.TestResponse;
 import dev.ticketing.acceptance.context.TestContext;
-import dev.ticketing.core.site.application.service.AllocationStatusService;
+import dev.ticketing.core.site.adapter.in.web.status.SseAllocationStatusBroadcaster;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -31,7 +31,7 @@ public class AllocationStatusSteps {
     private final SiteClient siteClient;
     private final AllocationClient allocationClient;
     private final TestContext testContext;
-    private final AllocationStatusService allocationStatusService;
+    private final SseAllocationStatusBroadcaster broadcaster;
 
     private Flux<ServerSentEvent<String>> eventStream;
     private final List<ServerSentEvent<String>> receivedEvents = new CopyOnWriteArrayList<>();
@@ -84,9 +84,9 @@ public class AllocationStatusSteps {
         await().atMost(Duration.ofSeconds(5))
                 .pollInterval(Duration.ofMillis(200))
                 .untilAsserted(() -> {
-                    log.info("[TEST] checkForUpdates 호출 전 이벤트수: {}", receivedEvents.size());
-                    allocationStatusService.checkForUpdates(); // 수동 트리거
-                    log.info("[TEST] checkForUpdates 호출 후 이벤트수: {}", receivedEvents.size());
+                    log.info("[TEST] pollAndBroadcast 호출 전 이벤트수: {}", receivedEvents.size());
+                    broadcaster.pollAndBroadcast(); // 수동 트리거
+                    log.info("[TEST] pollAndBroadcast 호출 후 이벤트수: {}", receivedEvents.size());
                     assertThat(receivedEvents.stream().anyMatch(e -> "changes".equals(e.event())))
                             .withFailMessage("changes 이벤트를 받지 못했습니다. 받은 이벤트: " + receivedEvents)
                             .isTrue();

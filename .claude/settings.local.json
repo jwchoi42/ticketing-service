@@ -11,7 +11,18 @@
       "Bash(docker compose:*)",
       "Bash(xxd:*)",
       "Bash(docker volume rm:*)",
-      "Bash(docker ps:*)"
+      "Bash(docker ps:*)",
+      "Bash(git mv:*)",
+      "Bash(./gradlew build:*)",
+      "Bash(./gradlew test:*)",
+      "Bash(docker builder prune:*)",
+      "Bash(docker system prune:*)",
+      "Bash(docker stop:*)",
+      "Bash(docker rm:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(docker exec:*)",
+      "Bash(git ls-tree:*)"
     ]
   }
 }

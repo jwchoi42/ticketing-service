@@ -1,8 +1,6 @@
 name: Continuous Integration
 
 on:
-  push:
-    branches: ["main", "dev"]
   pull_request:
     branches: ["main", "dev"]
 
@@ -11,6 +9,10 @@ jobs:
   backend:
 
     runs-on: ubuntu-22.04
+
+    defaults:
+      run:
+        working-directory: ./backend
 
     steps:
 
@@ -37,7 +39,7 @@ jobs:
         if: always()
         with:
           name: backend-test-report
-          path: build/reports/tests/test/
+          path: backend/build/reports/tests/test/
 
   frontend:
 

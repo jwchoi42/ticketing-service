@@ -33,6 +33,16 @@ public class ReservationController {
         return SuccessResponse.of(ReservationResponse.from(reservation));
     }
 
+    @Operation(summary = "예약 목록 조회 (유저별)")
+    @GetMapping
+    public SuccessResponse<List<ReservationResponse>> getReservations(@RequestParam final Long userId) {
+        final List<Reservation> reservations = loadReservationPort.loadByUserId(userId);
+        final List<ReservationResponse> responses = reservations.stream()
+                .map(ReservationResponse::from)
+                .toList();
+        return SuccessResponse.of(responses);
+    }
+
     @Operation(summary = "예약 조회")
     @GetMapping("/{id}")
     public SuccessResponse<ReservationResponse> getReservation(@PathVariable final Long id) {

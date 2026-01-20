@@ -1,10 +1,13 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/auth-store';
 import { useRouter, usePathname } from 'next/navigation';
 import { LogOut, User } from 'lucide-react';
+
+// Hoisted regex outside component to prevent recreation on every render
+const SEAT_SELECTION_PAGE_REGEX = /^\/matches\/[^\/]+$/;
 
 export function Header() {
     const { user, isAuthenticated, logout } = useAuthStore();
@@ -13,38 +16,48 @@ export function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const menuRef = useRef<HTMLDivElement>(null);
 
-    // Close menu when clicking outside - All hooks must be called before any early return
-    useEffect(() => {
-        const handleClickOutside = (event: MouseEvent) => {
-            if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-                setIsMenuOpen(false);
-            }
-        };
+    // Memoized click outside handler to prevent recreation
+    const handleClickOutside = useCallback((event: MouseEvent) => {
+        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setIsMenuOpen(false);
+        }
+    }, []);
 
+    // Close menu when clicking outside - optimized to only add/remove when needed
+    useEffect(() => {
         if (isMenuOpen) {
             document.addEventListener('mousedown', handleClickOutside);
+            return () => {
+                document.removeEventListener('mousedown', handleClickOutside);
+            };
         }
+    }, [isMenuOpen, handleClickOutside]);
 
-        return () => {
-            document.removeEventListener('mousedown', handleClickOutside);
-        };
-    }, [isMenuOpen]);
+    // Memoize page check to prevent recalculation on unrelated state changes
+    const shouldHideHeader = useMemo(() => {
+        const isAuthPage = pathname.startsWith('/log-in') || pathname.startsWith('/sign-up');
+        const isSeatSelectionPage = SEAT_SELECTION_PAGE_REGEX.test(pathname);
+        return isAuthPage || isSeatSelectionPage;
+    }, [pathname]);
 
-    // Early return AFTER all hooks
-    const isAuthPage = pathname.startsWith('/log-in') || pathname.startsWith('/sign-up');
-    const isSeatSelectionPage = /^\/matches\/[^\/]+$/.test(pathname);
-    if (isAuthPage || isSeatSelectionPage) return null;
-
-    const handleLogout = () => {
+    // Memoized handlers
+    const handleLogout = useCallback(() => {
         logout();
         setIsMenuOpen(false);
         router.push('/matches');
-    };
+    }, [logout, router]);
 
-    const handleProfile = () => {
+    const handleProfile = useCallback(() => {
         setIsMenuOpen(false);
         router.push('/profile');
-    };
+    }, [router]);
+
+    const toggleMenu = useCallback(() => {
+        setIsMenuOpen(prev => !prev);
+    }, []);
+
+    // Early return AFTER all hooks
+    if (shouldHideHeader) return null;
 
     return (
         <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-md border-b border-border">
@@ -57,7 +70,7 @@ export function Header() {
                     <div className="relative" ref={menuRef}>
                         {/* Avatar Button */}
                         <button
-                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            onClick={toggleMenu}
                             className="h-9 w-9 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center hover:bg-primary/20 transition-colors focus:outline-none focus:ring-2 focus:ring-primary/50"
                         >
                             <User className="h-5 w-5 text-primary" />

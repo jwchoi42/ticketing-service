@@ -1,60 +1,77 @@
-'use client';
+import { Suspense } from 'react';
+import type { Metadata } from 'next';
+import { Match } from '@/lib/api/matches';
+import { MatchList } from './match-list';
 
-import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/store/auth-store';
-import { toast } from 'sonner';
-import { matchApi } from '@/lib/api/matches';
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+// Page metadata for SEO
+export const metadata: Metadata = {
+    title: 'Matches | Ticketing Service',
+    description: 'Browse available matches and book your tickets',
+};
 
-export default function MatchListPage() {
-    const router = useRouter();
-    const { isAuthenticated } = useAuthStore();
-    const { data: matches, isLoading, error } = useQuery({
-        queryKey: ['matches'],
-        queryFn: matchApi.getMatches,
-    });
+// Force dynamic rendering - don't pre-render at build time
+export const dynamic = 'force-dynamic';
 
-    if (isLoading) return <div className="p-8 text-center bg-background text-foreground">Loading matches...</div>;
-    if (error) return <div className="p-8 text-center text-red-500 bg-background">Failed to load matches</div>;
+// Server-side data fetching (eliminates client-side waterfall)
+async function getMatches(): Promise<Match[]> {
+    try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+        const response = await fetch(`${baseUrl}/matches`, {
+            // Use no-store for real-time match data (force-dynamic already set)
+            cache: 'no-store',
+        });
 
+        if (!response.ok) {
+            console.error('Failed to fetch matches:', response.status);
+            return [];
+        }
+
+        const data = await response.json();
+        return data.data.matches;
+    } catch (error) {
+        console.error('Error fetching matches:', error);
+        return [];
+    }
+}
+
+// Pre-compute formatted dates on the server
+function formatMatchDates(matches: Match[]): Record<number, string> {
+    const formatted: Record<number, string> = {};
+    for (const match of matches) {
+        const date = new Date(match.dateTime);
+        formatted[match.id] = `${date.toLocaleDateString()} ${date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
+    }
+    return formatted;
+}
+
+function MatchListSkeleton() {
     return (
         <div className="px-4 py-2 pb-24 min-h-screen bg-background text-foreground">
-
             <div className="space-y-4">
-                {matches?.map((match) => (
-                    <Card key={match.id} className="bg-card text-card-foreground shadow-sm">
-                        <CardHeader className="pb-2">
-                            <div className="flex justify-between items-start">
-                                <CardTitle className="text-lg">{match.homeTeam} <span className="text-muted-foreground text-sm font-normal">vs</span> {match.awayTeam}</CardTitle>
-                            </div>
-                            <CardDescription>{new Date(match.dateTime).toLocaleDateString()} {new Date(match.dateTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</CardDescription>
-                        </CardHeader>
-                        <CardContent className="pb-2">
-                            <p className="text-sm text-muted-foreground">{match.stadium}</p>
-                        </CardContent>
-                        <CardFooter>
-                            <Button
-                                className="w-full"
-                                onClick={() => {
-                                    if (!isAuthenticated) {
-                                        toast.error('로그인이 필요합니다.');
-                                        router.push('/log-in');
-                                        return;
-                                    }
-                                    router.push(`/matches/${match.id}`);
-                                }}
-                            >
-                                Book Tickets
-                            </Button>
-                        </CardFooter>
-                    </Card>
+                {[1, 2, 3].map((i) => (
+                    <div key={i} className="bg-card rounded-lg shadow-sm p-4 animate-pulse">
+                        <div className="h-6 bg-muted rounded w-3/4 mb-2" />
+                        <div className="h-4 bg-muted rounded w-1/2 mb-4" />
+                        <div className="h-4 bg-muted rounded w-1/3 mb-4" />
+                        <div className="h-10 bg-muted rounded w-full" />
+                    </div>
                 ))}
-                {matches?.length === 0 && (
-                    <p className="text-center text-muted-foreground py-8">No matches scheduled.</p>
-                )}
             </div>
         </div>
+    );
+}
+
+async function MatchListServer() {
+    const matches = await getMatches();
+    const formattedDates = formatMatchDates(matches);
+
+    return <MatchList matches={matches} formattedDates={formattedDates} />;
+}
+
+export default function MatchListPage() {
+    return (
+        <Suspense fallback={<MatchListSkeleton />}>
+            <MatchListServer />
+        </Suspense>
     );
 }

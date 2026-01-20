@@ -2,6 +2,7 @@ package dev.ticketing.acceptance.config;
 
 import dev.ticketing.acceptance.client.*;
 import dev.ticketing.acceptance.context.TestContext;
+import dev.ticketing.configuration.TestContainerConfiguration;
 import io.cucumber.spring.CucumberContextConfiguration;
 import io.cucumber.spring.ScenarioScope;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -17,7 +18,7 @@ import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 
 @CucumberContextConfiguration
-@Import({AcceptanceTestContainersConfig.class, AcceptanceTestConfig.AcceptanceTestInnerConfig.class})
+@Import({TestContainerConfiguration.class, AcceptanceTestConfig.AcceptanceTestInnerConfig.class})
 @SpringBootTest(webEnvironment = RANDOM_PORT)
 @AutoConfigureWebTestClient(timeout = "30000")
 public class AcceptanceTestConfig {

@@ -15,7 +15,19 @@ export const dynamic = 'force-dynamic';
 // Server-side data fetching (eliminates client-side waterfall)
 async function getMatches(): Promise<Match[]> {
     try {
-        const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+        // When running on server (docker container), we must use the internal container name
+        // When running on client (browser), we use the public URL (handled by Nginx /api)
+        // Since this is a Server Component, it always runs on the server.
+        // We generally shouldn't use NEXT_PUBLIC_API_URL here if it's relative.
+
+        let baseUrl = process.env.NEXT_PUBLIC_API_URL;
+
+        // If baseUrl is relative (starts with /) or undefined, assuming Docker internal network
+        // We use 'http://backend:8080/api'
+        if (!baseUrl || baseUrl.startsWith('/')) {
+            baseUrl = 'http://backend:8080/api';
+        }
+
         const response = await fetch(`${baseUrl}/matches`, {
             // Use no-store for real-time match data (force-dynamic already set)
             cache: 'no-store',

@@ -1,8 +1,11 @@
 package dev.ticketing.core.user.adapter.out.persistence;
 
 import dev.ticketing.core.user.domain.User;
+import dev.ticketing.core.user.domain.UserRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,11 +32,15 @@ public class UserEntity {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserRole role;
+
     public static UserEntity from(final User user) {
-        return new UserEntity(user.getId(), user.getEmail(), user.getPassword());
+        return new UserEntity(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
     }
 
     public User toDomain() {
-        return User.withId(id, email, password);
+        return User.withId(id, email, password, role);
     }
 }

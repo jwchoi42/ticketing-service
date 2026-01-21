@@ -1,12 +1,12 @@
 package dev.ticketing;
 
-import dev.ticketing.acceptance.config.AcceptanceTestContainersConfig;
+import dev.ticketing.configuration.TestContainerConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 
 @SpringBootTest
-@Import(AcceptanceTestContainersConfig.class)
+@Import(TestContainerConfiguration.class)
 class TicketingServiceApplicationTests {
 
     @Test

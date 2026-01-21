@@ -43,3 +43,16 @@ The following pages require the user to be logged in. If an unauthenticated user
 
 ## 3. Interaction Details
 - **Feedback**: When redirection occurs due to auth requirements, a Toast message (e.g., "Login required") may be shown.
+
+
+## 4. Admin Features (Integrated)
+
+### Match List Extension
+For users with `ADMIN` role, the Match List page (`/matches` or Home) includes additional controls:
+
+1.  **Create Match**: A "Create Match" button (e.g., FAB or Header Action) to open a creation dialog/modal.
+2.  **Match Item Actions**: Each match card displays admin-only actions:
+    - **Open**: Changes status from `DRAFT` to `OPEN`.
+    - **Edit**: Opens the edit dialog.
+    - **Delete**: Removes the match (confirmation required).
+

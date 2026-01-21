@@ -74,14 +74,4 @@ public class Reservation {
                 .seatIds(this.seatIds)
                 .build();
     }
-
-    public Reservation cancel() {
-        return Reservation.builder()
-                .id(this.id)
-                .userId(this.userId)
-                .matchId(this.matchId)
-                .status(ReservationStatus.CANCELLED)
-                .seatIds(this.seatIds)
-                .build();
-    }
 }

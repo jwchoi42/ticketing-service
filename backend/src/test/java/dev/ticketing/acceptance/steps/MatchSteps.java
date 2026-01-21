@@ -3,6 +3,7 @@ package dev.ticketing.acceptance.steps;
 import dev.ticketing.acceptance.client.MatchClient;
 import dev.ticketing.acceptance.client.model.TestResponse;
 import dev.ticketing.acceptance.context.TestContext;
+import dev.ticketing.core.match.application.port.in.OpenMatchUseCase;
 import dev.ticketing.core.match.application.port.out.persistence.RecordMatchPort;
 import dev.ticketing.core.match.domain.Match;
 
@@ -26,6 +27,7 @@ public class MatchSteps {
     private final MatchClient matchClient;
     private final TestContext testContext;
     private final RecordMatchPort recordMatchPort;
+    private final OpenMatchUseCase openMatchUseCase;
 
     // 경기 목록 조회
 
@@ -36,7 +38,9 @@ public class MatchSteps {
         Match match = Match.create(stadium, homeTeam, awayTeam, dateTime);
         Match recorded = recordMatchPort.record(match);
         // alias 0L로 저장하여 기본 경기로 사용
-        testContext.saveMatchId(0L, recorded.getId()); 
+        testContext.saveMatchId(0L, recorded.getId());
+        // 경기를 오픈하여 좌석 선점이 가능하도록 함
+        openMatchUseCase.openMatch(recorded.getId());
     }
 
     @When("경기 목록을 조회하면,")

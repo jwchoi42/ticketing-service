@@ -86,5 +86,11 @@ public class AcceptanceTestConfig {
         public HealthCheckClient healthClient(WebTestClient webTestClient) {
             return new HealthCheckClient(webTestClient);
         }
+
+        @Lazy
+        @Bean
+        public AdminClient adminClient(WebTestClient webTestClient) {
+            return new AdminClient(webTestClient);
+        }
     }
 }

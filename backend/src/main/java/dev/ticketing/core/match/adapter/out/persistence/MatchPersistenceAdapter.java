@@ -32,4 +32,9 @@ public class MatchPersistenceAdapter implements LoadMatchPort, RecordMatchPort {
         MatchEntity entity = MatchEntity.from(match);
         return matchRepository.save(entity).toDomain();
     }
+
+    @Override
+    public void delete(final Long matchId) {
+        matchRepository.deleteById(matchId);
+    }
 }

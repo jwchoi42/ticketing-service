@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Skill(vercel-react-best-practices)",
+      "Skill(web-design-guidelines)",
+      "Bash(npm run build:*)",
+      "Bash(npm run lint)",
+      "Bash(wc:*)",
+      "Bash(grep:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

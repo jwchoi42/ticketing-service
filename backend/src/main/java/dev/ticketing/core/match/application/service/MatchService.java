@@ -91,7 +91,8 @@ public class MatchService implements GetMatchesUseCase, GetMatchUseCase,
     @Override
     @Transactional
     public MatchResponse openMatch(final Long matchId) {
-        Match match = loadMatchPort.loadById(matchId)
+        // Use pessimistic lock to prevent race condition when opening match
+        Match match = loadMatchPort.loadByIdWithLock(matchId)
                 .orElseThrow(() -> new MatchNotFoundException(matchId));
 
         if (match.isOpen()) {

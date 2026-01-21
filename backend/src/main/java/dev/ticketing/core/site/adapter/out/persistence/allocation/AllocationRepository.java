@@ -1,7 +1,6 @@
 package dev.ticketing.core.site.adapter.out.persistence.allocation;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -34,42 +33,4 @@ public interface AllocationRepository extends JpaRepository<AllocationEntity, Lo
             @Param("matchId") Long matchId,
             @Param("seatIds") List<Long> seatIds,
             @Param("updatedAt") LocalDateTime updatedAt);
-
-    /**
-     * Atomic upsert for seat allocation to prevent race conditions.
-     * Uses PostgreSQL INSERT ON CONFLICT to atomically insert or update.
-     * Only succeeds if the seat is AVAILABLE or has an expired HOLD.
-     * Returns number of affected rows (always 1 due to upsert behavior).
-     */
-    @Modifying
-    @Query(value = """
-            INSERT INTO allocations (user_id, match_id, seat_id, status, hold_expires_at, updated_at)
-            VALUES (:userId, :matchId, :seatId, 'HOLD', :holdExpiresAt, NOW())
-            ON CONFLICT (match_id, seat_id) DO UPDATE
-            SET user_id = CASE
-                WHEN allocations.status = 'AVAILABLE'
-                     OR (allocations.status = 'HOLD' AND allocations.hold_expires_at < NOW())
-                THEN EXCLUDED.user_id
-                ELSE allocations.user_id
-            END,
-            status = CASE
-                WHEN allocations.status = 'AVAILABLE'
-                     OR (allocations.status = 'HOLD' AND allocations.hold_expires_at < NOW())
-                THEN 'HOLD'
-                ELSE allocations.status
-            END,
-            hold_expires_at = CASE
-                WHEN allocations.status = 'AVAILABLE'
-                     OR (allocations.status = 'HOLD' AND allocations.hold_expires_at < NOW())
-                THEN EXCLUDED.hold_expires_at
-                ELSE allocations.hold_expires_at
-            END,
-            updated_at = NOW()
-            """, nativeQuery = true)
-    int tryHoldSeat(
-            @Param("userId") Long userId,
-            @Param("matchId") Long matchId,
-            @Param("seatId") Long seatId,
-            @Param("holdExpiresAt") LocalDateTime holdExpiresAt
-    );
 }

@@ -21,6 +21,11 @@ public class MatchPersistenceAdapter implements LoadMatchPort, RecordMatchPort {
     }
 
     @Override
+    public Optional<Match> loadByIdWithLock(final Long matchId) {
+        return matchRepository.findByIdWithLock(matchId).map(MatchEntity::toDomain);
+    }
+
+    @Override
     public List<Match> loadAll() {
         return matchRepository.findAll().stream()
                 .map(MatchEntity::toDomain)

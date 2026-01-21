@@ -15,6 +15,10 @@ import dev.ticketing.core.site.domain.hierarchy.Area;
 import dev.ticketing.core.site.domain.hierarchy.Block;
 import dev.ticketing.core.site.domain.hierarchy.Seat;
 import dev.ticketing.core.site.domain.hierarchy.Section;
+import dev.ticketing.core.user.adapter.out.persistence.UserEntity;
+import dev.ticketing.core.user.adapter.out.persistence.UserRepository;
+import dev.ticketing.core.user.domain.User;
+import dev.ticketing.core.user.domain.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
@@ -36,6 +40,7 @@ public class DataInitializer implements ApplicationRunner {
     private final BlockRepository blockRepository;
     private final SeatRepository seatRepository;
     private final MatchRepository matchRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional
@@ -53,6 +58,17 @@ public class DataInitializer implements ApplicationRunner {
             initMatch();
             log.info("Match Data Initialized.");
         }
+
+        if (!userRepository.existsByEmail("admin@email.com")) {
+            log.info("Initializing Admin User...");
+            initUser();
+            log.info("Admin User Initialized.");
+        }
+    }
+
+    private void initUser() {
+        User admin = User.create("admin@email.com", "admin", UserRole.ADMIN);
+        userRepository.save(UserEntity.from(admin));
     }
 
     private void initStadium() {

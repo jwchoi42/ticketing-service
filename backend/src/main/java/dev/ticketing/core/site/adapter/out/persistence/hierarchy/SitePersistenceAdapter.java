@@ -81,6 +81,13 @@ public class SitePersistenceAdapter
     }
 
     @Override
+    public List<Seat> loadAllSeats() {
+        return seatRepository.findAll().stream()
+                .map(SeatEntity::toDomain)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Area recordArea(final Area area) {
         return areaRepository.save(AreaEntity.from(area)).toDomain();
     }

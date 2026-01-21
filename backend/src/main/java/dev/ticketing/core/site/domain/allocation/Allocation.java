@@ -37,6 +37,15 @@ public class Allocation {
                 .build();
     }
 
+    public static Allocation availableForMatch(final Long matchId, final Long seatId) {
+        return Allocation.builder()
+                .matchId(matchId)
+                .seatId(seatId)
+                .status(AllocationStatus.AVAILABLE)
+                .updatedAt(LocalDateTime.now())
+                .build();
+    }
+
     public static Allocation withId(
             final Long id,
             final Long userId,

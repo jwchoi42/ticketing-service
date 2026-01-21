@@ -46,6 +46,15 @@
 - [ ] 에러 핸들링 및 Toast 메시지 연동
 - [ ] 최종 사용자 플로우 검증 (Manual Test)
 
+### Phase 7: 관리자 기능 (Admin Features) - [ ]
+- [ ] Admin Route/Action Protection (Role-based Rendering)
+- [ ] 경기 목록 (`/matches`)에 관리자 기능 통합
+    - [ ] 관리자 전용 "경기 생성" 버튼 및 모달 구현
+    - [ ] 각 경기 카드에 "수정/삭제/오픈" 액션 버튼 추가
+- [ ] 경기 상태 관리 연동
+    - [ ] `MatchStatus` (DRAFT/OPEN) 시각적 표시
+    - [ ] 오픈(Open) API 연동 및 상태 갱신 처리
+
 ---
 
 ## 3. 진행 일지

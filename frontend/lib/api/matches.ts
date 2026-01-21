@@ -6,6 +6,7 @@ export interface Match {
     awayTeam: string;
     dateTime: string; // "yyyy-MM-dd HH:mm:ss"
     stadium: string;
+    status: 'DRAFT' | 'OPEN';
 }
 
 export const matchApi = {

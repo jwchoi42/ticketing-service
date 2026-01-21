@@ -1,7 +1,11 @@
 package dev.ticketing.core.match.adapter.out.persistence;
 
 import dev.ticketing.core.match.domain.Match;
+import dev.ticketing.core.match.domain.MatchStatus;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -29,16 +33,21 @@ public class MatchEntity {
     private String awayTeam;
     private LocalDateTime dateTime;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private MatchStatus status;
+
     public static MatchEntity from(final Match match) {
         return new MatchEntity(
                 match.getId(),
                 match.getStadium(),
                 match.getHomeTeam(),
                 match.getAwayTeam(),
-                match.getDateTime());
+                match.getDateTime(),
+                match.getStatus());
     }
 
     public Match toDomain() {
-        return Match.withId(id, stadium, homeTeam, awayTeam, dateTime);
+        return Match.withId(id, stadium, homeTeam, awayTeam, dateTime, status);
     }
 }

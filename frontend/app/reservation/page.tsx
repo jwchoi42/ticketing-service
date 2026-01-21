@@ -1,5 +1,6 @@
 'use client';
 
+import { useMemo, useCallback } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { reservationApi, Reservation } from '@/lib/api/reservation';
@@ -18,6 +19,25 @@ export default function ReservationPage() {
         enabled: isAuthenticated,
     });
 
+    // Memoize filtered reservations - must be called before any early returns (Rules of Hooks)
+    const pendingReservations = useMemo(
+        () => reservations?.filter(r => r.status === 'PENDING') || [],
+        [reservations]
+    );
+
+    // Memoized navigation handlers
+    const handleGoToLogin = useCallback(() => {
+        router.push('/log-in');
+    }, [router]);
+
+    const handleBrowseMatches = useCallback(() => {
+        router.push('/matches');
+    }, [router]);
+
+    const handlePayment = useCallback((reservationId: number) => {
+        router.push(`/payment/${reservationId}`);
+    }, [router]);
+
     if (!isAuthenticated) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[80vh] p-6 text-center">
@@ -26,7 +46,7 @@ export default function ReservationPage() {
                 </div>
                 <h2 className="text-xl font-bold mb-2">Login Required</h2>
                 <p className="text-muted-foreground mb-6">Please log in to view your reservations.</p>
-                <Button onClick={() => router.push('/log-in')}>Go to Login</Button>
+                <Button onClick={handleGoToLogin}>Go to Login</Button>
             </div>
         );
     }
@@ -38,8 +58,6 @@ export default function ReservationPage() {
             </div>
         );
     }
-
-    const pendingReservations = reservations?.filter(r => r.status === 'PENDING') || [];
 
     return (
         <div className="p-4 pb-24 min-h-screen bg-muted/30">
@@ -56,7 +74,7 @@ export default function ReservationPage() {
                         </div>
                         <h3 className="font-semibold mb-1">No pending reservations</h3>
                         <p className="text-sm text-muted-foreground mb-4">Find a match and pick your seats to get started.</p>
-                        <Button variant="outline" onClick={() => router.push('/matches')}>
+                        <Button variant="outline" onClick={handleBrowseMatches}>
                             Browse Matches
                         </Button>
                     </CardContent>
@@ -82,7 +100,7 @@ export default function ReservationPage() {
                                     <Button
                                         size="sm"
                                         className="gap-2"
-                                        onClick={() => router.push(`/payment/${res.id}`)}
+                                        onClick={() => handlePayment(res.id)}
                                     >
                                         Pay Now
                                         <ChevronRight className="h-4 w-4" />

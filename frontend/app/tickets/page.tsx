@@ -1,5 +1,6 @@
 'use client';
 
+import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/auth-store';
 import { Button } from '@/components/ui/button';
@@ -10,6 +11,15 @@ export default function TicketsPage() {
     const { isAuthenticated } = useAuthStore();
     const router = useRouter();
 
+    // Memoized navigation handlers to prevent recreation on every render
+    const handleGoToLogin = useCallback(() => {
+        router.push('/log-in');
+    }, [router]);
+
+    const handleBrowseMatches = useCallback(() => {
+        router.push('/matches');
+    }, [router]);
+
     if (!isAuthenticated) {
         return (
             <div className="flex flex-col items-center justify-center min-h-[80vh] p-6 text-center">
@@ -18,7 +28,7 @@ export default function TicketsPage() {
                 </div>
                 <h2 className="text-xl font-bold mb-2">Login Required</h2>
                 <p className="text-muted-foreground mb-6">Please log in to view your tickets.</p>
-                <Button onClick={() => router.push('/log-in')}>Go to Login</Button>
+                <Button onClick={handleGoToLogin}>Go to Login</Button>
             </div>
         );
     }
@@ -37,7 +47,7 @@ export default function TicketsPage() {
                     </div>
                     <h3 className="font-semibold mb-1">No tickets yet</h3>
                     <p className="text-sm text-muted-foreground mb-4">Complete a reservation to get your tickets.</p>
-                    <Button variant="outline" onClick={() => router.push('/matches')}>
+                    <Button variant="outline" onClick={handleBrowseMatches}>
                         Browse Matches
                     </Button>
                 </CardContent>

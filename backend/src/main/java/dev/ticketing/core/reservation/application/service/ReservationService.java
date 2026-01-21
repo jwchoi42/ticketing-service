@@ -1,5 +1,9 @@
 package dev.ticketing.core.reservation.application.service;
 
+import dev.ticketing.core.match.application.port.out.persistence.LoadMatchPort;
+import dev.ticketing.core.match.application.service.exception.MatchNotFoundException;
+import dev.ticketing.core.match.application.service.exception.MatchNotOpenException;
+import dev.ticketing.core.match.domain.Match;
 import dev.ticketing.core.reservation.application.port.in.CreateReservationCommand;
 import dev.ticketing.core.reservation.application.port.in.CreateReservationUseCase;
 import dev.ticketing.core.reservation.application.port.out.persistence.RecordReservationPort;
@@ -27,6 +31,7 @@ public class ReservationService implements CreateReservationUseCase {
     private final RecordReservationPort recordReservationPort;
     private final LoadAllocationPort loadAllocationPort;
     private final RecordAllocationPort recordAllocationPort;
+    private final LoadMatchPort loadMatchPort;
 
     @Override
     @Transactional
@@ -35,9 +40,17 @@ public class ReservationService implements CreateReservationUseCase {
         final Long matchId = command.matchId();
         final List<Long> seatIds = command.seatIds();
 
+        // 0. Verify match is open
+        final Match match = loadMatchPort.loadById(matchId)
+                .orElseThrow(() -> new MatchNotFoundException(matchId));
+
+        if (!match.isOpen()) {
+            throw new MatchNotOpenException(matchId);
+        }
+
         // 1. Verify all seats are held by the user
         for (final Long seatId : seatIds) {
-            final Allocation allocation = loadAllocationPort.loadAllocationWithLock(matchId, seatId)
+            final Allocation allocation = loadAllocationPort.loadAllocationByMatchAndSeatWithLock(matchId, seatId)
                     .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));
 
             if (!allocation.isHeldBy(userId)) {
@@ -55,7 +68,7 @@ public class ReservationService implements CreateReservationUseCase {
 
         // 3. Update Allocations with Reservation ID
         for (final Long seatId : seatIds) {
-            final Allocation allocation = loadAllocationPort.loadAllocationWithLock(matchId, seatId)
+            final Allocation allocation = loadAllocationPort.loadAllocationByMatchAndSeatWithLock(matchId, seatId)
                     .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));
             final Allocation updatedAllocation = allocation.assignReservation(savedReservation.getId());
             recordAllocationPort.recordAllocation(updatedAllocation);

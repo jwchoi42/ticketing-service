@@ -10,4 +10,6 @@ public interface LoadSeatPort {
     List<Seat> loadSeatsByBlockId(Long blockId);
 
     Optional<Seat> loadSeatByBlockIdAndRowAndCol(Long blockId, int row, int col);
+
+    List<Seat> loadAllSeats();
 }

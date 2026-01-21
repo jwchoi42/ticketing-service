@@ -23,7 +23,10 @@
       "Bash(findstr:*)",
       "Bash(docker exec:*)",
       "Bash(git ls-tree:*)",
-      "Bash(git fetch:*)"
+      "Bash(git fetch:*)",
+      "Bash(./gradlew clean test:*)",
+      "Bash(tasklist:*)",
+      "Bash(./gradlew:*)"
     ]
   }
 }

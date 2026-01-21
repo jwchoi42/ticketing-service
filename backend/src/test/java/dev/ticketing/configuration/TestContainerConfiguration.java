@@ -1,4 +1,4 @@
-package dev.ticketing.acceptance.config;
+package dev.ticketing.configuration;
 
 import com.redis.testcontainers.RedisContainer;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -8,7 +8,7 @@ import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.utility.DockerImageName;
 
 @TestConfiguration(proxyBeanMethods = false)
-public class AcceptanceTestContainersConfig {
+public class TestContainerConfiguration {
 
     @Bean
     @ServiceConnection

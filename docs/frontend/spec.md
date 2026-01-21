@@ -29,7 +29,7 @@
     - Body: `{ "email": "...", "password": "..." }`
 - **로그인**: `POST /log-in`
     - Body: `{ "email": "...", "password": "..." }`
-    - Response: 성공 시 사용자 기본 정보를 반환합니다.
+    - Response: 성공 시 사용자 기본 정보(Role 포함)를 반환합니다.
 
 ### 3.2. 경기 (Match) - `/api/matches`
 - **경기 목록 조회**: `GET /`
@@ -82,6 +82,14 @@
 - **예약 생성**: `POST /api/reservations`
 - **결제 요청**: `POST /api/payments/request`
 - **결제 승인**: `POST /api/payments/confirm`
+    
+### 3.7. 관리자 (Admin) - `/api/admin`
+- **경기 생성**: `POST /api/admin/matches`
+    - Body: `{ "matchDate": "...", "homeTeam": "...", "awayTeam": "...", "stadiumName": "..." }`
+- **경기 수정**: `PUT /api/admin/matches/{matchId}`
+- **경기 삭제**: `DELETE /api/admin/matches/{matchId}`
+- **경기 오픈 (예매 시작)**: `POST /api/admin/matches/{matchId}/open`
+    - 경기 상태를 `DRAFT`에서 `OPEN`으로 변경하며, 해당 경기의 좌석 정보를 생성합니다.
 
 ---
 

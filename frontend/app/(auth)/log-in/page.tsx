@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useAuthStore } from '@/store/auth-store';
@@ -18,7 +18,7 @@ export default function LoginPage() {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleSubmit = useCallback(async (e: React.FormEvent) => {
         e.preventDefault();
         setIsLoading(true);
 
@@ -33,14 +33,19 @@ export default function LoginPage() {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, [email, password, login, router]);
+
+    // Memoized navigation handler
+    const handleBackToMatches = useCallback(() => {
+        router.push('/matches');
+    }, [router]);
 
     return (
         <div className="min-h-screen bg-muted/30 flex flex-col">
             {/* Back Button Header */}
             <div className="p-4">
                 <button
-                    onClick={() => router.push('/matches')}
+                    onClick={handleBackToMatches}
                     className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
                 >
                     <ArrowLeft className="h-5 w-5" />

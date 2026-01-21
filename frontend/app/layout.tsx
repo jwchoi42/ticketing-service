@@ -7,6 +7,13 @@ import { Toaster } from "sonner";
 import { Header } from "@/components/layout/header";
 import { MobileNav } from "@/components/layout/mobile-nav";
 
+// Extracted to constant to prevent object recreation on every render
+const TOAST_OPTIONS = {
+  classNames: {
+    icon: 'text-primary',
+  }
+} as const;
+
 export const metadata: Metadata = {
   title: "Ticketing Service",
   description: "Real-time ticketing service frontend",
@@ -36,11 +43,7 @@ export default function RootLayout({
           </div>
           <Toaster
             position="top-center"
-            toastOptions={{
-              classNames: {
-                icon: 'text-primary',
-              }
-            }}
+            toastOptions={TOAST_OPTIONS}
           />
         </QueryProvider>
       </body>

@@ -7,5 +7,6 @@ import java.util.Optional;
 
 public interface LoadMatchPort {
     Optional<Match> loadById(Long matchId);
+    Optional<Match> loadByIdWithLock(Long matchId);
     List<Match> loadAll();
 }

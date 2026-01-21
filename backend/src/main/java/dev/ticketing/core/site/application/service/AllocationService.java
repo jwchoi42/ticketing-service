@@ -27,7 +27,6 @@ import dev.ticketing.core.site.application.port.out.persistence.allocation.Recor
 import dev.ticketing.core.site.application.port.out.persistence.hierarchy.LoadSeatPort;
 import dev.ticketing.core.site.application.service.exception.AllocationNotFoundException;
 import dev.ticketing.core.site.application.service.exception.NoSeatsToConfirmException;
-import dev.ticketing.core.site.application.service.exception.SeatAllocationConflictException;
 import dev.ticketing.core.site.application.service.exception.SeatAlreadyHeldException;
 import dev.ticketing.core.site.application.service.exception.SeatAlreadyOccupiedException;
 import dev.ticketing.core.site.application.service.exception.SeatNotFoundException;
@@ -70,46 +69,31 @@ public class AllocationService implements AllocateSeatUseCase, ReleaseSeatUseCas
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime expiresAt = now.plusMinutes(occupationTtlMinutes);
 
-        // First, try to load existing allocation with lock (handles updates for existing records)
-        Optional<Allocation> existingAllocation = loadAllocationPort.loadAllocationByMatchAndSeatWithLock(matchId, seatId);
+        // Load existing allocation with pessimistic lock
+        // Allocation must exist because MatchService.openMatch() pre-creates AVAILABLE allocations for all seats
+        Allocation allocation = loadAllocationPort.loadAllocationByMatchAndSeatWithLock(matchId, seatId)
+                .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));
 
-        if (existingAllocation.isPresent()) {
-            Allocation allocation = existingAllocation.get();
-
-            if (allocation.getStatus() == AllocationStatus.OCCUPIED) {
-                log.warn("Seat already occupied: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
-                throw new SeatAlreadyOccupiedException(matchId, seatId);
-            }
-
-            if (allocation.getStatus() == AllocationStatus.HOLD &&
-                    allocation.getHoldExpiresAt() != null && allocation.getHoldExpiresAt().isAfter(now)) {
-                if (allocation.getUserId() != null && allocation.getUserId().equals(userId)) {
-                    log.info("Seat already held by same user: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
-                    return;
-                }
-                log.warn("Seat currently held by another user: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
-                throw new SeatAlreadyHeldException(matchId, seatId);
-            }
-
-            // Existing allocation is AVAILABLE or expired HOLD - update it
-            Allocation heldAllocation = allocation.hold(userId, matchId, expiresAt);
-            Allocation saved = recordAllocationPort.recordAllocation(heldAllocation);
-            log.info("Seat held successfully (updated existing): userId={}, matchId={}, seatId={}, expiresAt={}, updatedAt={}",
-                    userId, matchId, seatId, expiresAt, saved.getUpdatedAt());
-        } else {
-            // No existing allocation - use atomic upsert to prevent race condition
-            Optional<Allocation> result = recordAllocationPort.tryHoldSeat(userId, matchId, seatId, expiresAt);
-
-            if (result.isEmpty()) {
-                // Another user won the race condition
-                log.warn("Seat allocation conflict: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
-                throw new SeatAllocationConflictException(matchId, seatId);
-            }
-
-            Allocation saved = result.get();
-            log.info("Seat held successfully (new allocation): userId={}, matchId={}, seatId={}, expiresAt={}, updatedAt={}",
-                    userId, matchId, seatId, expiresAt, saved.getUpdatedAt());
+        if (allocation.getStatus() == AllocationStatus.OCCUPIED) {
+            log.warn("Seat already occupied: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
+            throw new SeatAlreadyOccupiedException(matchId, seatId);
         }
+
+        if (allocation.getStatus() == AllocationStatus.HOLD &&
+                allocation.getHoldExpiresAt() != null && allocation.getHoldExpiresAt().isAfter(now)) {
+            if (allocation.getUserId() != null && allocation.getUserId().equals(userId)) {
+                log.info("Seat already held by same user: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
+                return;
+            }
+            log.warn("Seat currently held by another user: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
+            throw new SeatAlreadyHeldException(matchId, seatId);
+        }
+
+        // AVAILABLE or expired HOLD - update it
+        Allocation heldAllocation = allocation.hold(userId, matchId, expiresAt);
+        Allocation saved = recordAllocationPort.recordAllocation(heldAllocation);
+        log.info("Seat held successfully: userId={}, matchId={}, seatId={}, expiresAt={}, updatedAt={}",
+                userId, matchId, seatId, expiresAt, saved.getUpdatedAt());
     }
 
     @Override

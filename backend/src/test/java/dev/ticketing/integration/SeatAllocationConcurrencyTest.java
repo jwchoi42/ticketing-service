@@ -3,7 +3,6 @@ package dev.ticketing.integration;
 import dev.ticketing.configuration.TestContainerConfiguration;
 import dev.ticketing.core.site.application.port.in.allocation.AllocateSeatCommand;
 import dev.ticketing.core.site.application.port.in.allocation.AllocateSeatUseCase;
-import dev.ticketing.core.site.application.service.exception.SeatAllocationConflictException;
 import dev.ticketing.core.site.application.service.exception.SeatAlreadyHeldException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -59,11 +58,12 @@ class SeatAllocationConcurrencyTest {
                 matchId
         );
 
-        // Ensure no allocation exists for this match-seat combination
-        jdbcTemplate.update(
-                "DELETE FROM allocations WHERE match_id = ? AND seat_id = ?",
-                matchId, seatId
-        );
+        // Pre-create AVAILABLE allocation (simulating MatchService.openMatch() behavior)
+        jdbcTemplate.update("""
+                INSERT INTO allocations (user_id, match_id, seat_id, status, hold_expires_at, updated_at)
+                VALUES (NULL, ?, ?, 'AVAILABLE', NULL, NOW())
+                ON CONFLICT (match_id, seat_id) DO UPDATE SET status = 'AVAILABLE', user_id = NULL, hold_expires_at = NULL
+                """, matchId, seatId);
     }
 
     @Test
@@ -91,7 +91,7 @@ class SeatAllocationConcurrencyTest {
                 startLatch.await();
                 allocateSeatUseCase.allocateSeat(command1);
                 successCount.incrementAndGet();
-            } catch (SeatAllocationConflictException | SeatAlreadyHeldException e) {
+            } catch (SeatAlreadyHeldException e) {
                 conflictCount.incrementAndGet();
             } catch (Exception e) {
                 unexpectedException.set(e);
@@ -105,7 +105,7 @@ class SeatAllocationConcurrencyTest {
                 startLatch.await();
                 allocateSeatUseCase.allocateSeat(command2);
                 successCount.incrementAndGet();
-            } catch (SeatAllocationConflictException | SeatAlreadyHeldException e) {
+            } catch (SeatAlreadyHeldException e) {
                 conflictCount.incrementAndGet();
             } catch (Exception e) {
                 unexpectedException.set(e);
@@ -171,7 +171,7 @@ class SeatAllocationConcurrencyTest {
                     startLatch.await();
                     allocateSeatUseCase.allocateSeat(command);
                     successCount.incrementAndGet();
-                } catch (SeatAllocationConflictException | SeatAlreadyHeldException e) {
+                } catch (SeatAlreadyHeldException e) {
                     conflictCount.incrementAndGet();
                 } catch (Exception e) {
                     if (unexpectedException.get() == null) {

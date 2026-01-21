@@ -8,6 +8,30 @@ API Specification Rule
 - **Base URL**: `/api`
 - **Content-Type**: `application/json`
 
+RESTful API Design
+---
+
+### 1. URL 설계 원칙
+- **리소스 중심 설계**: URL은 동사가 아닌 명사를 사용하여 리소스를 표현한다.
+- **복수형 명사 사용**: 컬렉션은 복수형으로 표현한다. (`/users`, `/matches`)
+- **계층 구조 표현**: 리소스 간의 관계는 경로로 표현한다. (`/matches/{matchId}/seats`)
+- **소문자 및 하이픈 사용**: URL은 소문자와 `kebab-case`를 사용한다.
+- **액션 표현**: 리소스로 표현이 불가능한 경우에만 동사를 허용한다. (`/seats/{seatId}/hold`)
+
+### 2. HTTP 메서드 사용 규칙
+
+| 메서드 | 용도 | 멱등성 | 예시 |
+|--------|------|--------|------|
+| GET | 리소스 조회 | O | `GET /matches` |
+| POST | 리소스 생성/액션 | X | `POST /matches` |
+| PUT | 리소스 전체 수정 | O | `PUT /matches/{id}` |
+| PATCH | 리소스 부분 수정 | O | `PATCH /matches/{id}` |
+| DELETE | 리소스 삭제 | O | `DELETE /matches/{id}` |
+
+### 3. Path Parameter vs Query Parameter
+- **Path Parameter**: 리소스를 고유하게 식별할 때 사용한다. (`/matches/{matchId}`)
+- **Query Parameter**: 필터링, 정렬, 페이징 등에 사용한다. (`?status=open&sort=date`)
+
 Response
 ---
 - All API responses follow a consistent structure.

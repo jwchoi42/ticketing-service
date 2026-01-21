@@ -6,7 +6,6 @@ import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadA
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationStatusPort;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.RecordAllocationPort;
 import dev.ticketing.core.site.domain.allocation.Allocation;
-import dev.ticketing.core.site.domain.allocation.AllocationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
@@ -38,18 +37,6 @@ public class AllocationPersistenceAdapter
                 .map(AllocationEntity::from)
                 .toList();
         allocationRepository.saveAll(entities);
-    }
-
-    @Override
-    public Optional<Allocation> tryHoldSeat(Long userId, Long matchId, Long seatId, LocalDateTime holdExpiresAt) {
-        // Perform atomic upsert
-        allocationRepository.tryHoldSeat(userId, matchId, seatId, holdExpiresAt);
-
-        // Query the allocation to verify if current user acquired the hold
-        return allocationRepository.findByMatchIdAndSeatId(matchId, seatId)
-                .filter(entity -> userId.equals(entity.getUserId())
-                        && entity.getStatus() == AllocationStatus.HOLD)
-                .map(AllocationEntity::toDomain);
     }
 
     // --- LoadAllocationPort ---

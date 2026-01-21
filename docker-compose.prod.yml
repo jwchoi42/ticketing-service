@@ -17,6 +17,8 @@ services:
   database:
     image: postgres:17-alpine
     container_name: ticketing-database
+    ports:
+      - "5432:5432"
     restart: always
     environment:
       - POSTGRES_DB=ticketing_database

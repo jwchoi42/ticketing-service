@@ -6,6 +6,10 @@ files:
     overwrite: true
 
 hooks:
+  ApplicationStop:
+    - location: infra/aws/scripts/stop.sh
+      timeout: 60
+      runas: ubuntu
   AfterInstall:
     - location: infra/aws/scripts/deploy.sh
       timeout: 300

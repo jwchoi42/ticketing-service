@@ -8,16 +8,23 @@ cd /home/ubuntu/ticketing-service
 
 echo "Starting deployment script via CodeDeploy..."
 
-# Note: In a production environment, you should use AWS SSM Parameter Store to get these.
-# For now, we assume the environment is set or we skip login if already logged in.
-# Alternatively, use $(aws ecr get-login-password) if using ECR.
+# 1. Fetch secrets from AWS SSM Parameter Store
+echo "Fetching secrets from AWS SSM..."
+export DB_PASSWORD=$(aws ssm get-parameter --name "/ticketing/prod/DB_PASSWORD" --with-decryption --query "Parameter.Value" --output text)
+export DOCKERHUB_USERNAME=$(aws ssm get-parameter --name "/ticketing/prod/DOCKERHUB_USERNAME" --query "Parameter.Value" --output text)
+export DOCKERHUB_TOKEN=$(aws ssm get-parameter --name "/ticketing/prod/DOCKERHUB_TOKEN" --with-decryption --query "Parameter.Value" --output text)
 
-# 1. Pull latest images
+# 2. Login to Docker Hub
+echo "Logging in to Docker Hub..."
+echo "$DOCKERHUB_TOKEN" | sudo docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
+# 3. Pull latest images and restart containers
 echo "Updating Docker containers..."
-sudo docker compose -f docker-compose.prod.yml pull
-sudo docker compose -f docker-compose.prod.yml up -d
+# Use sudo -E to preserve the exported environment variables (especially DB_PASSWORD)
+sudo -E docker compose -f docker-compose.prod.yml pull
+sudo -E docker compose -f docker-compose.prod.yml up -d
 
-# 2. Cleanup
+# 4. Cleanup
 echo "Pruning old Docker images..."
 sudo docker image prune -f
 

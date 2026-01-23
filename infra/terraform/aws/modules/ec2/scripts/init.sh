@@ -40,7 +40,14 @@ sudo usermod -aG docker ubuntu
 echo "Docker installation completed!"
 
 # ==============================================================================
-# 2. CodeDeploy Agent Installation
+# 2. AWS CLI Installation (Required for SSM secrets)
+# ==============================================================================
+sudo apt-get install -y awscli
+
+echo "AWS CLI installation completed!"
+
+# ==============================================================================
+# 3. CodeDeploy Agent Installation
 # ==============================================================================
 
 sudo apt-get install -y ruby-full wget

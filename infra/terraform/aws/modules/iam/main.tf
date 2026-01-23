@@ -82,3 +82,27 @@ resource "aws_iam_role_policy_attachment" "codedeploy_service_attach" {
   role       = aws_iam_role.codedeploy_role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSCodeDeployRole"
 }
+
+# ==============================================================================
+# 3. SECRET MANAGEMENT PERMISSIONS
+# ==============================================================================
+
+# [3-1] SSM Read Policy: Allows EC2 to fetch deployment secrets (DB password, Docker tokens)
+resource "aws_iam_role_policy" "ec2_ssm_read" {
+  name = "${var.project_name}-ssm-read-policy"
+  role = aws_iam_role.ec2_role.id
+
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ssm:GetParameter",
+          "ssm:GetParameters"
+        ]
+        Resource = "arn:aws:ssm:ap-northeast-2:*:parameter/ticketing/prod/*"
+      }
+    ]
+  })
+}

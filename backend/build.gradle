@@ -29,16 +29,6 @@ dependencies {
     // Web
     implementation 'org.springframework.boot:spring-boot-starter-web'
 
-    // Swagger
-    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0'
-
-    /**
-     * Operations
-     */
-
-    // Actuator
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
     /**
      * Database
      */
@@ -50,13 +40,12 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
 
     // Redis
-//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // Kafka
 //    implementation 'org.springframework.kafka:spring-kafka'
 
-    // WebFlux for SSE and async operations
-    implementation 'org.springframework.boot:spring-boot-starter-webflux'
+    // --------------------------------------------------------------------------------
 
     /**
      * Test
@@ -87,12 +76,27 @@ dependencies {
     // Awaitility for async testing
     testImplementation 'org.awaitility:awaitility:4.2.0'
 
+    // Swagger
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.0'
+
+    // --------------------------------------------------------------------------------
+
+    /**
+     * Operations
+     */
+
+    // Actuator
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
     /**
      * Observability
      */
 
     // Prometheus
     implementation 'io.micrometer:micrometer-registry-prometheus'
+
+    // WebFlux for SSE and async operations
+    implementation 'org.springframework.boot:spring-boot-starter-webflux'
 
 }
 

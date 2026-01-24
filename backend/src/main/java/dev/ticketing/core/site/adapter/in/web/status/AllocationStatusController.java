@@ -33,7 +33,7 @@ public class AllocationStatusController {
     @GetMapping("/blocks/{blockId}/seats")
     public SuccessResponse<AllocationStatusSnapShot> getSeatStatuses(@PathVariable final Long matchId,
             @PathVariable final Long blockId) {
-        List<Allocation> allocations = snapshotUseCase.getSnapshot(matchId, blockId);
+        List<Allocation> allocations = snapshotUseCase.getAllocationSnapshot(matchId, blockId);
         return SuccessResponse.of(AllocationStatusSnapShot.from(allocations));
     }
 }

@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -40,9 +41,11 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ErrorResponse handleUnexpectedException(final Exception e) {
+    public ResponseEntity<ErrorResponse> handleUnexpectedException(final Exception e) {
         log.error("Unexpected error occurred", e);
-        return ErrorResponse.of("Internal Server Error");
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(ErrorResponse.of("Internal Server Error"));
     }
 }

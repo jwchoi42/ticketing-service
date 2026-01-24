@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 // import localFont from "next/font/local";
 import "./globals.css";
 import QueryProvider from "@/components/providers/query-provider";
@@ -17,12 +17,13 @@ const TOAST_OPTIONS = {
 export const metadata: Metadata = {
   title: "Ticketing Service",
   description: "Real-time ticketing service frontend",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false,
-  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({

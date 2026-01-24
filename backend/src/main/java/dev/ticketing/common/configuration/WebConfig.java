@@ -1,4 +1,4 @@
-package dev.ticketing.common.config;
+package dev.ticketing.common.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;

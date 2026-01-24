@@ -60,3 +60,8 @@ Frontend-Backend Separation Rule
 - **STRICT RESTRICTION**: When assigned a frontend task (`frontend/`), **DO NOT** modify any files in the backend source code (`src/`).
 - **Escalation Policy**: If a frontend task is blocked by backend limitations (missing APIs, bugs, etc.), identify the issue, stop development on that part, and **REQUEST PROMPT INPUT** from the User to proceed.
 - Refer to [frontend-development-rule.md](../docs/convention/frontend-development-rule.md) for more details.
+
+Module Specific Rules
+===
+- **Frontend (`frontend/`)**: 프론트엔드 작업 시에는 `frontend/.agent/AGENT.md`에 명시된 상세 기술 스택 및 조사 규칙을 반드시 따릅니다.
+- **Backend (`backend/`)**: 백엔드 작업 시에는 Spring Boot 기반의 관례를 따릅니다.

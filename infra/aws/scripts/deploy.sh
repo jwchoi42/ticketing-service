@@ -22,8 +22,8 @@ echo "$DOCKERHUB_TOKEN" | sudo docker login -u "$DOCKERHUB_USERNAME" --password-
 # 3. Pull latest images and restart containers
 echo "Updating Docker containers..."
 # Use sudo -E to preserve the exported environment variables (especially DB_PASSWORD)
-sudo -E docker compose -f docker-compose.prod.yml pull
-sudo -E docker compose -f docker-compose.prod.yml up -d
+sudo -E docker compose -f compose.prod.yaml pull
+sudo -E docker compose -f compose.prod.yaml up -d
 
 # 4. Cleanup
 echo "Pruning old Docker images..."

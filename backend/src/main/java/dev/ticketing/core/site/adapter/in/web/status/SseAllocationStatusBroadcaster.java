@@ -52,14 +52,16 @@ public class SseAllocationStatusBroadcaster {
 
         try {
             // 2. 초기 데이터 전송
-            List<Allocation> snapshot = snapshotUseCase.getSnapshot(matchId, blockId);
+            List<Allocation> snapshot = snapshotUseCase.getAllocationSnapshot(matchId, blockId);
             sendSnapshotEvent(emitter, snapshot);
             log.info("초기 데이터 전송 완료: matchId={}, blockId={}, 좌석 수={}",
                     matchId, blockId, snapshot.size());
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             log.error("초기 데이터 전송 실패", e);
-            emitters.get(key).remove(emitter);
+            if (emitters.get(key) != null) {
+                emitters.get(key).remove(emitter);
+            }
             emitter.completeWithError(e);
             return emitter;
         }
@@ -112,7 +114,7 @@ public class SseAllocationStatusBroadcaster {
 
                 // UseCase를 통해 변경 사항 조회
                 log.debug("변경 사항 조회 시작: matchId={}, blockId={}, since={}", matchId, blockId, lastCheckTime);
-                List<Allocation> changes = changesUseCase.getChangesSince(matchId, blockId, lastCheckTime);
+                List<Allocation> changes = changesUseCase.getAllocationChangesSince(matchId, blockId, lastCheckTime);
                 log.debug("변경 사항 조회 완료: matchId={}, blockId={}, 변경 수={}", matchId, blockId, changes.size());
 
                 if (!changes.isEmpty()) {
@@ -161,6 +163,6 @@ public class SseAllocationStatusBroadcaster {
 
     private Long[] parseKey(String key) {
         String[] parts = key.split(":");
-        return new Long[]{Long.parseLong(parts[0]), Long.parseLong(parts[1])};
+        return new Long[] { Long.parseLong(parts[0]), Long.parseLong(parts[1]) };
     }
 }

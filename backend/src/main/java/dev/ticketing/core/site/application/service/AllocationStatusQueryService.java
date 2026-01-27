@@ -5,6 +5,7 @@ import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocati
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationStatusPort;
 import dev.ticketing.core.site.domain.allocation.Allocation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +25,13 @@ public class AllocationStatusQueryService
     private final LoadAllocationStatusPort loadAllocationStatusPort;
 
     @Override
-    public List<Allocation> getSnapshot(Long matchId, Long blockId) {
+    @Cacheable(value = "allocationSnapshot", key = "#matchId + ':' + #blockId")
+    public List<Allocation> getAllocationSnapshot(Long matchId, Long blockId) {
         return loadAllocationStatusPort.loadAllocationStatusesByBlockId(matchId, blockId);
     }
 
     @Override
-    public List<Allocation> getChangesSince(Long matchId, Long blockId, LocalDateTime since) {
+    public List<Allocation> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since) {
         return loadAllocationStatusPort.loadAllocationStatusesSince(matchId, blockId, since);
     }
 }

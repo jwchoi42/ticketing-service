@@ -63,7 +63,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          source: "docker-compose.prod.yml,infra"
+          source: "compose.yaml,compose.prod.yaml,infra"
           target: "~/"
 
       - name: SSH Deploy
@@ -74,7 +74,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }}
-            sudo docker login -u ${{ secrets.DOCKERHUB_USERNAME }} -p ${{ secrets.DOCKERHUB_TOKEN }}
-            sudo -E docker compose -f ~/docker-compose.prod.yml pull
-            sudo -E docker compose -f ~/docker-compose.prod.yml up -d
-            sudo docker image prune -f
+            sudo docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
+            sudo --preserve-env docker compose --file ~/compose.yaml --file ~/compose.prod.yaml pull
+            sudo --preserve-env docker compose --file ~/compose.yaml --file ~/compose.prod.yaml up --detach
+            sudo docker image prune --force

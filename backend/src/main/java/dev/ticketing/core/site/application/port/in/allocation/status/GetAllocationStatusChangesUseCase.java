@@ -10,5 +10,5 @@ import java.util.List;
  * 특정 시간 이후 변경된 좌석 상태만 조회 (서버 폴링용)
  */
 public interface GetAllocationStatusChangesUseCase {
-    List<Allocation> getChangesSince(Long matchId, Long blockId, LocalDateTime since);
+    List<Allocation> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since);
 }

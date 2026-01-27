@@ -58,8 +58,7 @@ public class Match {
                 .build();
     }
 
-    public Match update(final String stadium, final String homeTeam, final String awayTeam,
-            final LocalDateTime dateTime) {
+    public Match update(final String stadium, final String homeTeam, final String awayTeam, final LocalDateTime dateTime) {
         validate(stadium, homeTeam, awayTeam, dateTime);
         return Match.builder()
                 .id(this.id)

@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,6 +33,7 @@ import java.util.List;
 
 @Slf4j
 @Component
+@Profile("!test")
 @RequiredArgsConstructor
 public class DataInitializer implements ApplicationRunner {
 
@@ -130,7 +132,7 @@ public class DataInitializer implements ApplicationRunner {
 
     private void saveSeats(Block block) {
         List<SeatEntity> seats = new ArrayList<>();
-        // 100 seats: 10 rows x 10 seats
+        // 100 allocationStatuses: 10 rows x 10 allocationStatuses
         int rows = 10;
         int seatsPerRow = 10;
 

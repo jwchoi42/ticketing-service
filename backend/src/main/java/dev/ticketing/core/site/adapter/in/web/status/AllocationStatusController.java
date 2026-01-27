@@ -2,7 +2,7 @@ package dev.ticketing.core.site.adapter.in.web.status;
 
 import dev.ticketing.common.web.model.response.SuccessResponse;
 import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocationStatusSnapShotUseCase;
-import dev.ticketing.core.site.domain.allocation.Allocation;
+import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -12,28 +12,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 
-import java.util.List;
-
-@Tag(name = "StatusStream", description = "좌석 현황 API")
+@Tag(name = "Allocation Status", description = "자리 배정 현황 API")
 @RestController
-@RequestMapping("/api/matches/{matchId}")
+@RequestMapping("/api/matches/{matchId}/blocks/{blockId}/seats")
 @RequiredArgsConstructor
 public class AllocationStatusController {
 
-    private final GetAllocationStatusSnapShotUseCase snapshotUseCase;
+    private final GetAllocationStatusSnapShotUseCase getAllocationStatusSnapShotUseCase;
     private final SseAllocationStatusBroadcaster broadcaster;
 
-    @Operation(summary = "실시간 좌석 현황 스트림 (SSE)")
-    @GetMapping("/blocks/{blockId}/seats/events")
-    public SseEmitter getSeatStatusStream(@PathVariable final Long matchId, @PathVariable final Long blockId) {
+    @Operation(summary = "자리 배정 현황 조회")
+    @GetMapping
+    public SuccessResponse<AllocationStatusSnapShot> getAllocationStatusSnapShotByMatchIdAndBlockId(
+            @PathVariable final Long matchId, @PathVariable final Long blockId) {
+        AllocationStatusSnapShot snapshot
+                = getAllocationStatusSnapShotUseCase.getAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
+        return SuccessResponse.of(snapshot);
+    }
+
+    @Operation(summary = "자리 배정 변경 내역 발생")
+    @GetMapping("/events")
+    public SseEmitter getSeatStatusStreamByMatchIdAndBlockId(
+            @PathVariable final Long matchId, @PathVariable final Long blockId) {
         return broadcaster.subscribe(matchId, blockId);
     }
 
-    @Operation(summary = "좌석 현황 조회 (SnapShot)")
-    @GetMapping("/blocks/{blockId}/seats")
-    public SuccessResponse<AllocationStatusSnapShot> getSeatStatuses(@PathVariable final Long matchId,
-            @PathVariable final Long blockId) {
-        List<Allocation> allocations = snapshotUseCase.getAllocationSnapshot(matchId, blockId);
-        return SuccessResponse.of(AllocationStatusSnapShot.from(allocations));
-    }
 }

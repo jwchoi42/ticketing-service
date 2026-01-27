@@ -10,6 +10,7 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.ScenarioScope;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
 @Slf4j
+@ScenarioScope
 @RequiredArgsConstructor
 public class AllocationStatusSteps {
 
@@ -66,7 +68,7 @@ public class AllocationStatusSteps {
                 .orElseThrow(() -> new AssertionError("snapshot 이벤트를 받지 못했습니다."));
 
         testContext.set("lastSnapShot", initialEvent.data());
-        assertThat(initialEvent.data()).contains("\"status\":\"AVAILABLE\"");
+        assertThat(initialEvent.data()).contains("\"state\":\"AVAILABLE\"");
     }
 
     //
@@ -115,7 +117,7 @@ public class AllocationStatusSteps {
                 .anyMatch(e -> "changes".equals(e.event()) &&
                         e.data() != null &&
                         e.data().contains("\"seatId\":" + seatId) &&
-                        e.data().contains("\"status\":\"" + mappedStatus + "\""));
+                        e.data().contains("\"state\":\"" + mappedStatus + "\""));
 
         if (foundInChanges) {
             log.info("[TEST] changes 이벤트에서 좌석 상태 확인됨: seatId={}, 상태={}", seatId, mappedStatus);
@@ -136,8 +138,8 @@ public class AllocationStatusSteps {
 
         if (lastSnapShot != null) {
             // 스냅샷에서 해당 좌석의 상태 확인
-            boolean foundInSnapshot = lastSnapShot.contains("\"id\":" + seatId) &&
-                    lastSnapShot.contains("\"status\":\"" + mappedStatus + "\"");
+            boolean foundInSnapshot = lastSnapShot.contains("\"seatId\":" + seatId) &&
+                    lastSnapShot.contains("\"state\":\"" + mappedStatus + "\"");
             if (foundInSnapshot) {
                 log.info("[TEST] snapshot 이벤트(스냅샷)에서 좌석 상태 확인됨: seatId={}, 상태={}", seatId, mappedStatus);
                 return;

@@ -3,7 +3,8 @@ package dev.ticketing.core.site.application.service;
 import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocationStatusChangesUseCase;
 import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocationStatusSnapShotUseCase;
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationStatusPort;
-import dev.ticketing.core.site.domain.allocation.Allocation;
+import dev.ticketing.core.site.domain.allocation.AllocationStatus;
+import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -19,19 +20,19 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class AllocationStatusQueryService
+public class AllocationStatusService
         implements GetAllocationStatusSnapShotUseCase, GetAllocationStatusChangesUseCase {
 
     private final LoadAllocationStatusPort loadAllocationStatusPort;
 
     @Override
-    @Cacheable(value = "allocationSnapshot", key = "#matchId + ':' + #blockId")
-    public List<Allocation> getAllocationSnapshot(Long matchId, Long blockId) {
-        return loadAllocationStatusPort.loadAllocationStatusesByBlockId(matchId, blockId);
+    @Cacheable(value = "allocationStatusSnapShot", key = "#matchId + ':' + #blockId")
+    public AllocationStatusSnapShot getAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId) {
+        return loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
     }
 
     @Override
-    public List<Allocation> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since) {
+    public List<AllocationStatus> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since) {
         return loadAllocationStatusPort.loadAllocationStatusesSince(matchId, blockId, since);
     }
 }

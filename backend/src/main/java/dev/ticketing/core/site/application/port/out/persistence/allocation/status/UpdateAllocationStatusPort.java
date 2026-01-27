@@ -1,6 +1,6 @@
 package dev.ticketing.core.site.application.port.out.persistence.allocation.status;
 
-import dev.ticketing.core.site.domain.allocation.AllocationStatus;
+import dev.ticketing.core.site.domain.allocation.AllocationState;
 
 import java.time.Duration;
 
@@ -24,8 +24,8 @@ public interface UpdateAllocationStatusPort {
     boolean updateAllocationStatusAtomicWithTTL(
             Long matchId,
             Long seatId,
-            AllocationStatus expectedStatus,
-            AllocationStatus newStatus,
+            AllocationState expectedStatus,
+            AllocationState newStatus,
             Duration ttl);
 
     /**
@@ -38,8 +38,8 @@ public interface UpdateAllocationStatusPort {
      * @param newStatus      새로운 상태
      * @return 업데이트 성공 여부
      */
-    boolean updateAllocationStatusAtomic(Long matchId, Long seatId, AllocationStatus expectedStatus,
-            AllocationStatus newStatus);
+    boolean updateAllocationStatusAtomic(Long matchId, Long seatId, AllocationState expectedStatus,
+            AllocationState newStatus);
 
     /**
      * 좌석 상태를 강제로 업데이트 (상태 체크 없이)
@@ -48,7 +48,7 @@ public interface UpdateAllocationStatusPort {
      * @param seatId    좌석 ID
      * @param newStatus 새로운 상태
      */
-    void updateAllocationStatus(Long matchId, Long seatId, AllocationStatus newStatus);
+    void updateAllocationStatus(Long matchId, Long seatId, AllocationState newStatus);
 
     /**
      * 좌석 상태의 TTL 제거 (영구 저장)

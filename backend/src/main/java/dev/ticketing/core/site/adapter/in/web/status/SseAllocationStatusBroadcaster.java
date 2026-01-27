@@ -2,9 +2,14 @@ package dev.ticketing.core.site.adapter.in.web.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.ticketing.common.web.model.response.SuccessResponse;
+import dev.ticketing.core.site.adapter.in.web.status.model.SseChangesResponse;
+import dev.ticketing.core.site.adapter.in.web.status.model.SseSnapshotResponse;
 import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocationStatusChangesUseCase;
 import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocationStatusSnapShotUseCase;
-import dev.ticketing.core.site.domain.allocation.Allocation;
+import dev.ticketing.core.site.application.port.in.hierarchy.GetSeatsUseCase;
+import dev.ticketing.core.site.domain.allocation.AllocationStatus;
+import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
+import dev.ticketing.core.site.domain.hierarchy.Seat;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -28,6 +33,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @RequiredArgsConstructor
 public class SseAllocationStatusBroadcaster {
 
+    private final GetSeatsUseCase seatsUseCase;
     private final GetAllocationStatusSnapShotUseCase snapshotUseCase;
     private final GetAllocationStatusChangesUseCase changesUseCase;
     private final ObjectMapper objectMapper;
@@ -42,6 +48,7 @@ public class SseAllocationStatusBroadcaster {
      * SSE 스트림 구독
      */
     public SseEmitter subscribe(Long matchId, Long blockId) {
+        log.info("SSE 구독 시작: matchId={}, blockId={}", matchId, blockId);
         SseEmitter emitter = new SseEmitter(Long.MAX_VALUE); // 무제한 타임아웃
         String key = buildKey(matchId, blockId);
 
@@ -52,13 +59,17 @@ public class SseAllocationStatusBroadcaster {
 
         try {
             // 2. 초기 데이터 전송
-            List<Allocation> snapshot = snapshotUseCase.getAllocationSnapshot(matchId, blockId);
-            sendSnapshotEvent(emitter, snapshot);
-            log.info("초기 데이터 전송 완료: matchId={}, blockId={}, 좌석 수={}",
-                    matchId, blockId, snapshot.size());
+            log.info("좌석 및 배정 상태 조회 시작");
+            List<Seat> seats = seatsUseCase.getSeats(blockId);
+            AllocationStatusSnapShot snapshot = snapshotUseCase.getAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
+            log.info("조회 완료: 좌석 수={}, 배정 상태 수={}", seats.size(), snapshot.allocationStatuses().size());
+
+            log.info("SSE 이벤트 전송 시작");
+            sendSnapshotEvent(emitter, seats, snapshot.allocationStatuses());
+            log.info("초기 데이터 전송 완료: matchId={}, blockId={}", matchId, blockId);
 
         } catch (Exception e) {
-            log.error("초기 데이터 전송 실패", e);
+            log.error("초기 데이터 전송 실패: {}", e.getMessage(), e);
             if (emitters.get(key) != null) {
                 emitters.get(key).remove(emitter);
             }
@@ -114,7 +125,7 @@ public class SseAllocationStatusBroadcaster {
 
                 // UseCase를 통해 변경 사항 조회
                 log.debug("변경 사항 조회 시작: matchId={}, blockId={}, since={}", matchId, blockId, lastCheckTime);
-                List<Allocation> changes = changesUseCase.getAllocationChangesSince(matchId, blockId, lastCheckTime);
+                List<AllocationStatus> changes = changesUseCase.getAllocationChangesSince(matchId, blockId, lastCheckTime);
                 log.debug("변경 사항 조회 완료: matchId={}, blockId={}, 변경 수={}", matchId, blockId, changes.size());
 
                 if (!changes.isEmpty()) {
@@ -133,16 +144,16 @@ public class SseAllocationStatusBroadcaster {
         lastCheckTime = currentCheckTime;
     }
 
-    private void sendSnapshotEvent(SseEmitter emitter, List<Allocation> allocations) throws IOException {
-        AllocationStatusSnapShot snapshot = AllocationStatusSnapShot.from(allocations);
-        String json = objectMapper.writeValueAsString(SuccessResponse.of(snapshot));
+    private void sendSnapshotEvent(SseEmitter emitter, List<Seat> seats, List<AllocationStatus> allocationStatuses) throws IOException {
+        SseSnapshotResponse response = SseSnapshotResponse.of(seats, allocationStatuses);
+        String json = objectMapper.writeValueAsString(SuccessResponse.of(response));
         emitter.send(SseEmitter.event().name("snapshot").data(json));
     }
 
-    private void broadcastChanges(List<SseEmitter> emitterList, List<Allocation> changes) {
+    private void broadcastChanges(List<SseEmitter> emitterList, List<AllocationStatus> changes) {
         try {
-            AllocationStatusChanges changesEvent = AllocationStatusChanges.from(changes);
-            String json = objectMapper.writeValueAsString(SuccessResponse.of(changesEvent));
+            SseChangesResponse response = SseChangesResponse.from(changes);
+            String json = objectMapper.writeValueAsString(SuccessResponse.of(response));
 
             emitterList.forEach(emitter -> {
                 try {

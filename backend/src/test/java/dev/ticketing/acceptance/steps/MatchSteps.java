@@ -19,8 +19,11 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 
+import io.cucumber.spring.ScenarioScope;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ScenarioScope
 @RequiredArgsConstructor
 public class MatchSteps {
 

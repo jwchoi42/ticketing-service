@@ -38,24 +38,40 @@ class SeatAllocationConcurrencyTest {
 
     @BeforeEach
     void setUp() {
-        // Clean up existing allocations
+        // Clean up existing data
         jdbcTemplate.execute("DELETE FROM allocations");
+        jdbcTemplate.execute("DELETE FROM seats");
+        jdbcTemplate.execute("DELETE FROM blocks");
+        jdbcTemplate.execute("DELETE FROM matches");
 
-        // Get a valid match ID and seat ID from the database
+        // Insert test match data
+        jdbcTemplate.update("""
+                INSERT INTO matches (stadium, home_team, away_team, date_time, status)
+                VALUES ('Test Stadium', 'Home Team', 'Away Team', NOW(), 'OPEN')
+                """);
         matchId = jdbcTemplate.queryForObject(
                 "SELECT id FROM matches LIMIT 1",
                 Long.class
         );
 
-        seatId = jdbcTemplate.queryForObject(
-                "SELECT id FROM seats LIMIT 1",
+        // Insert test block data (required for seat foreign key)
+        jdbcTemplate.update("""
+                INSERT INTO blocks (section_id, name)
+                VALUES (1, 'Test Block')
+                """);
+        Long blockId = jdbcTemplate.queryForObject(
+                "SELECT id FROM blocks LIMIT 1",
                 Long.class
         );
 
-        // Ensure match is OPEN for seat allocation
-        jdbcTemplate.update(
-                "UPDATE matches SET status = 'OPEN' WHERE id = ?",
-                matchId
+        // Insert test seat data
+        jdbcTemplate.update("""
+                INSERT INTO seats (block_id, row_number, seat_number)
+                VALUES (?, 1, 1)
+                """, blockId);
+        seatId = jdbcTemplate.queryForObject(
+                "SELECT id FROM seats LIMIT 1",
+                Long.class
         );
 
         // Pre-create AVAILABLE allocation (simulating MatchService.openMatch() behavior)

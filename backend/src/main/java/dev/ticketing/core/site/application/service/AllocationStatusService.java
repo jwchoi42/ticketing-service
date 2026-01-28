@@ -26,7 +26,7 @@ public class AllocationStatusService
     private final LoadAllocationStatusPort loadAllocationStatusPort;
 
     @Override
-    @Cacheable(value = "allocationStatusSnapShot", key = "#matchId + ':' + #blockId")
+//    @Cacheable(value = "allocationStatusSnapShot", key = "#matchId + ':' + #blockId")
     public AllocationStatusSnapShot getAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId) {
         return loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
     }

@@ -8,11 +8,8 @@ import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.support.TransactionTemplate;
 
-import jakarta.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -26,47 +23,63 @@ import java.util.concurrent.TimeoutException;
  *
  * Request Collapsing 적용:
  * - 동시에 같은 matchId:blockId로 요청이 들어오면 DB 쿼리 1번만 실행
+ * - 첫 번째 요청 스레드가 직접 실행하고, 나머지는 결과를 기다림
  * - 캐시와 달리 데이터를 저장하지 않아 일관성 문제 없음
  */
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class AllocationStatusService
         implements GetAllocationStatusSnapShotUseCase, GetAllocationStatusChangesUseCase {
 
     private static final long TIMEOUT_SECONDS = 5;
 
     private final LoadAllocationStatusPort loadAllocationStatusPort;
-    private final PlatformTransactionManager transactionManager;
-
-    private TransactionTemplate transactionTemplate;
 
     // 진행 중인 스냅샷 조회 요청 추적
     private final Map<String, CompletableFuture<AllocationStatusSnapShot>> inFlightSnapshots
             = new ConcurrentHashMap<>();
 
-    @PostConstruct
-    public void init() {
-        this.transactionTemplate = new TransactionTemplate(transactionManager);
-        this.transactionTemplate.setReadOnly(true);
-    }
-
     @Override
     public AllocationStatusSnapShot getAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
 
-        CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
-                CompletableFuture
-                        .supplyAsync(() -> transactionTemplate.execute(status ->
-                                loadAllocationStatusPort
-                                        .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId)))
-                        .whenComplete((result, ex) -> inFlightSnapshots.remove(key))
-        );
+        CompletableFuture<AllocationStatusSnapShot> existing = inFlightSnapshots.get(key);
 
+        // 이미 진행 중인 요청이 있으면 그 결과를 기다림
+        if (existing != null) {
+            return waitForResult(existing, matchId, blockId);
+        }
+
+        // 새로운 Future 생성 및 등록 시도
+        CompletableFuture<AllocationStatusSnapShot> newFuture = new CompletableFuture<>();
+        CompletableFuture<AllocationStatusSnapShot> registered = inFlightSnapshots.putIfAbsent(key, newFuture);
+
+        // 다른 스레드가 먼저 등록했으면 그 결과를 기다림
+        if (registered != null) {
+            return waitForResult(registered, matchId, blockId);
+        }
+
+        // 첫 번째 스레드: 직접 실행
+        try {
+            AllocationStatusSnapShot result = loadAllocationStatusPort
+                    .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
+            newFuture.complete(result);
+            return result;
+        } catch (Exception e) {
+            newFuture.completeExceptionally(e);
+            throw e;
+        } finally {
+            inFlightSnapshots.remove(key);
+        }
+    }
+
+    private AllocationStatusSnapShot waitForResult(
+            CompletableFuture<AllocationStatusSnapShot> future, Long matchId, Long blockId) {
         try {
             return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            future.cancel(true);
             log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
             throw new RuntimeException("조회 타임아웃", e);
         } catch (Exception e) {
@@ -76,7 +89,6 @@ public class AllocationStatusService
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<AllocationStatus> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since) {
         return loadAllocationStatusPort.loadAllocationStatusesSince(matchId, blockId, since);
     }

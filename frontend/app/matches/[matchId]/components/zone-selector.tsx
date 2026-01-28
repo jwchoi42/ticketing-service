@@ -3,15 +3,6 @@
 import { memo } from 'react';
 import { Area, Section } from '@/lib/api/site';
 import { cn } from '@/lib/utils';
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-} from "@/components/ui/carousel";
-
-import { ChevronRight } from 'lucide-react';
-
-const CAROUSEL_OPTS = { align: "start" as const, dragFree: true };
 
 interface ZoneSelectorProps {
     areas: Area[] | undefined;

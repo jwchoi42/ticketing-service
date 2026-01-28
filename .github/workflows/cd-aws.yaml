@@ -2,7 +2,7 @@ name: Continuous Deployment (CodeDeploy - AWS)
 
 on:
   push:
-    branches: ["stage"]
+    branches: ["main"]
 
 jobs:
 

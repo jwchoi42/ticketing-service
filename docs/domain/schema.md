@@ -62,12 +62,14 @@ Table allocations {
   id integer [primary key]
   reservation_id integer [null]
   match_id integer [not null]
+  block_id integer [not null]
   seat_id integer [not null]
   status varchar [not null] // AVAILABLE, HOLD, OCCUPIED (mapped to AllocationStatus enum)
   hold_expires_at timestamp [null] // TTL for temporary seat hold
   
   Indexes {
     (match_id, seat_id) [unique] // Ensures one allocation per seat per match
+    (match_id, block_id) // Optimized lookup for seat status by block
   }
   
   Note: '''

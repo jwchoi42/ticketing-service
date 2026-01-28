@@ -12,6 +12,7 @@ import org.springframework.boot.test.web.reactive.server.WebTestClientBuilderCus
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 
@@ -20,6 +21,7 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 @CucumberContextConfiguration
 @Import({TestContainerConfiguration.class, AcceptanceTestConfig.AcceptanceTestInnerConfig.class})
 @SpringBootTest(webEnvironment = RANDOM_PORT)
+@ActiveProfiles("test")
 @AutoConfigureWebTestClient(timeout = "30000")
 public class AcceptanceTestConfig {
 

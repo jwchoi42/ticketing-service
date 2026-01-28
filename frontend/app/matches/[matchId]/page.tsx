@@ -30,6 +30,7 @@ export default function SeatSelectionPage() {
     const [myHeldSeatIds, setMyHeldSeatIds] = useState<Set<number>>(new Set());
     const [heldSeatsInfo, setHeldSeatsInfo] = useState<Map<number, { blockName: string, seatNumber: number | string }>>(new Map());
     const [isSummaryExpanded, setIsSummaryExpanded] = useState(false);
+    const [slideDirection, setSlideDirection] = useState<'left' | 'right'>('right');
 
     // Ref to avoid stale closures in callbacks (rerender-functional-setstate / advanced-use-latest)
     const heldSeatIdsRef = useRef(myHeldSeatIds);
@@ -100,15 +101,18 @@ export default function SeatSelectionPage() {
     const handleSectionSelect = useCallback((sectionId: number) => {
         setSelectedSectionId(sectionId);
         setSelectedBlockId(null);
+        setSlideDirection('right'); // Default entry direction
     }, []);
 
     const handlePrevBlock = useCallback(() => {
         if (!blocks || currentBlockIndex <= 0) return;
+        setSlideDirection('left');
         setSelectedBlockId(blocks[currentBlockIndex - 1].id);
     }, [blocks, currentBlockIndex]);
 
     const handleNextBlock = useCallback(() => {
         if (!blocks || currentBlockIndex < 0 || currentBlockIndex >= blocks.length - 1) return;
+        setSlideDirection('right');
         setSelectedBlockId(blocks[currentBlockIndex + 1].id);
     }, [blocks, currentBlockIndex]);
 
@@ -119,18 +123,18 @@ export default function SeatSelectionPage() {
             router.push('/log-in');
             return;
         }
-        if (seat.status === 'OCCUPIED') return;
+        if (seat.state === 'OCCUPIED') return;
 
         // Check if held by someone else using functional check
         setMyHeldSeatIds(currentHeldIds => {
-            if (seat.status === 'HOLD' && !currentHeldIds.has(seat.id)) {
+            if (seat.state === 'HOLD' && !currentHeldIds.has(seat.id)) {
                 return currentHeldIds; // No change - someone else holds it
             }
             return currentHeldIds;
         });
 
         try {
-            if (seat.status === 'HOLD') {
+            if (seat.state === 'HOLD') {
                 // Release
                 await allocationApi.releaseSeat(matchId, seat.id);
                 setMyHeldSeatIds(prev => {
@@ -278,21 +282,26 @@ export default function SeatSelectionPage() {
                 />
             )}
 
-            {/* 4. Main Content (Seat Map) */}
-            <main className="flex-1 p-4 overflow-auto bg-slate-50/50 pb-40">
-                {!selectedSectionId ? (
-                    <div className="flex flex-col items-center justify-center h-64 text-muted-foreground space-y-2">
-                        <p className="font-medium">Select an Area and Section above</p>
-                    </div>
-                ) : !activeBlockId ? (
-                    <div className="flex items-center justify-center h-64 text-muted-foreground">Loading Blocks...</div>
-                ) : (
-                    <SeatGrid
-                        seats={seats}
-                        myHeldSeatIds={myHeldSeatIds}
-                        onSeatClick={handleSeatClick}
-                    />
-                )}
+            {/* 4. Main Content (Seat Map) - Improved mobile scroll and layout */}
+            <main className="flex-1 overflow-hidden bg-slate-50/50 flex flex-col">
+                <div className="w-full max-w-lg mx-auto flex-1 flex flex-col h-full">
+                    {!selectedSectionId ? (
+                        <div className="flex flex-col items-center justify-center h-64 text-muted-foreground space-y-2">
+                            <p className="font-medium text-sm">영역과 구역을 먼저 선택해주세요</p>
+                        </div>
+                    ) : !activeBlockId ? (
+                        <div className="flex items-center justify-center h-64 text-muted-foreground text-sm">블록 정보를 불러오는 중...</div>
+                    ) : (
+                        <SeatGrid
+                            blockId={activeBlockId} // Pass ID for internal keying
+                            seats={seats}
+                            myHeldSeatIds={myHeldSeatIds}
+                            onSeatClick={handleSeatClick}
+                            direction={slideDirection}
+                            status={status}
+                        />
+                    )}
+                </div>
             </main>
 
             {/* 5. Selection Summary & Confirmation (Always Visible) */}

@@ -22,9 +22,15 @@ async function getMatches(): Promise<Match[]> {
 
         let baseUrl = process.env.NEXT_PUBLIC_API_URL;
 
-        // If baseUrl is relative (starts with /) or undefined, assuming Docker internal network
-        // We use 'http://backend:8080/api'
-        if (!baseUrl || baseUrl.startsWith('/')) {
+        // If baseUrl is relative (starts with /) or undefined:
+        // 1. On server (docker), we want http://backend:8080/api
+        // 2. Local dev (npm run dev), we want http://localhost:8080/api
+        // We'll use NEXT_PUBLIC_API_URL = /api in Docker (via Nginx proxy)
+        // For local dev, we either set it in .env.local or fallback to localhost
+        if (!baseUrl) {
+            baseUrl = 'http://localhost:8080/api';
+        } else if (baseUrl.startsWith('/')) {
+            // Assume Docker internal network if relative URL
             baseUrl = 'http://backend:8080/api';
         }
 

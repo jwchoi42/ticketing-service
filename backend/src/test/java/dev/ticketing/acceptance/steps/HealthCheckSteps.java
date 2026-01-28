@@ -8,8 +8,11 @@ import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
+import io.cucumber.spring.ScenarioScope;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ScenarioScope
 @RequiredArgsConstructor
 public class HealthCheckSteps {
 

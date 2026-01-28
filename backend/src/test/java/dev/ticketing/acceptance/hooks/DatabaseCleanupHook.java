@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.metamodel.EntityType;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import io.cucumber.java.Before;
@@ -21,6 +22,11 @@ public class DatabaseCleanupHook {
 
     private List<String> tableNames;
 
+    // 좌석 구조는 불변 데이터이므로 TRUNCATE 대상에서 제외
+    private static final Set<String> EXCLUDED_TABLES = Set.of(
+            "areas", "sections", "blocks", "seats"
+    );
+
     @Before
     @Transactional
     public void cleanupDatabase() {
@@ -33,6 +39,7 @@ public class DatabaseCleanupHook {
         for (String tableName : tableNames) {
             entityManager.createNativeQuery("TRUNCATE TABLE " + tableName + " CASCADE").executeUpdate();
         }
+        entityManager.clear();
 
         log.info("[BDD] Database cleaned up successfully (Dynamic Table Discovery)");
     }
@@ -41,8 +48,10 @@ public class DatabaseCleanupHook {
         tableNames = entityManager.getMetamodel().getEntities().stream()
                 .filter(e -> e.getJavaType().getAnnotation(Entity.class) != null)
                 .map(this::getTableName)
+                .filter(tableName -> !EXCLUDED_TABLES.contains(tableName))
                 .collect(Collectors.toList());
         log.info("[BDD] Initialized table names for cleanup: {}", tableNames);
+        log.info("[BDD] Excluded tables (site hierarchy): {}", EXCLUDED_TABLES);
     }
 
     private String getTableName(EntityType<?> entityType) {

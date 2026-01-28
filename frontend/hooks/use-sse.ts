@@ -1,8 +1,24 @@
 'use client';
 
 import { useState, useEffect, useRef, useCallback, useMemo } from 'react';
-import { Seat } from '@/lib/api/site';
+import { Seat, AllocationState } from '@/lib/api/site';
 import { toast } from 'sonner';
+
+interface SeatInfo {
+    id: number;
+    rowNumber: number;
+    seatNumber: number;
+}
+
+interface AllocationInfo {
+    seatId: number;
+    state: AllocationState;
+}
+
+interface ChangeInfo {
+    seatId: number;
+    state: AllocationState;
+}
 
 export type ConnectionStatus = 'connected' | 'disconnected' | 'reconnecting';
 
@@ -71,14 +87,28 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
             }
         };
 
-        // Event: snapshot (Initial Load) - convert array to Map
+        // Event: snapshot (Initial Load) - combine seats and allocationStatuses into Map
         es.addEventListener('snapshot', (event) => {
             try {
                 const payload = JSON.parse(event.data);
-                const newSeats: Seat[] = payload.data?.seats || [];
+                const seats: SeatInfo[] = payload.data?.seats || [];
+                const allocationStatuses: AllocationInfo[] = payload.data?.allocationStatuses || [];
+
+                // Create a map of seatId -> state for quick lookup
+                const stateMap = new Map<number, AllocationState>();
+                for (const allocation of allocationStatuses) {
+                    stateMap.set(allocation.seatId, allocation.state);
+                }
+
+                // Combine seats with their allocation states
                 const newMap = new Map<number, Seat>();
-                for (const seat of newSeats) {
-                    newMap.set(seat.id, seat);
+                for (const seat of seats) {
+                    newMap.set(seat.id, {
+                        id: seat.id,
+                        rowNumber: seat.rowNumber,
+                        seatNumber: seat.seatNumber,
+                        state: stateMap.get(seat.id) || 'AVAILABLE',
+                    });
                 }
                 setSeatMap(newMap);
             } catch (err) {
@@ -90,14 +120,14 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
         es.addEventListener('changes', (event) => {
             try {
                 const payload = JSON.parse(event.data);
-                const changes: Array<{ seatId: number; status: string }> = payload.data?.changes || [];
+                const changes: ChangeInfo[] = payload.data?.changes || [];
 
                 setSeatMap((prev) => {
                     const next = new Map(prev);
                     for (const change of changes) {
                         const existing = next.get(change.seatId);
                         if (existing) {
-                            next.set(change.seatId, { ...existing, status: change.status as Seat['status'] });
+                            next.set(change.seatId, { ...existing, state: change.state });
                         }
                     }
                     return next;

@@ -19,9 +19,12 @@ import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
+import io.cucumber.spring.ScenarioScope;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
+@ScenarioScope
 @RequiredArgsConstructor
 public class AdminSteps {
 

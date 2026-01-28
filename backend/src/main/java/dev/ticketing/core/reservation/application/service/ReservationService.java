@@ -48,7 +48,7 @@ public class ReservationService implements CreateReservationUseCase {
             throw new MatchNotOpenException(matchId);
         }
 
-        // 1. Verify all seats are held by the user
+        // 1. Verify all allocationStatuses are held by the user
         for (final Long seatId : seatIds) {
             final Allocation allocation = loadAllocationPort.loadAllocationByMatchAndSeatWithLock(matchId, seatId)
                     .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));

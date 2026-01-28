@@ -3,6 +3,7 @@ package dev.ticketing.acceptance.steps;
 import dev.ticketing.acceptance.client.SiteClient;
 import dev.ticketing.acceptance.client.model.TestResponse;
 import dev.ticketing.acceptance.context.TestContext;
+import dev.ticketing.core.site.application.port.out.persistence.hierarchy.LoadAreaPort;
 import dev.ticketing.core.site.application.port.out.persistence.hierarchy.RecordAreaPort;
 import dev.ticketing.core.site.application.port.out.persistence.hierarchy.RecordBlockPort;
 import dev.ticketing.core.site.application.port.out.persistence.hierarchy.RecordSeatPort;
@@ -15,6 +16,7 @@ import dev.ticketing.core.site.domain.hierarchy.Section;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.spring.ScenarioScope;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,11 +27,13 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
+@ScenarioScope
 @RequiredArgsConstructor
 public class SiteSteps {
 
     private final SiteClient siteClient;
     private final TestContext testContext;
+    private final LoadAreaPort loadAreaPort;
     private final RecordAreaPort recordAreaPort;
     private final RecordSectionPort recordSectionPort;
     private final RecordBlockPort recordBlockPort;
@@ -49,6 +53,15 @@ public class SiteSteps {
 
     @Given("경기장은 내야와 외야 영역으로 나뉘며, 내야 영역은 연고와 원정 진영으로, 외야 영역은 좌측과 우측 진영으로 구분되고, 각 진영은 {int}개의 구간과 구간별 {int}개의 좌석으로 구성됩니다.")
     public void setupSiteHierarchy(int blocksCount, int seatsPerBlock) {
+        // 이미 좌석 구조가 있으면 스킵 (테스트 간 공유)
+        List<Area> existingAreas = loadAreaPort.loadAllAreas();
+        if (!existingAreas.isEmpty()) {
+            log.info("[BDD] 좌석 구조가 이미 존재함 - 생성 스킵 (영역 수: {})", existingAreas.size());
+            return;
+        }
+
+        log.info("[BDD] 좌석 구조 생성 시작: {}개 블록 x {}개 좌석", blocksCount, seatsPerBlock);
+
         Area infield = recordAreaPort.recordArea(new Area("INFIELD"));
         Area outfield = recordAreaPort.recordArea(new Area("OUTFIELD"));
 
@@ -62,6 +75,8 @@ public class SiteSteps {
         createBlocksAndSeatsForArea(infield, infieldSections, blocksCount, seatsPerBlock, INFIELD_SECTION_NAME_MAP);
         createBlocksAndSeatsForArea(outfield, outfieldSections, blocksCount, seatsPerBlock,
                 OUTFIELD_SECTION_NAME_MAP);
+
+        log.info("[BDD] 좌석 구조 생성 완료");
     }
 
     //

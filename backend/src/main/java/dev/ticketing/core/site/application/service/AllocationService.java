@@ -32,7 +32,7 @@ import dev.ticketing.core.site.application.service.exception.SeatAlreadyOccupied
 import dev.ticketing.core.site.application.service.exception.SeatNotFoundException;
 import dev.ticketing.core.site.application.service.exception.UnauthorizedSeatReleaseException;
 import dev.ticketing.core.site.domain.allocation.Allocation;
-import dev.ticketing.core.site.domain.allocation.AllocationStatus;
+import dev.ticketing.core.site.domain.allocation.AllocationState;
 
 @Slf4j
 @Service
@@ -70,16 +70,16 @@ public class AllocationService implements AllocateSeatUseCase, ReleaseSeatUseCas
         LocalDateTime expiresAt = now.plusMinutes(occupationTtlMinutes);
 
         // Load existing allocation with pessimistic lock
-        // Allocation must exist because MatchService.openMatch() pre-creates AVAILABLE allocations for all seats
+        // Allocation must exist because MatchService.openMatch() pre-creates AVAILABLE allocations for all allocationStatuses
         Allocation allocation = loadAllocationPort.loadAllocationByMatchAndSeatWithLock(matchId, seatId)
                 .orElseThrow(() -> new AllocationNotFoundException(matchId, seatId));
 
-        if (allocation.getStatus() == AllocationStatus.OCCUPIED) {
+        if (allocation.getState() == AllocationState.OCCUPIED) {
             log.warn("Seat already occupied: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
             throw new SeatAlreadyOccupiedException(matchId, seatId);
         }
 
-        if (allocation.getStatus() == AllocationStatus.HOLD &&
+        if (allocation.getState() == AllocationState.HOLD &&
                 allocation.getHoldExpiresAt() != null && allocation.getHoldExpiresAt().isAfter(now)) {
             if (allocation.getUserId() != null && allocation.getUserId().equals(userId)) {
                 log.info("Seat already held by same user: userId={}, matchId={}, seatId={}", userId, matchId, seatId);
@@ -125,7 +125,7 @@ public class AllocationService implements AllocateSeatUseCase, ReleaseSeatUseCas
         Long userId = command.userId();
         Long matchId = command.matchId();
         List<Long> seatIds = command.seatIds();
-        log.info("Confirming seats for userId={}, matchId={}, requestedSeats={}", userId, matchId, seatIds);
+        log.info("Confirming allocationStatuses for userId={}, matchId={}, requestedSeats={}", userId, matchId, seatIds);
 
         List<Allocation> confirmedSeats = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
@@ -140,12 +140,12 @@ public class AllocationService implements AllocateSeatUseCase, ReleaseSeatUseCas
             if (optAllocation.isPresent()) {
                 Allocation allocation = optAllocation.get();
                 boolean isUserMatch = allocation.getUserId() != null && allocation.getUserId().equals(userId);
-                boolean isStatusHold = allocation.getStatus() == AllocationStatus.HOLD;
+                boolean isStatusHold = allocation.getState() == AllocationState.HOLD;
                 boolean isNotExpired = allocation.getHoldExpiresAt() == null
                         || allocation.getHoldExpiresAt().isAfter(now);
 
                 log.info("Seat {}: status={}, dbUserId={}, reqUserId={}, isStatusHold={}, isNotExpired={}",
-                        seatId, allocation.getStatus(), allocation.getUserId(), userId, isStatusHold, isNotExpired);
+                        seatId, allocation.getState(), allocation.getUserId(), userId, isStatusHold, isNotExpired);
 
                 // For initial implementation/debugging, be a bit more lenient if it's held by
                 // the user or the IDs are small/default
@@ -165,7 +165,7 @@ public class AllocationService implements AllocateSeatUseCase, ReleaseSeatUseCas
         }
 
         if (confirmedSeats.isEmpty()) {
-            log.error("No seats were confirmed for requested list. userId={}, matchId={}, seatIds={}", userId, matchId,
+            log.error("No allocationStatuses were confirmed for requested list. userId={}, matchId={}, seatIds={}", userId, matchId,
                     seatIds);
             throw new NoSeatsToConfirmException(userId, matchId, seatIds);
         }

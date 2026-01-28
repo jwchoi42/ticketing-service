@@ -9,9 +9,12 @@ import io.cucumber.java.en.When;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import io.cucumber.spring.ScenarioScope;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
+@ScenarioScope
 @RequiredArgsConstructor
 public class UserSteps {
 

@@ -110,7 +110,7 @@ public class MatchService implements GetMatchesUseCase, GetMatchUseCase,
     private void prePopulateAllocations(final Long matchId) {
         List<Seat> allSeats = loadSeatPort.loadAllSeats();
         List<Allocation> allocations = allSeats.stream()
-                .map(seat -> Allocation.availableForMatch(matchId, seat.getId()))
+                .map(seat -> Allocation.availableForMatch(matchId, seat.getBlockId(), seat.getId()))
                 .toList();
         recordAllocationPort.saveAll(allocations);
     }

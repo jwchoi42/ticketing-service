@@ -26,7 +26,10 @@
       "Bash(git fetch:*)",
       "Bash(./gradlew clean test:*)",
       "Bash(tasklist:*)",
-      "Bash(./gradlew:*)"
+      "Bash(./gradlew:*)",
+      "Bash(dot:*)",
+      "Bash(taskkill //F //PID 13476)",
+      "WebSearch"
     ]
   }
 }

@@ -1,6 +1,6 @@
 package dev.ticketing.core.site.adapter.in.web.allocation.model.response;
 
-import dev.ticketing.core.site.domain.allocation.AllocationStatus;
+import dev.ticketing.core.site.domain.allocation.AllocationState;
 import dev.ticketing.core.site.domain.allocation.Allocation;
 
 import java.util.List;
@@ -14,10 +14,10 @@ public record ConfirmSeatsResponse(
 
     public record ConfirmedSeat(
             Long seatId,
-            AllocationStatus status
+            AllocationState status
     ) {
         public static ConfirmedSeat from(Allocation seat) {
-            return new ConfirmedSeat(seat.getSeatId(), seat.getStatus());
+            return new ConfirmedSeat(seat.getSeatId(), seat.getState());
         }
     }
 

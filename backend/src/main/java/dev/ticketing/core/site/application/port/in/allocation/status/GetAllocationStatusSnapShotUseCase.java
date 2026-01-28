@@ -1,13 +1,11 @@
 package dev.ticketing.core.site.application.port.in.allocation.status;
 
-import dev.ticketing.core.site.domain.allocation.Allocation;
-
-import java.util.List;
+import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 
 /**
  * GetAllocationStatusSnapShotUseCase - 좌석 현황 스냅샷 조회 포트
  * Application Layer는 기술 중립적이어야 하므로 도메인 타입만 반환
  */
 public interface GetAllocationStatusSnapShotUseCase {
-    List<Allocation> getAllocationSnapshot(Long matchId, Long blockId);
+    AllocationStatusSnapShot getAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId);
 }

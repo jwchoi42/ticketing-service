@@ -178,7 +178,7 @@ export function MatchList({ matches: initialMatches, formattedDates }: MatchList
                 await adminApi.deleteMatch(matchId);
                 toast.success('Match deleted');
                 router.refresh();
-            } catch (error) {
+            } catch {
                 toast.error('Failed to delete match');
             }
         }
@@ -190,7 +190,7 @@ export function MatchList({ matches: initialMatches, formattedDates }: MatchList
                 await adminApi.openMatch(matchId);
                 toast.success('Match opened successfully');
                 router.refresh();
-            } catch (error) {
+            } catch {
                 toast.error('Failed to open match');
             }
         }

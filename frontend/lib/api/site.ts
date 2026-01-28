@@ -15,11 +15,13 @@ export interface Block {
     name: string; // e.g., "101블록"
 }
 
+export type AllocationState = 'AVAILABLE' | 'HOLD' | 'OCCUPIED';
+
 export interface Seat {
     id: number;
     rowNumber: number;
     seatNumber: number;
-    status?: string; // "AVAILABLE" | "HOLD" | "OCCUPIED" 
+    state?: AllocationState;
 }
 
 export const siteApi = {

@@ -1,6 +1,6 @@
 package dev.ticketing.core.site.application.port.in.allocation.status;
 
-import dev.ticketing.core.site.domain.allocation.Allocation;
+import dev.ticketing.core.site.domain.allocation.AllocationStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -10,5 +10,5 @@ import java.util.List;
  * 특정 시간 이후 변경된 좌석 상태만 조회 (서버 폴링용)
  */
 public interface GetAllocationStatusChangesUseCase {
-    List<Allocation> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since);
+    List<AllocationStatus> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since);
 }

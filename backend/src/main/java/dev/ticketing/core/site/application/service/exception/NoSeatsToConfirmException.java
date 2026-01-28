@@ -14,7 +14,7 @@ public class NoSeatsToConfirmException extends SiteException {
     private final List<Long> requestedSeatIds;
 
     public NoSeatsToConfirmException(final Long userId, final Long matchId, final List<Long> requestedSeatIds) {
-        super(String.format("No seats to confirm for user %d in match %d. Requested seats: %s",
+        super(String.format("No allocationStatuses to confirm for user %d in match %d. Requested allocationStatuses: %s",
                 userId, matchId, requestedSeatIds), HttpStatus.BAD_REQUEST);
         this.userId = userId;
         this.matchId = matchId;

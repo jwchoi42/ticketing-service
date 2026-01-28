@@ -25,18 +25,16 @@ public class RedisCacheConfig {
     }
 
     private RedisCacheConfiguration defaultRedisCacheConfiguration() {
-        // 커스텀 ObjectMapper 생성 (JavaTimeModule 등록)
         com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
+        // LocalDateTime 직렬화를 위한 JavaTimeModule 등록
         objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
         objectMapper.disable(com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        // GenericJackson2JsonRedisSerializer 기본 생성자와 동일한 타입 설정
         objectMapper.activateDefaultTyping(
-                com.fasterxml.jackson.databind.jsontype.BasicPolymorphicTypeValidator.builder()
-                        .allowIfBaseType(Object.class)
-                        .build(),
-                com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping.NON_FINAL);
+                objectMapper.getPolymorphicTypeValidator(),
+                com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping.EVERYTHING);
 
         StringRedisSerializer keySerializer = new StringRedisSerializer();
-        // 커스텀 ObjectMapper를 사용하는 Serializer 생성
         GenericJackson2JsonRedisSerializer valueSerializer = new GenericJackson2JsonRedisSerializer(objectMapper);
 
         return RedisCacheConfiguration.defaultCacheConfig()

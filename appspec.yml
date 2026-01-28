@@ -1,0 +1,16 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /home/ubuntu/ticketing-service
+    overwrite: true
+
+hooks:
+  ApplicationStop:
+    - location: infra/aws/scripts/stop.sh
+      timeout: 60
+      runas: ubuntu
+  AfterInstall:
+    - location: infra/aws/scripts/deploy.sh
+      timeout: 300
+      runas: ubuntu

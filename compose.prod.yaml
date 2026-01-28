@@ -20,14 +20,12 @@ services:
       - backend
     networks:
       - ticketing-network
-
   backend:
     image: jwchoi42/ticketing-backend:latest
     restart: always
     depends_on:
       - database
       - redis
-
     environment:
 
       SPRING_DATASOURCE_URL: jdbc:postgresql://database:5432/ticketing_database

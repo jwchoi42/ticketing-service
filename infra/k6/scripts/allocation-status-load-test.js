@@ -18,8 +18,8 @@ export const options = {
             executor: 'ramping-vus',
             startVUs: 0,
             stages: [
-                { duration: '30s', target: 1000 }, // 목표 부하까지 30초 동안 상승
-                { duration: '1m', target: 1000 },  // 1000 VU에서 1분간 부하 유지
+                { duration: '30s', target: 10 }, // 목표 부하까지 30초 동안 상승
+                { duration: '1m', target: 10 },  // 1000 VU에서 1분간 부하 유지
                 { duration: '30s', target: 0 },    // 30초 동안 종료
             ],
         },

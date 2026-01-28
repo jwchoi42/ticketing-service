@@ -8,8 +8,11 @@ import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +31,25 @@ import java.util.concurrent.TimeoutException;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
 public class AllocationStatusService
         implements GetAllocationStatusSnapShotUseCase, GetAllocationStatusChangesUseCase {
 
     private static final long TIMEOUT_SECONDS = 5;
 
     private final LoadAllocationStatusPort loadAllocationStatusPort;
+    private final PlatformTransactionManager transactionManager;
+
+    private TransactionTemplate transactionTemplate;
 
     // 진행 중인 스냅샷 조회 요청 추적
     private final Map<String, CompletableFuture<AllocationStatusSnapShot>> inFlightSnapshots
             = new ConcurrentHashMap<>();
+
+    @PostConstruct
+    public void init() {
+        this.transactionTemplate = new TransactionTemplate(transactionManager);
+        this.transactionTemplate.setReadOnly(true);
+    }
 
     @Override
     public AllocationStatusSnapShot getAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId) {
@@ -46,8 +57,9 @@ public class AllocationStatusService
 
         CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
                 CompletableFuture
-                        .supplyAsync(() -> loadAllocationStatusPort
-                                .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
+                        .supplyAsync(() -> transactionTemplate.execute(status ->
+                                loadAllocationStatusPort
+                                        .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId)))
                         .whenComplete((result, ex) -> inFlightSnapshots.remove(key))
         );
 
@@ -64,6 +76,7 @@ public class AllocationStatusService
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<AllocationStatus> getAllocationChangesSince(Long matchId, Long blockId, LocalDateTime since) {
         return loadAllocationStatusPort.loadAllocationStatusesSince(matchId, blockId, since);
     }

@@ -39,12 +39,12 @@ export const SeatGrid = memo(function SeatGrid({ blockId, seats, myHeldSeatIds, 
     // Group seats by row
     const { seatsByRow, maxColumns, isSkeleton } = useMemo(() => {
         if (!seats || seats.length === 0) {
-            const skeletonMap = new Map<number, { id: string; seatNumber: number; rowNumber: number; status: string }[]>();
+            const skeletonMap = new Map<number, Seat[]>();
             const { rows: skelRows, cols: skelCols } = lastKnownDimensionsRef.current;
 
             for (let r = 1; r <= skelRows; r++) {
                 skeletonMap.set(r, Array.from({ length: skelCols }, (_, i) => ({
-                    id: `skel-${r}-${i}`, seatNumber: i + 1, rowNumber: r, status: 'skeleton'
+                    id: -(r * 1000 + i), seatNumber: i + 1, rowNumber: r
                 })));
             }
             return { seatsByRow: skeletonMap, maxColumns: skelCols, isSkeleton: true };

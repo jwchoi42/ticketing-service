@@ -110,6 +110,10 @@ tasks.named('test') {
     useJUnitPlatform()
     maxHeapSize = "1024m"
     testLogging {
-        showStandardStreams = true
+        events "passed", "skipped", "failed"
+        exceptionFormat "full"
+        showExceptions true
+        showCauses true
+        showStackTraces true
     }
 }

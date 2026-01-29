@@ -23,7 +23,8 @@ import java.time.LocalDateTime;
 @Table(name = "allocations", indexes = {
         @Index(name = "idx_match_seat_unique", columnList = "matchId, seatId", unique = true),
         @Index(name = "idx_match_block", columnList = "matchId, blockId"),
-        @Index(name = "idx_allocations_updated_at", columnList = "updatedAt")
+        @Index(name = "idx_match_block_updated", columnList = "matchId, blockId, updatedAt"),
+        @Index(name = "idx_reservation_id", columnList = "reservationId")
 })
 @Entity
 @Getter

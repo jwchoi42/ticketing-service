@@ -7,6 +7,7 @@ import dev.ticketing.core.site.domain.allocation.AllocationStatus;
 import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,6 @@ import java.util.concurrent.TimeoutException;
  */
 @Slf4j
 @Service
-@RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class AllocationStatusService
         implements GetAllocationStatusSnapShotUseCase, GetAllocationStatusChangesUseCase {
@@ -42,6 +42,15 @@ public class AllocationStatusService
     private final LoadAllocationStatusPort loadAllocationStatusPort;
     private final CacheManager redisCacheManager;
     private final CacheManager caffeineCacheManager;
+
+    public AllocationStatusService(
+            LoadAllocationStatusPort loadAllocationStatusPort,
+            @Qualifier("redisCacheManager") CacheManager redisCacheManager,
+            @Qualifier("caffeineCacheManager") CacheManager caffeineCacheManager) {
+        this.loadAllocationStatusPort = loadAllocationStatusPort;
+        this.redisCacheManager = redisCacheManager;
+        this.caffeineCacheManager = caffeineCacheManager;
+    }
 
     // Request Collapsing용
     private final Map<String, CompletableFuture<AllocationStatusSnapShot>> inFlightSnapshots

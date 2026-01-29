@@ -18,6 +18,7 @@ import java.time.Duration;
 public class RedisCacheConfig {
 
     @Bean
+    @org.springframework.context.annotation.Primary
     public RedisCacheManager redisCacheManager(RedisConnectionFactory redisConnectionFactory) {
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(defaultRedisCacheConfiguration())

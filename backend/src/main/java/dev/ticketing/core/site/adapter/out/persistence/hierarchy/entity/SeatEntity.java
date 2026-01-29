@@ -13,7 +13,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Table(name = "seats", indexes = {
-    @Index(name = "idx_seats_block_id", columnList = "blockId")
+    @Index(name = "idx_seats_block_id", columnList = "blockId"),
+    @Index(name = "idx_seats_block_row_seat", columnList = "blockId, rowNumber, seatNumber")
 })
 @Entity
 @Getter

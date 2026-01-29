@@ -48,6 +48,9 @@ dependencies {
     // Redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
+    // Caffeine (Local Cache)
+    implementation 'com.github.ben-manes.caffeine:caffeine'
+
     // Kafka
 //    implementation 'org.springframework.kafka:spring-kafka'
 

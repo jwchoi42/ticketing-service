@@ -5,7 +5,6 @@ import dev.ticketing.core.site.application.port.in.allocation.status.GetAllocati
 import dev.ticketing.core.site.application.port.out.persistence.allocation.LoadAllocationStatusPort;
 import dev.ticketing.core.site.domain.allocation.AllocationStatus;
 import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.Cache;
@@ -18,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -39,6 +40,11 @@ public class AllocationStatusService
     private static final long TIMEOUT_SECONDS = 5;
     private static final String CACHE_NAME = "allocationStatusSnapShot";
 
+    // Request Collapsing 전용 Executor - ForkJoinPool 포화 문제 방지
+    private static final Executor COLLAPSING_EXECUTOR = Executors.newCachedThreadPool();
+    // Cleanup 전용 Executor - Recursive update 방지
+    private static final Executor CLEANUP_EXECUTOR = Executors.newSingleThreadExecutor();
+
     private final LoadAllocationStatusPort loadAllocationStatusPort;
     private final CacheManager redisCacheManager;
     private final CacheManager caffeineCacheManager;
@@ -52,7 +58,7 @@ public class AllocationStatusService
         this.caffeineCacheManager = caffeineCacheManager;
     }
 
-    // Request Collapsing용
+    // Request Collapsing용 - 진행 중인 요청 추적
     private final Map<String, CompletableFuture<AllocationStatusSnapShot>> inFlightSnapshots
             = new ConcurrentHashMap<>();
 
@@ -84,24 +90,22 @@ public class AllocationStatusService
 
     /**
      * 전략 2: Request Collapsing (비동기 방식)
-     * - computeIfAbsent + supplyAsync로 ForkJoinPool에서 DB 쿼리 실행
      * - 동시 요청은 같은 Future를 공유하여 DB 쿼리 1번만 실행
+     * - 전용 Executor 사용으로 ForkJoinPool 포화 문제 방지
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
 
         CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
-                CompletableFuture.supplyAsync(() ->
-                        loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
-                        .whenComplete((result, ex) ->
-                                // 비동기로 제거하여 Recursive update 방지
-                                CompletableFuture.runAsync(() -> inFlightSnapshots.remove(key)))
+                CompletableFuture.supplyAsync(
+                        () -> loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId),
+                        COLLAPSING_EXECUTOR
+                ).whenCompleteAsync((result, ex) -> inFlightSnapshots.remove(key), CLEANUP_EXECUTOR)
         );
 
         try {
             return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            future.cancel(true);
             log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
             throw new RuntimeException("조회 타임아웃", e);
         } catch (Exception e) {
@@ -132,19 +136,6 @@ public class AllocationStatusService
         }
 
         return result;
-    }
-
-    private AllocationStatusSnapShot waitForResult(
-            CompletableFuture<AllocationStatusSnapShot> future, Long matchId, Long blockId) {
-        try {
-            return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
-        } catch (TimeoutException e) {
-            log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
-            throw new RuntimeException("조회 타임아웃", e);
-        } catch (Exception e) {
-            log.error("AllocationStatusSnapShot 조회 실패: matchId={}, blockId={}", matchId, blockId, e);
-            throw new RuntimeException("조회 실패", e);
-        }
     }
 
     @Override

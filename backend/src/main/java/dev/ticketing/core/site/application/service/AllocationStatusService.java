@@ -82,23 +82,47 @@ public class AllocationStatusService
     }
 
     /**
-     * 전략 2: Request Collapsing
+     * 전략 2: Request Collapsing (동기 방식)
      * - 동시 요청은 같은 Future를 공유하여 DB 쿼리 1번만 실행
+     * - 첫 번째 요청 스레드가 직접 실행하고, 나머지는 결과를 기다림
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
 
-        CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
-                CompletableFuture
-                        .supplyAsync(() -> loadAllocationStatusPort
-                                .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
-                        .whenComplete((result, ex) -> inFlightSnapshots.remove(key))
-        );
+        // 이미 진행 중인 요청이 있으면 그 결과를 기다림
+        CompletableFuture<AllocationStatusSnapShot> existing = inFlightSnapshots.get(key);
+        if (existing != null) {
+            return waitForResult(existing, matchId, blockId);
+        }
 
+        // 새로운 Future 생성 및 등록 시도
+        CompletableFuture<AllocationStatusSnapShot> newFuture = new CompletableFuture<>();
+        CompletableFuture<AllocationStatusSnapShot> registered = inFlightSnapshots.putIfAbsent(key, newFuture);
+
+        // 다른 스레드가 먼저 등록했으면 그 결과를 기다림
+        if (registered != null) {
+            return waitForResult(registered, matchId, blockId);
+        }
+
+        // 첫 번째 스레드: 직접 실행
+        try {
+            AllocationStatusSnapShot result = loadAllocationStatusPort
+                    .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
+            newFuture.complete(result);
+            return result;
+        } catch (Exception e) {
+            newFuture.completeExceptionally(e);
+            throw e;
+        } finally {
+            inFlightSnapshots.remove(key);
+        }
+    }
+
+    private AllocationStatusSnapShot waitForResult(
+            CompletableFuture<AllocationStatusSnapShot> future, Long matchId, Long blockId) {
         try {
             return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            future.cancel(true);
             log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
             throw new RuntimeException("조회 타임아웃", e);
         } catch (Exception e) {

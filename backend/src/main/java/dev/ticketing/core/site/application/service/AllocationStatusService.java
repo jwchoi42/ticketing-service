@@ -83,38 +83,21 @@ public class AllocationStatusService
     }
 
     /**
-     * 전략 2: Request Collapsing
+     * 전략 2: Request Collapsing (비동기 방식)
+     * - computeIfAbsent + supplyAsync로 ForkJoinPool에서 DB 쿼리 실행
+     * - Tomcat 스레드 블로킹 최소화
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
 
-        CompletableFuture<AllocationStatusSnapShot> existing = inFlightSnapshots.get(key);
+        CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
+                CompletableFuture
+                        .supplyAsync(() -> loadAllocationStatusPort
+                                .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
+                        .whenComplete((result, ex) -> inFlightSnapshots.remove(key))
+        );
 
-        if (existing != null) {
-            log.debug("[Collapsing] 기존 요청에 합류: key={}", key);
-            return waitForResult(existing, matchId, blockId);
-        }
-
-        CompletableFuture<AllocationStatusSnapShot> newFuture = new CompletableFuture<>();
-        CompletableFuture<AllocationStatusSnapShot> registered = inFlightSnapshots.putIfAbsent(key, newFuture);
-
-        if (registered != null) {
-            log.debug("[Collapsing] 경쟁 후 합류: key={}", key);
-            return waitForResult(registered, matchId, blockId);
-        }
-
-        log.debug("[Collapsing] 새 DB 쿼리 시작: key={}", key);
-        try {
-            AllocationStatusSnapShot result = loadAllocationStatusPort
-                    .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
-            newFuture.complete(result);
-            return result;
-        } catch (Exception e) {
-            newFuture.completeExceptionally(e);
-            throw e;
-        } finally {
-            inFlightSnapshots.remove(key);
-        }
+        return waitForResult(future, matchId, blockId);
     }
 
     /**

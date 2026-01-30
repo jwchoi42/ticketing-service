@@ -5,7 +5,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+#    show-sql: true
     open-in-view: false
     properties:
       hibernate:
@@ -74,3 +74,7 @@ seat:
 #    success-rate: 0.9
 #    min-delay-ms: 500
 #    max-delay-ms: 2000
+
+logging:
+  level:
+    dev.ticketing.core.site.application.service: DEBUG

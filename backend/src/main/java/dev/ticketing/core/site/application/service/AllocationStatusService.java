@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.Executor;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -39,11 +37,6 @@ public class AllocationStatusService
 
     private static final long TIMEOUT_SECONDS = 5;
     private static final String CACHE_NAME = "allocationStatusSnapShot";
-
-    // Request Collapsing 전용 Executor - ForkJoinPool 포화 문제 방지
-    private static final Executor COLLAPSING_EXECUTOR = Executors.newCachedThreadPool();
-    // Cleanup 전용 Executor - Recursive update 방지
-    private static final Executor CLEANUP_EXECUTOR = Executors.newSingleThreadExecutor();
 
     private final LoadAllocationStatusPort loadAllocationStatusPort;
     private final CacheManager redisCacheManager;
@@ -89,18 +82,19 @@ public class AllocationStatusService
     }
 
     /**
-     * 전략 2: Request Collapsing (비동기 방식)
+     * 전략 2: Request Collapsing
      * - 동시 요청은 같은 Future를 공유하여 DB 쿼리 1번만 실행
-     * - 전용 Executor 사용으로 ForkJoinPool 포화 문제 방지
+     * - 기본 ForkJoinPool 사용 (CPU 코어 수 제한)
+     * - whenCompleteAsync로 Recursive update 방지
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
 
         CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
-                CompletableFuture.supplyAsync(
-                        () -> loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId),
-                        COLLAPSING_EXECUTOR
-                ).whenCompleteAsync((result, ex) -> inFlightSnapshots.remove(key), CLEANUP_EXECUTOR)
+                CompletableFuture
+                        .supplyAsync(() -> loadAllocationStatusPort
+                                .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
+                        .whenCompleteAsync((result, ex) -> inFlightSnapshots.remove(key))
         );
 
         try {

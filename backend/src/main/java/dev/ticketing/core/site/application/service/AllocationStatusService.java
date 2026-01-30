@@ -91,6 +91,7 @@ public class AllocationStatusService
         CompletableFuture<AllocationStatusSnapShot> existing = inFlightSnapshots.get(key);
 
         if (existing != null) {
+            log.debug("[Collapsing] 기존 요청에 합류: key={}", key);
             return waitForResult(existing, matchId, blockId);
         }
 
@@ -98,9 +99,11 @@ public class AllocationStatusService
         CompletableFuture<AllocationStatusSnapShot> registered = inFlightSnapshots.putIfAbsent(key, newFuture);
 
         if (registered != null) {
+            log.debug("[Collapsing] 경쟁 후 합류: key={}", key);
             return waitForResult(registered, matchId, blockId);
         }
 
+        log.debug("[Collapsing] 새 DB 쿼리 시작: key={}", key);
         try {
             AllocationStatusSnapShot result = loadAllocationStatusPort
                     .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);

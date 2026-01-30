@@ -91,13 +91,23 @@ public class AllocationStatusService
         String key = matchId + ":" + blockId;
 
         CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
-                CompletableFuture
-                        .supplyAsync(() -> loadAllocationStatusPort
-                                .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
-                        .whenComplete((result, ex) -> inFlightSnapshots.remove(key))
+                CompletableFuture.supplyAsync(() ->
+                        loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
         );
 
-        return waitForResult(future, matchId, blockId);
+        try {
+            return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
+        } catch (TimeoutException e) {
+            log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
+            throw new RuntimeException("조회 타임아웃", e);
+        } catch (Exception e) {
+            log.error("AllocationStatusSnapShot 조회 실패: matchId={}, blockId={}", matchId, blockId, e);
+            throw new RuntimeException("조회 실패", e);
+        } finally {
+            if (future.isDone()) {
+                inFlightSnapshots.remove(key, future);
+            }
+        }
     }
 
     /**

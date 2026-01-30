@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static dev.ticketing.core.site.adapter.out.persistence.allocation.QAllocationEntity.allocationEntity;
+import static dev.ticketing.core.site.adapter.out.persistence.hierarchy.entity.QSeatEntity.seatEntity;
 
 @RequiredArgsConstructor
 public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery {
@@ -18,20 +19,22 @@ public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery 
 
     @Override
     public List<AllocationStatus> findAllocationStatusesByMatchIdAndBlockId(Long matchId, Long blockId) {
+        // JOIN 방식 - 테스트용 (비정규화 방식보다 느림)
         return queryFactory
                 .select(Projections.constructor(AllocationStatus.class,
                         allocationEntity.id,
                         allocationEntity.matchId,
-                        allocationEntity.blockId,
+                        seatEntity.blockId,
                         allocationEntity.seatId,
                         allocationEntity.status,
                         allocationEntity.holdExpiresAt,
                         allocationEntity.updatedAt
                 ))
                 .from(allocationEntity)
+                .join(seatEntity).on(allocationEntity.seatId.eq(seatEntity.id))
                 .where(
                         allocationEntity.matchId.eq(matchId),
-                        allocationEntity.blockId.eq(blockId)
+                        seatEntity.blockId.eq(blockId)
                 )
                 .fetch();
     }
@@ -39,20 +42,22 @@ public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery 
     @Override
     public List<AllocationStatus> findAllocationStatusesByBlockIdAndUpdatedAtAfter(
             Long matchId, Long blockId, LocalDateTime since) {
+        // JOIN 방식 - 테스트용 (비정규화 방식보다 느림)
         return queryFactory
                 .select(Projections.constructor(AllocationStatus.class,
                         allocationEntity.id,
                         allocationEntity.matchId,
-                        allocationEntity.blockId,
+                        seatEntity.blockId,
                         allocationEntity.seatId,
                         allocationEntity.status,
                         allocationEntity.holdExpiresAt,
                         allocationEntity.updatedAt
                 ))
                 .from(allocationEntity)
+                .join(seatEntity).on(allocationEntity.seatId.eq(seatEntity.id))
                 .where(
                         allocationEntity.matchId.eq(matchId),
-                        allocationEntity.blockId.eq(blockId),
+                        seatEntity.blockId.eq(blockId),
                         allocationEntity.updatedAt.after(since)
                 )
                 .fetch();

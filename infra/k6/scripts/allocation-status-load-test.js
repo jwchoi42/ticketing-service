@@ -2,10 +2,10 @@ import http from 'k6/http';
 import { check, sleep } from 'k6';
 
 /**
- * [Common] Allocation Status Load 테스트
- * 
- * 목적: 예상되는 최대 트래픽(1000 VU) 상황에서 시스템의 안정성 및 응답 속도 확인
- * - Breakpoint 테스트처럼 부하를 계속 높이는 것이 아니라, 목표 부하에서 일정 시간 유지하여 안정성 확인
+ * [Burst] Allocation Status Load 테스트 - 티켓 오픈 시나리오
+ *
+ * 목적: 티켓 오픈 순간처럼 동시 요청이 폭주하는 상황 시뮬레이션
+ * - sleep(0.1)로 요청 간격을 줄여 동시성 증가 → Request Collapsing 효과 측정
  */
 
 const BASE_URL = __ENV.BASE_URL || 'http://localhost:8080';
@@ -42,5 +42,5 @@ export default function () {
         'response time < 1000ms': (r) => r.timings.duration < 1000,
     });
 
-    sleep(1);
+    sleep(1);  // 100ms 간격 → 동시 요청 증가 → Request Collapsing 효과 측정
 }

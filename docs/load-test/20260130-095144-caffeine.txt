@@ -1,0 +1,1265 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: infra/k6/scripts/allocation-status-load-test.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1000 max VUs, 2m30s max duration (incl. graceful stop):
+              * load_test: Up to 1000 looping VUs for 2m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (0m00.9s), 0031/1000 VUs, 108 complete and 0 interrupted iterations
+load_test   [   1% ] 0031/1000 VUs  0m00.9s/2m00.0s
+
+running (0m01.9s), 0064/1000 VUs, 514 complete and 0 interrupted iterations
+load_test   [   2% ] 0064/1000 VUs  0m01.9s/2m00.0s
+
+running (0m02.9s), 0097/1000 VUs, 1197 complete and 0 interrupted iterations
+load_test   [   2% ] 0097/1000 VUs  0m02.9s/2m00.0s
+
+running (0m03.9s), 0131/1000 VUs, 1968 complete and 0 interrupted iterations
+load_test   [   3% ] 0131/1000 VUs  0m03.9s/2m00.0s
+
+running (0m04.9s), 0164/1000 VUs, 2696 complete and 0 interrupted iterations
+load_test   [   4% ] 0164/1000 VUs  0m04.9s/2m00.0s
+
+running (0m05.9s), 0197/1000 VUs, 3496 complete and 0 interrupted iterations
+load_test   [   5% ] 0197/1000 VUs  0m05.9s/2m00.0s
+
+running (0m06.9s), 0231/1000 VUs, 4285 complete and 0 interrupted iterations
+load_test   [   6% ] 0231/1000 VUs  0m06.9s/2m00.0s
+
+running (0m07.9s), 0264/1000 VUs, 5046 complete and 0 interrupted iterations
+load_test   [   7% ] 0264/1000 VUs  0m07.9s/2m00.0s
+
+running (0m08.9s), 0297/1000 VUs, 5796 complete and 0 interrupted iterations
+load_test   [   7% ] 0297/1000 VUs  0m08.9s/2m00.0s
+
+running (0m09.9s), 0331/1000 VUs, 6582 complete and 0 interrupted iterations
+load_test   [   8% ] 0331/1000 VUs  0m09.9s/2m00.0s
+
+running (0m10.9s), 0364/1000 VUs, 7379 complete and 0 interrupted iterations
+load_test   [   9% ] 0364/1000 VUs  0m10.9s/2m00.0s
+
+running (0m11.9s), 0397/1000 VUs, 8158 complete and 0 interrupted iterations
+load_test   [  10% ] 0397/1000 VUs  0m11.9s/2m00.0s
+
+running (0m12.9s), 0431/1000 VUs, 8920 complete and 0 interrupted iterations
+load_test   [  11% ] 0431/1000 VUs  0m12.9s/2m00.0s
+
+running (0m13.9s), 0464/1000 VUs, 9703 complete and 0 interrupted iterations
+load_test   [  12% ] 0464/1000 VUs  0m13.9s/2m00.0s
+
+running (0m14.9s), 0497/1000 VUs, 10477 complete and 0 interrupted iterations
+load_test   [  12% ] 0497/1000 VUs  0m14.9s/2m00.0s
+
+running (0m15.9s), 0531/1000 VUs, 11214 complete and 0 interrupted iterations
+load_test   [  13% ] 0531/1000 VUs  0m15.9s/2m00.0s
+
+running (0m16.9s), 0564/1000 VUs, 12003 complete and 0 interrupted iterations
+load_test   [  14% ] 0564/1000 VUs  0m16.9s/2m00.0s
+
+running (0m17.9s), 0597/1000 VUs, 12792 complete and 0 interrupted iterations
+load_test   [  15% ] 0597/1000 VUs  0m17.9s/2m00.0s
+
+running (0m18.9s), 0631/1000 VUs, 13571 complete and 0 interrupted iterations
+load_test   [  16% ] 0631/1000 VUs  0m18.9s/2m00.0s
+
+running (0m19.9s), 0664/1000 VUs, 14342 complete and 0 interrupted iterations
+load_test   [  17% ] 0664/1000 VUs  0m19.9s/2m00.0s
+
+running (0m20.9s), 0697/1000 VUs, 15110 complete and 0 interrupted iterations
+load_test   [  17% ] 0697/1000 VUs  0m20.9s/2m00.0s
+
+running (0m21.9s), 0731/1000 VUs, 15889 complete and 0 interrupted iterations
+load_test   [  18% ] 0731/1000 VUs  0m21.9s/2m00.0s
+
+running (0m22.9s), 0764/1000 VUs, 16662 complete and 0 interrupted iterations
+load_test   [  19% ] 0764/1000 VUs  0m22.9s/2m00.0s
+
+running (0m23.9s), 0797/1000 VUs, 17440 complete and 0 interrupted iterations
+load_test   [  20% ] 0797/1000 VUs  0m23.9s/2m00.0s
+
+running (0m24.9s), 0831/1000 VUs, 18205 complete and 0 interrupted iterations
+load_test   [  21% ] 0831/1000 VUs  0m24.9s/2m00.0s
+
+running (0m25.9s), 0864/1000 VUs, 18966 complete and 0 interrupted iterations
+load_test   [  22% ] 0864/1000 VUs  0m25.9s/2m00.0s
+
+running (0m26.9s), 0897/1000 VUs, 19744 complete and 0 interrupted iterations
+load_test   [  22% ] 0897/1000 VUs  0m26.9s/2m00.0s
+
+running (0m27.9s), 0931/1000 VUs, 20543 complete and 0 interrupted iterations
+load_test   [  23% ] 0931/1000 VUs  0m27.9s/2m00.0s
+
+running (0m28.9s), 0964/1000 VUs, 21315 complete and 0 interrupted iterations
+load_test   [  24% ] 0964/1000 VUs  0m28.9s/2m00.0s
+
+running (0m29.9s), 0997/1000 VUs, 22069 complete and 0 interrupted iterations
+load_test   [  25% ] 0997/1000 VUs  0m29.9s/2m00.0s
+
+running (0m30.9s), 1000/1000 VUs, 22866 complete and 0 interrupted iterations
+load_test   [  26% ] 1000/1000 VUs  0m30.9s/2m00.0s
+
+running (0m31.9s), 1000/1000 VUs, 23657 complete and 0 interrupted iterations
+load_test   [  27% ] 1000/1000 VUs  0m31.9s/2m00.0s
+
+running (0m32.9s), 1000/1000 VUs, 24450 complete and 0 interrupted iterations
+load_test   [  27% ] 1000/1000 VUs  0m32.9s/2m00.0s
+
+running (0m33.9s), 1000/1000 VUs, 25244 complete and 0 interrupted iterations
+load_test   [  28% ] 1000/1000 VUs  0m33.9s/2m00.0s
+
+running (0m34.9s), 1000/1000 VUs, 26051 complete and 0 interrupted iterations
+load_test   [  29% ] 1000/1000 VUs  0m34.9s/2m00.0s
+
+running (0m35.9s), 1000/1000 VUs, 26846 complete and 0 interrupted iterations
+load_test   [  30% ] 1000/1000 VUs  0m35.9s/2m00.0s
+
+running (0m36.9s), 1000/1000 VUs, 27623 complete and 0 interrupted iterations
+load_test   [  31% ] 1000/1000 VUs  0m36.9s/2m00.0s
+
+running (0m37.9s), 1000/1000 VUs, 28421 complete and 0 interrupted iterations
+load_test   [  32% ] 1000/1000 VUs  0m37.9s/2m00.0s
+
+running (0m38.9s), 1000/1000 VUs, 29222 complete and 0 interrupted iterations
+load_test   [  32% ] 1000/1000 VUs  0m38.9s/2m00.0s
+
+running (0m39.9s), 1000/1000 VUs, 30002 complete and 0 interrupted iterations
+load_test   [  33% ] 1000/1000 VUs  0m39.9s/2m00.0s
+
+running (0m40.9s), 1000/1000 VUs, 30820 complete and 0 interrupted iterations
+load_test   [  34% ] 1000/1000 VUs  0m40.9s/2m00.0s
+
+running (0m41.9s), 1000/1000 VUs, 31487 complete and 0 interrupted iterations
+load_test   [  35% ] 1000/1000 VUs  0m41.9s/2m00.0s
+
+running (0m42.9s), 1000/1000 VUs, 32160 complete and 0 interrupted iterations
+load_test   [  36% ] 1000/1000 VUs  0m42.9s/2m00.0s
+
+running (0m43.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  37% ] 1000/1000 VUs  0m43.9s/2m00.0s
+
+running (0m44.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  37% ] 1000/1000 VUs  0m44.9s/2m00.0s
+
+running (0m45.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  38% ] 1000/1000 VUs  0m45.9s/2m00.0s
+
+running (0m46.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  39% ] 1000/1000 VUs  0m46.9s/2m00.0s
+
+running (0m47.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  40% ] 1000/1000 VUs  0m47.9s/2m00.0s
+
+running (0m48.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  41% ] 1000/1000 VUs  0m48.9s/2m00.0s
+
+running (0m49.9s), 1000/1000 VUs, 32675 complete and 0 interrupted iterations
+load_test   [  42% ] 1000/1000 VUs  0m49.9s/2m00.0s
+time="2026-01-30T09:59:42+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3185->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m50.9s), 1000/1000 VUs, 32687 complete and 0 interrupted iterations
+load_test   [  42% ] 1000/1000 VUs  0m50.9s/2m00.0s
+time="2026-01-30T09:59:43+09:00" level=warning msg="Request Failed" error="Get \"http://3.38.125.37/api/matches/1/blocks/1/seats?strategy=caffeine\": dial tcp 3.38.125.37:80: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond."
+time="2026-01-30T09:59:44+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3242->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m51.9s), 1000/1000 VUs, 32715 complete and 0 interrupted iterations
+load_test   [  43% ] 1000/1000 VUs  0m51.9s/2m00.0s
+time="2026-01-30T09:59:45+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3498->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m52.9s), 1000/1000 VUs, 32753 complete and 0 interrupted iterations
+load_test   [  44% ] 1000/1000 VUs  0m52.9s/2m00.0s
+time="2026-01-30T09:59:46+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3399->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:46+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2953->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:46+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3671->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m53.9s), 1000/1000 VUs, 33164 complete and 0 interrupted iterations
+load_test   [  45% ] 1000/1000 VUs  0m53.9s/2m00.0s
+
+running (0m54.9s), 1000/1000 VUs, 33990 complete and 0 interrupted iterations
+load_test   [  46% ] 1000/1000 VUs  0m54.9s/2m00.0s
+time="2026-01-30T09:59:47+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3757->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:47+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2983->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3280->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3669->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3437->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2956->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3034->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3123->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m55.9s), 1000/1000 VUs, 34772 complete and 0 interrupted iterations
+load_test   [  47% ] 1000/1000 VUs  0m55.9s/2m00.0s
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3515->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3381->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:48+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3665->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3705->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3451->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3282->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3161->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3504->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3276->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3130->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3781->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3145->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m56.9s), 1000/1000 VUs, 35569 complete and 0 interrupted iterations
+load_test   [  47% ] 1000/1000 VUs  0m56.9s/2m00.0s
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3106->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3263->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:49+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3697->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3001->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3181->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3446->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3315->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m57.9s), 1000/1000 VUs, 36370 complete and 0 interrupted iterations
+load_test   [  48% ] 1000/1000 VUs  0m57.9s/2m00.0s
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3439->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3273->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3312->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3889->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:50+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3096->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3685->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3349->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3369->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3628->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3732->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3064->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3820->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3069->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3877->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3818->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3629->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m58.9s), 1000/1000 VUs, 37168 complete and 0 interrupted iterations
+load_test   [  49% ] 1000/1000 VUs  0m58.9s/2m00.0s
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3739->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3158->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3718->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3886->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3163->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:51+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3007->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3336->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3176->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3474->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3082->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3049->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3218->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3285->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3127->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3600->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3924->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (0m59.9s), 1000/1000 VUs, 37923 complete and 0 interrupted iterations
+load_test   [  50% ] 1000/1000 VUs  0m59.9s/2m00.0s
+time="2026-01-30T09:59:52+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3309->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3093->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2949->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3436->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m00.9s), 1000/1000 VUs, 38741 complete and 0 interrupted iterations
+load_test   [  51% ] 1000/1000 VUs  1m00.9s/2m00.0s
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2968->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3822->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3613->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3711->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3408->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3318->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:53+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3863->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3441->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3111->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3648->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3178->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m01.9s), 1000/1000 VUs, 39570 complete and 0 interrupted iterations
+load_test   [  52% ] 1000/1000 VUs  1m01.9s/2m00.0s
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3324->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3819->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3062->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:54+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3405->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3141->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3169->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3465->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3384->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3331->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3484->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m02.9s), 1000/1000 VUs, 40301 complete and 0 interrupted iterations
+load_test   [  52% ] 1000/1000 VUs  1m02.9s/2m00.0s
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3483->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3666->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3288->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:55+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3506->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2967->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3561->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3105->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3780->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3929->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3354->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3415->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m03.9s), 1000/1000 VUs, 41143 complete and 0 interrupted iterations
+load_test   [  53% ] 1000/1000 VUs  1m03.9s/2m00.0s
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3496->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2987->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3594->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2969->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3128->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3741->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:56+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3047->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3454->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3344->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3404->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3717->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3442->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3486->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3409->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3802->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3377->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3270->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m04.9s), 1000/1000 VUs, 41926 complete and 0 interrupted iterations
+load_test   [  54% ] 1000/1000 VUs  1m04.9s/2m00.0s
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3854->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3954->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3846->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3229->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3182->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3587->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3014->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3142->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3236->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3258->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3896->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:57+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3293->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3121->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3421->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3020->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3736->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m05.9s), 1000/1000 VUs, 42749 complete and 0 interrupted iterations
+load_test   [  55% ] 1000/1000 VUs  1m05.9s/2m00.0s
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3461->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3870->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3016->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3317->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3898->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3343->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:58+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3433->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m06.9s), 1000/1000 VUs, 43510 complete and 0 interrupted iterations
+load_test   [  56% ] 1000/1000 VUs  1m06.9s/2m00.0s
+time="2026-01-30T09:59:59+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3872->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:59+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3166->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:59+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3694->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T09:59:59+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3508->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3071->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3790->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3491->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3028->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3596->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3234->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3051->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3909->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3393->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m07.9s), 1000/1000 VUs, 44329 complete and 0 interrupted iterations
+load_test   [  57% ] 1000/1000 VUs  1m07.9s/2m00.0s
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3860->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3609->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2950->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3162->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3223->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3817->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3220->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3591->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3637->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:00+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3352->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3118->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3793->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3297->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3453->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3516->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3743->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3501->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3531->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3313->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3009->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3423->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m08.9s), 1000/1000 VUs, 45132 complete and 0 interrupted iterations
+load_test   [  57% ] 1000/1000 VUs  1m08.9s/2m00.0s
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3903->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3115->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3367->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2977->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3037->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3835->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:01+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3186->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2984->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3361->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3702->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3054->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3574->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3899->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3379->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3541->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3836->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3392->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3543->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m09.9s), 1000/1000 VUs, 45898 complete and 0 interrupted iterations
+load_test   [  58% ] 1000/1000 VUs  1m09.9s/2m00.0s
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3522->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2957->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3307->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3114->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3815->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3362->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3348->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3845->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3827->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3168->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3762->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3279->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3341->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3923->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3933->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:02+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3355->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3904->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3547->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2993->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3011->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3693->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3593->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3807->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3060->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3901->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3337->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3401->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3292->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3770->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3714->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3689->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m10.9s), 1000/1000 VUs, 46737 complete and 0 interrupted iterations
+load_test   [  59% ] 1000/1000 VUs  1m10.9s/2m00.0s
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3200->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3290->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3323->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3277->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3586->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3557->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2976->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3664->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3936->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3226->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3792->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2970->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3191->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3197->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3188->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3538->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3283->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3107->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3847->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3934->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3219->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3738->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3712->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:03+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3808->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3101->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3490->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3391->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3826->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3351->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3577->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3334->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3413->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3553->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3215->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3149->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3212->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3834->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3837->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3173->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3210->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3320->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3523->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3031->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3099->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3139->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3462->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3438->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3160->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3632->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3874->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3567->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3458->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3636->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3564->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3579->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3682->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2975->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m11.9s), 1000/1000 VUs, 47554 complete and 0 interrupted iterations
+load_test   [  60% ] 1000/1000 VUs  1m11.9s/2m00.0s
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2952->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3057->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3350->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3742->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3222->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3511->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3330->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3964->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3638->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3396->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3913->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3943->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3884->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3699->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3540->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3518->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3549->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3776->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3641->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3203->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3505->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3256->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3876->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3798->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3475->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3012->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3735->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:04+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3912->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3598->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3915->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3542->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3296->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3565->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3481->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3607->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3308->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3783->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3124->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3175->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3937->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3527->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3761->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3319->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3370->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3480->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2991->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3961->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3753->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3507->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3048->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3117->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3583->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3329->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3266->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3873->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3681->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3260->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3675->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3640->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3639->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3635->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3083->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3788->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3900->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3786->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3456->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3233->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3610->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2972->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3221->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3621->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3157->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3244->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3499->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3400->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3271->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3472->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3032->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3862->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3521->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3109->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3833->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3388->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2988->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3853->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3768->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3597->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3177->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3616->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3633->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3090->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3864->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3017->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3006->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3424->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m12.9s), 1000/1000 VUs, 48408 complete and 0 interrupted iterations
+load_test   [  61% ] 1000/1000 VUs  1m12.9s/2m00.0s
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3890->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3839->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3375->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3473->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3155->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3417->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3855->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3868->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3914->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3254->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3683->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3575->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3204->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3550->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3262->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3448->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3871->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3928->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3642->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3627->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3849->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3652->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3460->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3325->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3559->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3136->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2960->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3039->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3869->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3931->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3806->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2989->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3546->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3519->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3631->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3119->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3617->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3432->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3866->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3078->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3364->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3303->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3134->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3476->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3524->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3885->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:05+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3027->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3089->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3029->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3165->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3205->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3676->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3452->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3104->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3495->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3828->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3691->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3751->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3055->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3905->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3654->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3573->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3599->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3267->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3646->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3094->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3201->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3722->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3302->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3537->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3412->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3110->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3345->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3851->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3321->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3033->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3668->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3698->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3733->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3250->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3022->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3383->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3190->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3715->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3146->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3278->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3953->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2951->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2961->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3030->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3300->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2985->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3772->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3133->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3464->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3657->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3435->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3880->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3095->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3562->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2992->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3604->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3602->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2997->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3410->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3482->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3091->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3365->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3340->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2962->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3824->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3927->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3471->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3568->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3740->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3948->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3625->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3687->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3150->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3183->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3787->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3152->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3584->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3532->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3019->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3700->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3264->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3295->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3479->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3144->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3406->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3004->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3803->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3477->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3910->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3061->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3765->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3414->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3443->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3680->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3407->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3841->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3696->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3328->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2974->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3287->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3844->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3385->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3551->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3897->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3140->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3286->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3116->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3534->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3644->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3275->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3643->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3070->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3440->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3858->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3113->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3842->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3825->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3589->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3816->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3649->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3063->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3789->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3402->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3467->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3248->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3728->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3382->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3247->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3154->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3015->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3759->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3626->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3703->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3663->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3380->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3719->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3073->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3766->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3843->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3284->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3147->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3955->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3576->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3470->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3372->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3202->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3960->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3867->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3281->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3726->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3725->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3578->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3174->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3077->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3701->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3086->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3080->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3558->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3894->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3005->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3056->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3865->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2966->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3274->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3368->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3622->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3620->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3729->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3947->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3445->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3059->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3347->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2998->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3529->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3812->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3848->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3098->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3088->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3314->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3813->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3535->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3763->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3463->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3744->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3688->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3734->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3322->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3840->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3814->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3268->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3926->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3255->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3692->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3794->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3427->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3510->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3674->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2965->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3571->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3046->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3036->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3727->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3832->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3797->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3570->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3403->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3660->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3704->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3957->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3566->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3592->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3213->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3861->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3251->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3695->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3569->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3892->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3065->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3298->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3494->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3614->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3730->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3394->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3533->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3224->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3184->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3013->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3206->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3708->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3804->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3418->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3723->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3939->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3008->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3068->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3339->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3656->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3153->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3434->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3902->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3332->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3603->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3211->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3528->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:06+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3918->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m13.9s), 1000/1000 VUs, 49408 complete and 0 interrupted iterations
+load_test   [  62% ] 1000/1000 VUs  1m13.9s/2m00.0s
+time="2026-01-30T10:00:07+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3764->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:07+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3502->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m14.9s), 1000/1000 VUs, 50094 complete and 0 interrupted iterations
+load_test   [  62% ] 1000/1000 VUs  1m14.9s/2m00.0s
+
+running (1m15.9s), 1000/1000 VUs, 50869 complete and 0 interrupted iterations
+load_test   [  63% ] 1000/1000 VUs  1m15.9s/2m00.0s
+
+running (1m16.9s), 1000/1000 VUs, 51641 complete and 0 interrupted iterations
+load_test   [  64% ] 1000/1000 VUs  1m16.9s/2m00.0s
+time="2026-01-30T10:00:10+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3767->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:10+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3102->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:10+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:10+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3512->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m17.9s), 1000/1000 VUs, 52463 complete and 0 interrupted iterations
+load_test   [  65% ] 1000/1000 VUs  1m17.9s/2m00.0s
+time="2026-01-30T10:00:11+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:11+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m18.9s), 1000/1000 VUs, 53234 complete and 0 interrupted iterations
+load_test   [  66% ] 1000/1000 VUs  1m18.9s/2m00.0s
+time="2026-01-30T10:00:11+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3038->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:11+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:12+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3492->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m19.9s), 1000/1000 VUs, 54044 complete and 0 interrupted iterations
+load_test   [  67% ] 1000/1000 VUs  1m19.9s/2m00.0s
+time="2026-01-30T10:00:12+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3775->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m20.9s), 1000/1000 VUs, 54836 complete and 0 interrupted iterations
+load_test   [  67% ] 1000/1000 VUs  1m20.9s/2m00.0s
+time="2026-01-30T10:00:13+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3920->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m21.9s), 1000/1000 VUs, 55637 complete and 0 interrupted iterations
+load_test   [  68% ] 1000/1000 VUs  1m21.9s/2m00.0s
+
+running (1m22.9s), 1000/1000 VUs, 56428 complete and 0 interrupted iterations
+load_test   [  69% ] 1000/1000 VUs  1m22.9s/2m00.0s
+time="2026-01-30T10:00:15+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3143->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:15+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:16+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3397->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:16+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3230->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m23.9s), 1000/1000 VUs, 57214 complete and 0 interrupted iterations
+load_test   [  70% ] 1000/1000 VUs  1m23.9s/2m00.0s
+time="2026-01-30T10:00:16+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3304->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:16+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3555->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:16+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3024->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:17+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3881->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:17+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3151->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m24.9s), 1000/1000 VUs, 58015 complete and 0 interrupted iterations
+load_test   [  71% ] 1000/1000 VUs  1m24.9s/2m00.0s
+time="2026-01-30T10:00:17+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3875->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:17+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3911->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:18+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3386->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m25.9s), 1000/1000 VUs, 58820 complete and 0 interrupted iterations
+load_test   [  72% ] 1000/1000 VUs  1m25.9s/2m00.0s
+time="2026-01-30T10:00:18+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3670->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:19+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3952->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:19+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3517->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:19+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3530->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m26.9s), 1000/1000 VUs, 59616 complete and 0 interrupted iterations
+load_test   [  72% ] 1000/1000 VUs  1m26.9s/2m00.0s
+time="2026-01-30T10:00:19+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3556->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:19+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3371->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3311->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3238->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3624->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3043->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3208->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2994->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3390->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3754->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3706->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3731->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3041->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3231->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3301->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3707->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3779->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m27.9s), 1000/1000 VUs, 60415 complete and 0 interrupted iterations
+load_test   [  73% ] 1000/1000 VUs  1m27.9s/2m00.0s
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3747->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3838->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3958->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3257->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2959->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2955->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3252->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3466->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3455->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3232->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:20+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3651->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3750->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3760->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3830->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3092->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3619->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3358->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3217->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3810->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3265->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:2973->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3811->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3103->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3023->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3554->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3745->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3595->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+time="2026-01-30T10:00:21+09:00" level=warning msg="Request Failed" error="read tcp 172.16.11.200:3025->3.38.125.37:80: wsarecv: An existing connection was forcibly closed by the remote host."
+
+running (1m28.9s), 1000/1000 VUs, 61194 complete and 0 interrupted iterations
+load_test   [  74% ] 1000/1000 VUs  1m28.9s/2m00.0s
+
+running (1m29.9s), 1000/1000 VUs, 62001 complete and 0 interrupted iterations
+load_test   [  75% ] 1000/1000 VUs  1m29.9s/2m00.0s
+time="2026-01-30T10:00:23+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m30.9s), 0988/1000 VUs, 62784 complete and 0 interrupted iterations
+load_test   [  76% ] 0988/1000 VUs  1m30.9s/2m00.0s
+time="2026-01-30T10:00:24+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:24+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m31.9s), 0972/1000 VUs, 63591 complete and 0 interrupted iterations
+load_test   [  77% ] 0971/1000 VUs  1m31.9s/2m00.0s
+
+running (1m32.9s), 0946/1000 VUs, 64414 complete and 0 interrupted iterations
+load_test   [  77% ] 0946/1000 VUs  1m32.9s/2m00.0s
+time="2026-01-30T10:00:26+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m33.9s), 0921/1000 VUs, 65228 complete and 0 interrupted iterations
+load_test   [  78% ] 0921/1000 VUs  1m33.9s/2m00.0s
+time="2026-01-30T10:00:27+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m34.9s), 0892/1000 VUs, 66027 complete and 0 interrupted iterations
+load_test   [  79% ] 0892/1000 VUs  1m34.9s/2m00.0s
+time="2026-01-30T10:00:27+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m35.9s), 0866/1000 VUs, 66822 complete and 0 interrupted iterations
+load_test   [  80% ] 0866/1000 VUs  1m35.9s/2m00.0s
+
+running (1m36.9s), 0853/1000 VUs, 67647 complete and 0 interrupted iterations
+load_test   [  81% ] 0853/1000 VUs  1m36.9s/2m00.0s
+
+running (1m37.9s), 0819/1000 VUs, 68454 complete and 0 interrupted iterations
+load_test   [  82% ] 0819/1000 VUs  1m37.9s/2m00.0s
+
+running (1m38.9s), 0782/1000 VUs, 69272 complete and 0 interrupted iterations
+load_test   [  82% ] 0782/1000 VUs  1m38.9s/2m00.0s
+
+running (1m39.9s), 0749/1000 VUs, 70084 complete and 0 interrupted iterations
+load_test   [  83% ] 0749/1000 VUs  1m39.9s/2m00.0s
+time="2026-01-30T10:00:32+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:32+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:32+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:33+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m40.9s), 0721/1000 VUs, 70891 complete and 0 interrupted iterations
+load_test   [  84% ] 0721/1000 VUs  1m40.9s/2m00.0s
+time="2026-01-30T10:00:33+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:33+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m41.9s), 0695/1000 VUs, 71702 complete and 0 interrupted iterations
+load_test   [  85% ] 0695/1000 VUs  1m41.9s/2m00.0s
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:34+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m42.9s), 0656/1000 VUs, 72558 complete and 0 interrupted iterations
+load_test   [  86% ] 0656/1000 VUs  1m42.9s/2m00.0s
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:35+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:00:36+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (1m43.9s), 0619/1000 VUs, 73364 complete and 0 interrupted iterations
+load_test   [  87% ] 0619/1000 VUs  1m43.9s/2m00.0s
+
+running (1m44.9s), 0589/1000 VUs, 74155 complete and 0 interrupted iterations
+load_test   [  87% ] 0589/1000 VUs  1m44.9s/2m00.0s
+
+running (1m45.9s), 0563/1000 VUs, 74963 complete and 0 interrupted iterations
+load_test   [  88% ] 0563/1000 VUs  1m45.9s/2m00.0s
+
+running (1m46.9s), 0523/1000 VUs, 75767 complete and 0 interrupted iterations
+load_test   [  89% ] 0523/1000 VUs  1m46.9s/2m00.0s
+
+running (1m47.9s), 0482/1000 VUs, 76589 complete and 0 interrupted iterations
+load_test   [  90% ] 0482/1000 VUs  1m47.9s/2m00.0s
+
+running (1m48.9s), 0440/1000 VUs, 77428 complete and 0 interrupted iterations
+load_test   [  91% ] 0440/1000 VUs  1m48.9s/2m00.0s
+
+running (1m49.9s), 0401/1000 VUs, 78220 complete and 0 interrupted iterations
+load_test   [  92% ] 0401/1000 VUs  1m49.9s/2m00.0s
+
+running (1m50.9s), 0366/1000 VUs, 79076 complete and 0 interrupted iterations
+load_test   [  92% ] 0366/1000 VUs  1m50.9s/2m00.0s
+
+running (1m51.9s), 0332/1000 VUs, 79875 complete and 0 interrupted iterations
+load_test   [  93% ] 0332/1000 VUs  1m51.9s/2m00.0s
+
+running (1m52.9s), 0298/1000 VUs, 80674 complete and 0 interrupted iterations
+load_test   [  94% ] 0298/1000 VUs  1m52.9s/2m00.0s
+
+running (1m53.9s), 0260/1000 VUs, 81515 complete and 0 interrupted iterations
+load_test   [  95% ] 0260/1000 VUs  1m53.9s/2m00.0s
+
+running (1m54.9s), 0226/1000 VUs, 82324 complete and 0 interrupted iterations
+load_test   [  96% ] 0226/1000 VUs  1m54.9s/2m00.0s
+
+running (1m55.9s), 0190/1000 VUs, 83138 complete and 0 interrupted iterations
+load_test   [  97% ] 0190/1000 VUs  1m55.9s/2m00.0s
+
+running (1m56.9s), 0154/1000 VUs, 83956 complete and 0 interrupted iterations
+load_test   [  97% ] 0154/1000 VUs  1m56.9s/2m00.0s
+
+running (1m57.9s), 0116/1000 VUs, 84652 complete and 0 interrupted iterations
+load_test   [  98% ] 0116/1000 VUs  1m57.9s/2m00.0s
+
+running (1m58.9s), 0080/1000 VUs, 85080 complete and 0 interrupted iterations
+load_test   [  99% ] 0080/1000 VUs  1m58.9s/2m00.0s
+
+running (1m59.9s), 0047/1000 VUs, 85255 complete and 0 interrupted iterations
+load_test   [ 100% ] 0047/1000 VUs  1m59.9s/2m00.0s
+
+running (2m00.9s), 0039/1000 VUs, 85264 complete and 0 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m01.9s), 0031/1000 VUs, 85270 complete and 2 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m02.9s), 0024/1000 VUs, 85276 complete and 3 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m03.9s), 0020/1000 VUs, 85279 complete and 4 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m04.9s), 0016/1000 VUs, 85283 complete and 4 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m05.9s), 0015/1000 VUs, 85284 complete and 4 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m06.9s), 0013/1000 VUs, 85285 complete and 5 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m07.9s), 0013/1000 VUs, 85285 complete and 5 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m08.9s), 0013/1000 VUs, 85285 complete and 5 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m09.9s), 0012/1000 VUs, 85285 complete and 6 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m10.9s), 0012/1000 VUs, 85285 complete and 6 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m11.9s), 0011/1000 VUs, 85285 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m12.9s), 0011/1000 VUs, 85285 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (2m13.9s), 0004/1000 VUs, 85292 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+time="2026-01-30T10:01:06+09:00" level=warning msg="Request Failed" error="request timeout"
+
+running (2m14.9s), 0001/1000 VUs, 85295 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m15.9s), 0001/1000 VUs, 85295 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m16.9s), 0001/1000 VUs, 85295 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m17.9s), 0001/1000 VUs, 85295 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+
+running (2m18.9s), 0001/1000 VUs, 85295 complete and 7 interrupted iterations
+load_test ↓ [ 100% ] 0045/1000 VUs  2m0s
+time="2026-01-30T10:01:11+09:00" level=warning msg="Request Failed" error="request timeout"
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<1000' p(95)=2.04s
+    ✗ 'p(99)<5000' p(99)=30.2s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.92%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 170592 1225.58218/s
+    checks_succeeded...: 93.14% 158895 out of 170592
+    checks_failed......: 6.85%  11697 out of 170592
+
+    ✗ status is 200
+      ↳  99% — ✓ 84507 / ✗ 789
+    ✗ response time < 1000ms
+      ↳  87% — ✓ 74388 / ✗ 10908
+
+    HTTP
+    http_req_duration..............: avg=970.45ms min=0s       med=316.62ms max=1m0s   p(90)=1.17s p(95)=2.04s
+      { expected_response:true }...: avg=654.78ms min=5.17ms   med=313.66ms max=53.87s p(90)=1.11s p(95)=1.64s
+    http_req_failed................: 0.92%  789 out of 85296
+    http_reqs......................: 85296  612.79109/s
+
+    EXECUTION
+    iteration_duration.............: avg=1.07s    min=105.44ms med=418.68ms max=1m0s   p(90)=1.28s p(95)=2.2s 
+    iterations.....................: 85296  612.79109/s
+    vus............................: 1      min=1            max=1000
+    vus_max........................: 1000   min=1000         max=1000
+
+    NETWORK
+    data_received..................: 1.1 GB 8.0 MB/s
+    data_sent......................: 9.7 MB 69 kB/s
+
+
+
+
+running (2m19.2s), 0000/1000 VUs, 85296 complete and 7 interrupted iterations
+load_test ✓ [ 100% ] 0000/1000 VUs  2m0s
+time="2026-01-30T10:01:12+09:00" level=error msg="thresholds on metrics 'http_req_duration' have been crossed"

@@ -85,7 +85,7 @@ public class AllocationStatusService
     /**
      * 전략 2: Request Collapsing (비동기 방식)
      * - computeIfAbsent + supplyAsync로 ForkJoinPool에서 DB 쿼리 실행
-     * - Tomcat 스레드 블로킹 최소화
+     * - 동시 요청은 같은 Future를 공유하여 DB 쿼리 1번만 실행
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
@@ -93,20 +93,20 @@ public class AllocationStatusService
         CompletableFuture<AllocationStatusSnapShot> future = inFlightSnapshots.computeIfAbsent(key, k ->
                 CompletableFuture.supplyAsync(() ->
                         loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
+                        .whenComplete((result, ex) ->
+                                // 비동기로 제거하여 Recursive update 방지
+                                CompletableFuture.runAsync(() -> inFlightSnapshots.remove(key)))
         );
 
         try {
             return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
+            future.cancel(true);
             log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
             throw new RuntimeException("조회 타임아웃", e);
         } catch (Exception e) {
             log.error("AllocationStatusSnapShot 조회 실패: matchId={}, blockId={}", matchId, blockId, e);
             throw new RuntimeException("조회 실패", e);
-        } finally {
-            if (future.isDone()) {
-                inFlightSnapshots.remove(key, future);
-            }
         }
     }
 

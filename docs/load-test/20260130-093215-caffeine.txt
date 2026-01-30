@@ -1,0 +1,183 @@
+
+         /\      Grafana   /‾‾/  
+    /\  /  \     |\  __   /  /   
+   /  \/    \    | |/ /  /   ‾‾\ 
+  /          \   |   (  |  (‾)  |
+ / __________ \  |_|\_\  \_____/ 
+
+     execution: local
+        script: infra/k6/scripts/allocation-status-load-test.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 2000 max VUs, 2m30s max duration (incl. graceful stop):
+              * load_test: Up to 2000 looping VUs for 2m0s over 3 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  █ THRESHOLDS 
+
+    http_req_duration
+    ✗ 'p(95)<1000' p(95)=3.49s
+    ✗ 'p(99)<5000' p(99)=11.13s
+
+    http_req_failed
+    ✓ 'rate<0.01' rate=0.16%
+
+
+  █ TOTAL RESULTS 
+
+    checks_total.......: 157034 1239.766367/s
+    checks_succeeded...: 82.76% 129975 out of 157034
+    checks_failed......: 17.23% 27059 out of 157034
+
+    ✗ status is 200
+      ↳  99% — ✓ 78391 / ✗ 126
+    ✗ response time < 1000ms
+      ↳  65% — ✓ 51584 / ✗ 26933
+
+    HTTP
+    http_req_duration..............: avg=1.31s min=7.87ms med=673.72ms max=1m0s   p(90)=2.41s p(95)=3.49s
+      { expected_response:true }...: avg=1.22s min=7.87ms med=672.26ms max=57.99s p(90)=2.37s p(95)=3.41s
+    http_req_failed................: 0.16%  126 out of 78517
+    http_reqs......................: 78517  619.883183/s
+
+    EXECUTION
+    iteration_duration.............: avg=2.32s min=1s     med=1.68s    max=1m1s   p(90)=3.45s p(95)=4.54s
+    iterations.....................: 78515  619.867393/s
+    vus............................: 1      min=1            max=2000
+    vus_max........................: 2000   min=2000         max=2000
+
+    NETWORK
+    data_received..................: 1.0 GB 8.1 MB/s
+    data_sent......................: 8.9 MB 70 kB/s
+
+
+
+
+time="2026-01-30T09:41:37+09:00" level=error msg="thresholds on metrics 'http_req_duration' have been crossed"

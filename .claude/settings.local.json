@@ -29,7 +29,8 @@
       "Bash(./gradlew:*)",
       "Bash(dot:*)",
       "Bash(taskkill //F //PID 13476)",
-      "WebSearch"
+      "WebSearch",
+      "Bash(done)"
     ]
   }
 }

@@ -84,8 +84,6 @@ public class AllocationStatusService
     /**
      * 전략 2: Request Collapsing
      * - 동시 요청은 같은 Future를 공유하여 DB 쿼리 1번만 실행
-     * - 기본 ForkJoinPool 사용 (CPU 코어 수 제한)
-     * - whenCompleteAsync로 Recursive update 방지
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId) {
         String key = matchId + ":" + blockId;
@@ -94,12 +92,13 @@ public class AllocationStatusService
                 CompletableFuture
                         .supplyAsync(() -> loadAllocationStatusPort
                                 .loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId))
-                        .whenCompleteAsync((result, ex) -> inFlightSnapshots.remove(key))
+                        .whenComplete((result, ex) -> inFlightSnapshots.remove(key))
         );
 
         try {
             return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
+            future.cancel(true);
             log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
             throw new RuntimeException("조회 타임아웃", e);
         } catch (Exception e) {

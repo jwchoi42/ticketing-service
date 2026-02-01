@@ -46,5 +46,5 @@ export default function () {
         'response time < 1000ms': (r) => r.timings.duration < 1000,
     });
 
-    sleep(0.1);
+    sleep(1);
 }

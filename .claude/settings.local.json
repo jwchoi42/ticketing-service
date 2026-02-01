@@ -32,7 +32,8 @@
       "WebSearch",
       "Bash(done)",
       "Bash(k6 run:*)",
-      "WebFetch(domain:vercel.com)"
+      "WebFetch(domain:vercel.com)",
+      "Bash(powershell -Command:*)"
     ]
   }
 }

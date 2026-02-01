@@ -26,6 +26,12 @@ public class AreaEntity {
         return new AreaEntity(area.getId(), area.getName());
     }
 
+    public static AreaEntity fromId(final Long id) {
+        AreaEntity entity = new AreaEntity();
+        entity.id = id;
+        return entity;
+    }
+
     public Area toDomain() {
         return new Area(id, name);
     }

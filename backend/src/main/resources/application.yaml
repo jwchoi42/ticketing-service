@@ -12,7 +12,7 @@ spring:
         format_sql: true
 
   datasource:
-    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/ticketing_database}
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5433/ticketing_database}
     username: ${SPRING_DATASOURCE_USERNAME:postgres}
     password: ${SPRING_DATASOURCE_PASSWORD:password}
     hikari:

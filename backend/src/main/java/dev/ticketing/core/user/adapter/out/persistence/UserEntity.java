@@ -40,6 +40,12 @@ public class UserEntity {
         return new UserEntity(user.getId(), user.getEmail(), user.getPassword(), user.getRole());
     }
 
+    public static UserEntity fromId(final Long id) {
+        UserEntity entity = new UserEntity();
+        entity.id = id;
+        return entity;
+    }
+
     public User toDomain() {
         return User.withId(id, email, password, role);
     }

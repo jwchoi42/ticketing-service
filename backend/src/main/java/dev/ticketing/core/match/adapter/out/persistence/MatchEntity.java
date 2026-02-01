@@ -47,6 +47,12 @@ public class MatchEntity {
                 match.getStatus());
     }
 
+    public static MatchEntity fromId(final Long id) {
+        MatchEntity entity = new MatchEntity();
+        entity.id = id;
+        return entity;
+    }
+
     public Match toDomain() {
         return Match.withId(id, stadium, homeTeam, awayTeam, dateTime, status);
     }

@@ -60,6 +60,7 @@ Table reservations {
 
 Table allocations {
   id integer [primary key]
+  user_id integer [null]
   reservation_id integer [null]
   match_id integer [not null]
   block_id integer [not null]
@@ -81,7 +82,9 @@ Table allocations {
   '''
 }
 
+Ref: users.id < allocations.user_id
 Ref: matches.id < allocations.match_id
+Ref: blocks.id < allocations.block_id
 Ref: seats.id < allocations.seat_id
 Ref: reservations.id < allocations.reservation_id
 

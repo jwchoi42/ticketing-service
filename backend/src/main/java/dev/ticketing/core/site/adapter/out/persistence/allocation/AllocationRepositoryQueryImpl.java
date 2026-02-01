@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static dev.ticketing.core.site.adapter.out.persistence.allocation.QAllocationEntity.allocationEntity;
+import static dev.ticketing.core.site.adapter.out.persistence.hierarchy.entity.QSeatEntity.seatEntity;
 
 @RequiredArgsConstructor
 public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery {
@@ -21,18 +22,35 @@ public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery 
         return queryFactory
                 .select(Projections.constructor(AllocationStatus.class,
                         allocationEntity.id,
-                        allocationEntity.matchId,
-                        allocationEntity.blockId,
-                        allocationEntity.seatId,
+                        allocationEntity.match.id,
+                        allocationEntity.block.id,
+                        allocationEntity.seat.id,
                         allocationEntity.status,
                         allocationEntity.holdExpiresAt,
-                        allocationEntity.updatedAt
-                ))
+                        allocationEntity.updatedAt))
                 .from(allocationEntity)
                 .where(
-                        allocationEntity.matchId.eq(matchId),
-                        allocationEntity.blockId.eq(blockId)
-                )
+                        allocationEntity.match.id.eq(matchId),
+                        allocationEntity.block.id.eq(blockId))
+                .fetch();
+    }
+
+    @Override
+    public List<AllocationStatus> findAllocationStatusesByMatchIdAndBlockIdWithJoin(Long matchId, Long blockId) {
+        return queryFactory
+                .select(Projections.constructor(AllocationStatus.class,
+                        allocationEntity.id,
+                        allocationEntity.match.id,
+                        seatEntity.block.id,
+                        allocationEntity.seat.id,
+                        allocationEntity.status,
+                        allocationEntity.holdExpiresAt,
+                        allocationEntity.updatedAt))
+                .from(allocationEntity)
+                .join(allocationEntity.seat, seatEntity)
+                .where(
+                        allocationEntity.match.id.eq(matchId),
+                        seatEntity.block.id.eq(blockId))
                 .fetch();
     }
 
@@ -42,19 +60,17 @@ public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery 
         return queryFactory
                 .select(Projections.constructor(AllocationStatus.class,
                         allocationEntity.id,
-                        allocationEntity.matchId,
-                        allocationEntity.blockId,
-                        allocationEntity.seatId,
+                        allocationEntity.match.id,
+                        allocationEntity.block.id,
+                        allocationEntity.seat.id,
                         allocationEntity.status,
                         allocationEntity.holdExpiresAt,
-                        allocationEntity.updatedAt
-                ))
+                        allocationEntity.updatedAt))
                 .from(allocationEntity)
                 .where(
-                        allocationEntity.matchId.eq(matchId),
-                        allocationEntity.blockId.eq(blockId),
-                        allocationEntity.updatedAt.after(since)
-                )
+                        allocationEntity.match.id.eq(matchId),
+                        allocationEntity.block.id.eq(blockId),
+                        allocationEntity.updatedAt.after(since))
                 .fetch();
     }
 }

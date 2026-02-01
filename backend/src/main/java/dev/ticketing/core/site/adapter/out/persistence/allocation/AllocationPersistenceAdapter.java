@@ -30,8 +30,15 @@ public class AllocationPersistenceAdapter
 
     @Override
     public AllocationStatusSnapShot loadAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId) {
-        List<AllocationStatus> allocationStatuses
-                = allocationRepository.findAllocationStatusesByMatchIdAndBlockId(matchId, blockId);
+        List<AllocationStatus> allocationStatuses = allocationRepository
+                .findAllocationStatusesByMatchIdAndBlockId(matchId, blockId);
+        return AllocationStatusSnapShot.from(allocationStatuses);
+    }
+
+    @Override
+    public AllocationStatusSnapShot loadAllocationStatusSnapShotByMatchIdAndBlockIdWithJoin(Long matchId, Long blockId) {
+        List<AllocationStatus> allocationStatuses = allocationRepository
+                .findAllocationStatusesByMatchIdAndBlockIdWithJoin(matchId, blockId);
         return AllocationStatusSnapShot.from(allocationStatuses);
     }
 
@@ -70,7 +77,7 @@ public class AllocationPersistenceAdapter
                 .map(e -> AllocationStatus.from(e.toDomain()))
                 .orElseGet(() -> {
                     Long blockId = seatRepository.findById(seatId)
-                            .map(seat -> seat.getBlockId())
+                            .map(seat -> seat.getBlock().getId())
                             .orElse(null);
                     return AllocationStatus.from(Allocation.availableForMatch(matchId, blockId, seatId));
                 });

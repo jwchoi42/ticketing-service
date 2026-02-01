@@ -1,0 +1,59 @@
+Table matches {
+  id integer [primary key, increment]
+  stadium varchar
+  home_team varchar
+  away_team varchar
+  date_time timestamp
+}
+
+Ref: matches.id < allocations.match_id
+
+Table allocations {
+
+  id integer [primary key, increment]
+  match_id integer [not null]
+  seat_id integer [not null]
+  block_id integer [not null]
+  state varchar [not null]
+  hold_expires_at timestamp [null]
+  updated_at timestamp [null]
+
+  Indexes {
+    (match_id, seat_id) [unique]
+    (match_id, block_id)
+    (match_id, updated_at)
+  }
+
+}
+
+Ref: seats.id < allocations.seat_id
+
+Table seats {
+  id integer [primary key, increment]
+  block_id integer
+  row_number integer
+  seat_number integer
+}
+
+Ref: blocks.id < seats.block_id
+
+Table blocks {
+  id integer [primary key, increment]
+  section_id integer
+  name varchar
+}
+
+Ref: sections.id < blocks.section_id
+
+Table sections {
+  id integer [primary key, increment]
+  area_id integer
+  name varchar // HOME, AWAY, LEFT, RIGHT
+}
+
+Ref: areas.id < sections.area_id
+
+Table areas {
+  id integer [primary key, increment]
+  name varchar // INFIELD, OUTFIELD
+} 

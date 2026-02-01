@@ -31,7 +31,8 @@
       "Bash(taskkill //F //PID 13476)",
       "WebSearch",
       "Bash(done)",
-      "Bash(k6 run:*)"
+      "Bash(k6 run:*)",
+      "WebFetch(domain:vercel.com)"
     ]
   }
 }

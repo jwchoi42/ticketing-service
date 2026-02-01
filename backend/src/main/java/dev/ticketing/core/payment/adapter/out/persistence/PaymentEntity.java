@@ -2,12 +2,16 @@ package dev.ticketing.core.payment.adapter.out.persistence;
 
 import dev.ticketing.core.payment.domain.Payment;
 import dev.ticketing.core.payment.domain.PaymentStatus;
+import dev.ticketing.core.reservation.adapter.out.persistence.ReservationEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -25,7 +29,10 @@ public class PaymentEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long reservationId;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reservation_id", nullable = false)
+    private ReservationEntity reservation;
     private Integer amount;
     private String method;
 
@@ -37,20 +44,29 @@ public class PaymentEntity {
     private LocalDateTime paidAt;
 
     public static PaymentEntity from(final Payment payment) {
-        return new PaymentEntity(
-                payment.getId(),
-                payment.getReservationId(),
-                payment.getAmount(),
-                payment.getMethod(),
-                payment.getStatus(),
-                payment.getPaymentGatewayProvider(),
-                payment.getPaymentTransactionId(),
-                payment.getCreatedAt(),
-                payment.getPaidAt());
+        PaymentEntity entity = new PaymentEntity();
+        entity.id = payment.getId();
+        entity.reservation = ReservationEntity.fromId(payment.getReservationId());
+        entity.amount = payment.getAmount();
+        entity.method = payment.getMethod();
+        entity.status = payment.getStatus();
+        entity.paymentGatewayProvider = payment.getPaymentGatewayProvider();
+        entity.paymentTransactionId = payment.getPaymentTransactionId();
+        entity.createdAt = payment.getCreatedAt();
+        entity.paidAt = payment.getPaidAt();
+        return entity;
     }
 
     public Payment toDomain() {
-        return Payment.withId(id, reservationId, amount, method, status, paymentGatewayProvider, paymentTransactionId,
-                createdAt, paidAt);
+        return Payment.withId(
+                id,
+                reservation != null ? reservation.getId() : null,
+                amount,
+                method,
+                status,
+                paymentGatewayProvider,
+                paymentTransactionId,
+                createdAt,
+                paidAt);
     }
 }

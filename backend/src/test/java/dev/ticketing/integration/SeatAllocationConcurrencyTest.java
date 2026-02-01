@@ -38,11 +38,20 @@ class SeatAllocationConcurrencyTest {
 
     @BeforeEach
     void setUp() {
-        // Clean up existing data
+        // Clean up existing data (order matters due to FK constraints)
         jdbcTemplate.execute("DELETE FROM allocations");
         jdbcTemplate.execute("DELETE FROM seats");
         jdbcTemplate.execute("DELETE FROM blocks");
+        jdbcTemplate.execute("DELETE FROM sections");
+        jdbcTemplate.execute("DELETE FROM areas");
         jdbcTemplate.execute("DELETE FROM matches");
+        jdbcTemplate.execute("DELETE FROM users");
+
+        // Insert test users (required for allocation foreign key)
+        for (int i = 1; i <= 10; i++) {
+            jdbcTemplate.update("INSERT INTO users (id, email, password, role) VALUES (?, ?, ?, ?)",
+                    i, "user" + i + "@test.com", "password", "USER");
+        }
 
         // Insert test match data
         jdbcTemplate.update("""
@@ -54,11 +63,19 @@ class SeatAllocationConcurrencyTest {
                 Long.class
         );
 
+        // Insert test area data (required for section foreign key)
+        jdbcTemplate.update("INSERT INTO areas (name) VALUES ('Test Area')");
+        Long areaId = jdbcTemplate.queryForObject("SELECT id FROM areas LIMIT 1", Long.class);
+
+        // Insert test section data (required for block foreign key)
+        jdbcTemplate.update("INSERT INTO sections (area_id, name) VALUES (?, 'Test Section')", areaId);
+        Long sectionId = jdbcTemplate.queryForObject("SELECT id FROM sections LIMIT 1", Long.class);
+
         // Insert test block data (required for seat foreign key)
         jdbcTemplate.update("""
                 INSERT INTO blocks (section_id, name)
-                VALUES (1, 'Test Block')
-                """);
+                VALUES (?, 'Test Block')
+                """, sectionId);
         Long blockId = jdbcTemplate.queryForObject(
                 "SELECT id FROM blocks LIMIT 1",
                 Long.class
@@ -76,10 +93,10 @@ class SeatAllocationConcurrencyTest {
 
         // Pre-create AVAILABLE allocation (simulating MatchService.openMatch() behavior)
         jdbcTemplate.update("""
-                INSERT INTO allocations (user_id, match_id, seat_id, status, hold_expires_at, updated_at)
-                VALUES (NULL, ?, ?, 'AVAILABLE', NULL, NOW())
+                INSERT INTO allocations (user_id, match_id, block_id, seat_id, status, hold_expires_at, updated_at)
+                VALUES (NULL, ?, ?, ?, 'AVAILABLE', NULL, NOW())
                 ON CONFLICT (match_id, seat_id) DO UPDATE SET status = 'AVAILABLE', user_id = NULL, hold_expires_at = NULL
-                """, matchId, seatId);
+                """, matchId, blockId, seatId);
     }
 
     @Test

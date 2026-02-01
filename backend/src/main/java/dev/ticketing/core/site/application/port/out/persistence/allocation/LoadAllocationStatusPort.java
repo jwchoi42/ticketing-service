@@ -11,6 +11,11 @@ public interface LoadAllocationStatusPort {
     AllocationStatusSnapShot loadAllocationStatusSnapShotByMatchIdAndBlockId(Long matchId, Long blockId);
 
     /**
+     * 정규화 시뮬레이션용 - seat 테이블과 JOIN하여 조회
+     */
+    AllocationStatusSnapShot loadAllocationStatusSnapShotByMatchIdAndBlockIdWithJoin(Long matchId, Long blockId);
+
+    /**
      * 특정 좌석의 상태 조회
      *
      * @param matchId 경기 ID

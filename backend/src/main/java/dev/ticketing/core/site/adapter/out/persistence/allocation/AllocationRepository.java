@@ -16,7 +16,7 @@ public interface AllocationRepository extends JpaRepository<AllocationEntity, Lo
     Optional<AllocationEntity> findByMatchIdAndSeatId(Long matchId, Long seatId);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT a FROM AllocationEntity a WHERE a.matchId = :matchId AND a.seatId = :seatId")
+    @Query("SELECT a FROM AllocationEntity a WHERE a.match.id = :matchId AND a.seat.id = :seatId")
     Optional<AllocationEntity> findByMatchIdAndSeatIdWithLock(@Param("matchId") Long matchId,
             @Param("seatId") Long seatId);
 

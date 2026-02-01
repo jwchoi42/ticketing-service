@@ -19,47 +19,58 @@ public class AllocationRepositoryQueryImpl implements AllocationRepositoryQuery 
 
     @Override
     public List<AllocationStatus> findAllocationStatusesByMatchIdAndBlockId(Long matchId, Long blockId) {
-        // JOIN 방식 - 테스트용 (비정규화 방식보다 느림)
         return queryFactory
                 .select(Projections.constructor(AllocationStatus.class,
                         allocationEntity.id,
-                        allocationEntity.matchId,
-                        seatEntity.blockId,
-                        allocationEntity.seatId,
+                        allocationEntity.match.id,
+                        allocationEntity.block.id,
+                        allocationEntity.seat.id,
                         allocationEntity.status,
                         allocationEntity.holdExpiresAt,
-                        allocationEntity.updatedAt
-                ))
+                        allocationEntity.updatedAt))
                 .from(allocationEntity)
-                .join(seatEntity).on(allocationEntity.seatId.eq(seatEntity.id))
                 .where(
-                        allocationEntity.matchId.eq(matchId),
-                        seatEntity.blockId.eq(blockId)
-                )
+                        allocationEntity.match.id.eq(matchId),
+                        allocationEntity.block.id.eq(blockId))
+                .fetch();
+    }
+
+    @Override
+    public List<AllocationStatus> findAllocationStatusesByMatchIdAndBlockIdWithJoin(Long matchId, Long blockId) {
+        return queryFactory
+                .select(Projections.constructor(AllocationStatus.class,
+                        allocationEntity.id,
+                        allocationEntity.match.id,
+                        seatEntity.block.id,
+                        allocationEntity.seat.id,
+                        allocationEntity.status,
+                        allocationEntity.holdExpiresAt,
+                        allocationEntity.updatedAt))
+                .from(allocationEntity)
+                .join(allocationEntity.seat, seatEntity)
+                .where(
+                        allocationEntity.match.id.eq(matchId),
+                        seatEntity.block.id.eq(blockId))
                 .fetch();
     }
 
     @Override
     public List<AllocationStatus> findAllocationStatusesByBlockIdAndUpdatedAtAfter(
             Long matchId, Long blockId, LocalDateTime since) {
-        // JOIN 방식 - 테스트용 (비정규화 방식보다 느림)
         return queryFactory
                 .select(Projections.constructor(AllocationStatus.class,
                         allocationEntity.id,
-                        allocationEntity.matchId,
-                        seatEntity.blockId,
-                        allocationEntity.seatId,
+                        allocationEntity.match.id,
+                        allocationEntity.block.id,
+                        allocationEntity.seat.id,
                         allocationEntity.status,
                         allocationEntity.holdExpiresAt,
-                        allocationEntity.updatedAt
-                ))
+                        allocationEntity.updatedAt))
                 .from(allocationEntity)
-                .join(seatEntity).on(allocationEntity.seatId.eq(seatEntity.id))
                 .where(
-                        allocationEntity.matchId.eq(matchId),
-                        seatEntity.blockId.eq(blockId),
-                        allocationEntity.updatedAt.after(since)
-                )
+                        allocationEntity.match.id.eq(matchId),
+                        allocationEntity.block.id.eq(blockId),
+                        allocationEntity.updatedAt.after(since))
                 .fetch();
     }
 }

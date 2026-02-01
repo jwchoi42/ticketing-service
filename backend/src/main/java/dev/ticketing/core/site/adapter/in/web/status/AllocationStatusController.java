@@ -29,9 +29,11 @@ public class AllocationStatusController {
             @PathVariable final Long matchId,
             @PathVariable final Long blockId,
             @Parameter(description = "조회 전략: none, collapsing, redis, caffeine")
-            @RequestParam(defaultValue = "collapsing") final String strategy) {
+            @RequestParam(defaultValue = "collapsing") final String strategy,
+            @Parameter(description = "스키마: normalized (JOIN 쿼리), denormalized (비정규화 쿼리)")
+            @RequestParam(defaultValue = "denormalized") final String schema) {
         AllocationStatusSnapShot snapshot = allocationStatusService
-                .getAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId, strategy);
+                .getAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId, strategy, schema);
         return SuccessResponse.of(snapshot);
     }
 

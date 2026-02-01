@@ -7,6 +7,7 @@ import dev.ticketing.core.site.domain.allocation.AllocationStatus;
 import dev.ticketing.core.site.domain.allocation.AllocationStatusSnapShot;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -42,7 +41,8 @@ public class AllocationStatusService
     private final CacheManager caffeineCacheManager;
 
     // Request Collapsing용 - 진행 중인 요청 추적
-    private final Map<String, CompletableFuture<AllocationStatusSnapShot>> inFlightSnapshots = new ConcurrentHashMap<>();
+    private final Map<String, CompletableFuture<AllocationStatusSnapShot>> inFlightSnapshots
+            = new ConcurrentHashMap<>();
 
     public AllocationStatusService(
             LoadAllocationStatusPort loadAllocationStatusPort,
@@ -64,7 +64,7 @@ public class AllocationStatusService
         boolean normalized = "normalized".equals(schema);
 
         return switch (strategy) {
-            case "none" -> normalized ? loadFromDbWithJoin(matchId, blockId) : loadFromDb(matchId, blockId);
+            case "none" -> loadFromDb(matchId, blockId, normalized);
             case "collapsing" -> loadWithCollapsing(matchId, blockId, normalized);
             case "redis" -> loadWithCache(matchId, blockId, redisCacheManager, normalized);
             case "caffeine" -> loadWithCache(matchId, blockId, caffeineCacheManager, normalized);
@@ -75,75 +75,85 @@ public class AllocationStatusService
     // ===== 전략별 구현 =====
 
     /**
-     * 비정규화 쿼리 (block_id 직접 조회)
+     * 전략 1: 캐시 없음 (기준선)
      */
-    private AllocationStatusSnapShot loadFromDb(Long matchId, Long blockId) {
+    private AllocationStatusSnapShot loadFromDb(Long matchId, Long blockId, boolean normalized) {
+        if (normalized) {
+            return loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockIdWithJoin(matchId, blockId);
+        }
         return loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockId(matchId, blockId);
     }
 
     /**
-     * 정규화 쿼리 (seat JOIN 필요)
-     */
-    private AllocationStatusSnapShot loadFromDbWithJoin(Long matchId, Long blockId) {
-        return loadAllocationStatusPort.loadAllocationStatusSnapShotByMatchIdAndBlockIdWithJoin(matchId, blockId);
-    }
-
-    private AllocationStatusSnapShot loadFromDb(Long matchId, Long blockId, boolean normalized) {
-        return normalized ? loadFromDbWithJoin(matchId, blockId) : loadFromDb(matchId, blockId);
-    }
-
-    /**
-     * Request Collapsing (동기 방식)
+     * 전략 2: Request Collapsing (동기 방식)
+     * - 동시 요청은 같은 Future를 공유하여 DB 쿼리 1번만 실행
+     * - 첫 번째 요청 스레드가 직접 실행하고, 나머지는 결과를 기다림
      */
     private AllocationStatusSnapShot loadWithCollapsing(Long matchId, Long blockId, boolean normalized) {
         String key = matchId + ":" + blockId + ":" + (normalized ? "n" : "d");
 
-        return Optional.ofNullable(inFlightSnapshots.get(key))
-                .map(this::awaitFuture)
-                .orElseGet(() -> executeWithCollapsing(key, matchId, blockId, normalized));
-    }
+        // 이미 진행 중인 요청이 있으면 그 결과를 기다림
+        CompletableFuture<AllocationStatusSnapShot> existing = inFlightSnapshots.get(key);
+        if (existing != null) {
+            return waitForResult(existing, matchId, blockId);
+        }
 
-    private AllocationStatusSnapShot executeWithCollapsing(String key, Long matchId, Long blockId, boolean normalized) {
+        // 새로운 Future 생성 및 등록 시도
         CompletableFuture<AllocationStatusSnapShot> newFuture = new CompletableFuture<>();
+        CompletableFuture<AllocationStatusSnapShot> registered = inFlightSnapshots.putIfAbsent(key, newFuture);
 
-        return Optional.ofNullable(inFlightSnapshots.putIfAbsent(key, newFuture))
-                .map(this::awaitFuture)
-                .orElseGet(() -> {
-                    try {
-                        AllocationStatusSnapShot result = loadFromDb(matchId, blockId, normalized);
-                        newFuture.complete(result);
-                        return result;
-                    } catch (Exception e) {
-                        newFuture.completeExceptionally(e);
-                        throw e;
-                    } finally {
-                        inFlightSnapshots.remove(key);
-                    }
-                });
+        // 다른 스레드가 먼저 등록했으면 그 결과를 기다림
+        if (registered != null) {
+            return waitForResult(registered, matchId, blockId);
+        }
+
+        // 첫 번째 스레드: 직접 실행
+        try {
+            AllocationStatusSnapShot result = loadFromDb(matchId, blockId, normalized);
+            newFuture.complete(result);
+            return result;
+        } catch (Exception e) {
+            newFuture.completeExceptionally(e);
+            throw e;
+        } finally {
+            inFlightSnapshots.remove(key);
+        }
     }
 
-    private AllocationStatusSnapShot awaitFuture(CompletableFuture<AllocationStatusSnapShot> future) {
+    private AllocationStatusSnapShot waitForResult(
+            CompletableFuture<AllocationStatusSnapShot> future, Long matchId, Long blockId) {
         try {
             return future.get(TIMEOUT_SECONDS, TimeUnit.SECONDS);
         } catch (TimeoutException e) {
-            throw new IllegalStateException("좌석 현황 조회 타임아웃", e);
-        } catch (ExecutionException e) {
-            throw new IllegalStateException("좌석 현황 조회 실패", e.getCause());
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new IllegalStateException("좌석 현황 조회 중단", e);
+            log.error("AllocationStatusSnapShot 조회 타임아웃: matchId={}, blockId={}", matchId, blockId);
+            throw new RuntimeException("조회 타임아웃", e);
+        } catch (Exception e) {
+            log.error("AllocationStatusSnapShot 조회 실패: matchId={}, blockId={}", matchId, blockId, e);
+            throw new RuntimeException("조회 실패", e);
         }
     }
 
     /**
-     * Cache (Redis 또는 Caffeine)
+     * 전략 3, 4: Cache (Redis 또는 Caffeine)
      */
     private AllocationStatusSnapShot loadWithCache(Long matchId, Long blockId, CacheManager cacheManager, boolean normalized) {
         String key = matchId + ":" + blockId + ":" + (normalized ? "n" : "d");
+        Cache cache = cacheManager.getCache(CACHE_NAME);
 
-        return Optional.ofNullable(cacheManager.getCache(CACHE_NAME))
-                .map(cache -> cache.get(key, () -> loadFromDb(matchId, blockId, normalized)))
-                .orElseGet(() -> loadFromDb(matchId, blockId, normalized));
+        if (cache != null) {
+            AllocationStatusSnapShot cached = cache.get(key, AllocationStatusSnapShot.class);
+            if (cached != null) {
+                return cached;
+            }
+        }
+
+        AllocationStatusSnapShot result = loadFromDb(matchId, blockId, normalized);
+
+        if (cache != null) {
+            cache.put(key, result);
+        }
+
+        return result;
     }
 
     @Override

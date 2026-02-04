@@ -58,7 +58,8 @@ export function useSSE({ matchId, blockId, enabled }: UseSSEProps): UseSSEReturn
         setSeatMap(new Map());
         setStatus('reconnecting');
 
-        const url = `${process.env.NEXT_PUBLIC_API_URL}/matches/${matchId}/blocks/${blockId}/seats/events`;
+        const validApiUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080/api';
+        const url = `${validApiUrl}/matches/${matchId}/blocks/${blockId}/seats/events`;
         console.log('Connecting to SSE:', url);
 
         const es = new EventSource(url);
